@@ -1,0 +1,13 @@
+.abs-pos{
+    right:20px; 
+    top:15%;
+  }
+  .bg-blue{
+    background-color: #022E64;
+  }
+  .text-blue{
+      color: #022E64;
+  }
+  .text-sm{
+    font-size: 12px;
+  }

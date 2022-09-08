@@ -1,0 +1,335 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Payments</h5>
+                </div>
+                <div class="accounts-overview-div p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Single Payment</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-payment-form mt-4">
+                        <form [formGroup]="PappsForm" (ngSubmit)="InitiateForm(PappsForm.value)">
+                            <div class="mb-4">
+                                <h3 class="div-title font-blue font-14px">Initiate PAPPS Payment<span class="px-2"><img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="" data-toggle="tooltip" data-placement="top" data-title="Initiate Single Payments"></span></h3>
+                                <p class="font-10px font-dark f-weight500">Please fill the form  below to initiate a payment</p>
+                            </div>
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Transfer funds from</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="sourceAcc" (change)="selectSource($event)">
+                                        <option selected>Select account</option>
+                                        <option value="{{ StringifyString(item)}}" *ngFor="let item of localResponse?.Accounts">{{item?.AccountName}}-{{item?.AccountNumber}}</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                    <div *ngIf="f.accountId.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.accountId.errors.required">Source Account is required</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Originating Account</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" (input)="CheckValue($event)" (change)="setSourceAccount($event)"  formControlName="sourceAccount">
+                                    <small class="fs-12">{{sourceAccountDetails?.AccountName}}</small>
+                                    <div *ngIf="f.sourceAccount.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.sourceAccount.errors.required">Originating Account is required</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Account</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" (input)="CheckValue($event)" (change)="validateWatch($event)"  formControlName="accountNumber">
+                                    <div *ngIf="f.accountNumber.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.accountNumber.errors.required">Beneficiary Account is required</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Bank</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="inlineFormCustomSelect"(change)="selectBank($event)">
+                                        <option selected>Select Bank</option>
+                                        <option value="{{ StringifyString(item)}}" *ngFor="let item of PappsBank?.participants">{{item?.name}}</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Name</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" id="accountName" formControlName="accountName" disabled>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="selectedCountry">
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Country Code</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <small>{{selectedCountry?.countryCode}}</small> 
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Currency Code</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <small>{{selectedCountry?.currencyCode}}</small> 
+                                    </div>
+                                </div> 
+                            </ng-container> 
+                            
+
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="referenceNo" class="mb-0 font-12px font-blue f-weight500">Reference No.</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" id="referenceNo" formControlName="mFormReferenceNo">
+                                </div>
+                            </div> 
+                            
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Transaction Type</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="paymentType" (change)="selectPaymentType($event)">
+                                        <option selected>Select Transaction Type</option>
+                                        <option value="CBN Trade-Backed">CBN Trade-Backed</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                    <div *ngIf="f.trnxType.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.trnxType.errors.required">Transaction Type is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mb-4" *ngIf="transactionType == 'CBN Trade-Backed'">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Mode</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="paymentType" formControlName="tradeBackType">
+                                        <option selected>Select account</option>
+                                        <option value="Letter of Credit">Letter of Credit</option>
+                                        <option value="Bills of Collection">Bills of Collection</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                    <!-- <div *ngIf="f.paymentType.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.paymentType.errors.required">Payment Mode is required</div>
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Type</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="paymentType"  (change)="selectInvoiceType($event)" formControlName="invoiceType">
+                                        <option selected>Select payment type</option>
+                                        <option value="Direct Payment">Direct Payment</option>
+                                        <option value="Invoice Payment">Invoice Payment</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                    <!-- <div *ngIf="f.paymentType.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.paymentType.errors.required">Payment Mode is required</div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mb-4" *ngIf="invoiceType">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Amount</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" [value]="Amount" (input)="CheckValue($event)" class="form-control input-field" (blur)="formatCurrency_TaxableValue($event)" formControlName="sourceAmount">
+                                    <small class="fs-12" *ngIf="rateBody">{{rateBody?.description}} at {{rateBody?.rate}}</small>
+                                 </div>
+                                <div class="col-xl-3 col-lg-4">
+                                    <strong class="font-12px">Daily Limit: {{localResponse?.Limit?.OutstandingLimit | number: '.2'}}</strong>
+                                </div>
+                                
+                            </div>
+                            
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Bank</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5 position-relative">
+                                    <select class="input-field form-select-custom" id="inlineFormCustomSelect" formControlName="beneficiaryName"  (change)="newBeneficiaryBank($event)">
+                                        <option selected>Select Bank</option>
+                                        <option value="{{ StringifyString(item)}}" *ngFor="let item of localResponse?.BankList">{{item?.BankName}}</option>
+                                    </select>
+                                    <div class="position-absolute abs-pos">
+                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Name</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" id="accountName" formControlName="accountName">
+                                </div>
+                            </div>     -->
+
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Amount</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" [value]="Amount" (input)="CheckValue($event)" class="form-control input-field" (blur)="formatCurrency_TaxableValue($event)" formControlName="amount">
+                                </div>
+                                <div class="col-xl-3 col-lg-4">
+                                    <strong class="font-12px">Daily Limit: {{localResponse?.Limit?.OutstandingLimit | number: '.2'}}</strong>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Narration</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input type="text" class="form-control input-field" formControlName="narration">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mb-4" *ngIf="beneficiaryType === 'new'">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Save Beneficiary</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <div class="row align-items-center">
+                                        <div class="form-check col-lg-4 align-items-center">
+                                            <p class="mb-0 d-flex">
+                                                <input type="checkbox" id="saveBene" name="radio-debit" (change)="SaveBeneficiary()">
+                                                <label for="saveBene" class="mb-0 font-blueGrey font-12px"></label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Method</label>
+                                </div>
+                                <div class="col-xl-6 col-md-8">
+                                    <div class="row align-items-center">
+                                        <div class="form-check col-lg-4 align-items-center" *ngFor="let item of localResponse?.PaymentMethod; let i = index">
+                                            <p class="mb-0 d-flex" data-toggle="tooltip" data-placement="top" title="Payment method for {{item?.Value}}">
+                                                <input type="radio" id="method{{i}}" name="method-response">
+                                                <label for="method{{i}}" class="mb-0 font-blueGrey font-12px" (click)="selectMethod(item?.Id)">{{item?.Value}}</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="f.paymentMethod.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.paymentMethod.errors.required">Payment Method is required</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Type</label>
+                                </div>
+                                <div class="col-xl-6 col-md-8">
+                                    <div class="row align-items-center">
+                                        <div class="form-check col-lg-4 align-items-center" *ngFor="let item of localResponse?.PaymentType; let i = index">
+                                            <p class="mb-0 d-flex">
+                                                <input type="radio" id="type{{i}}" name="type-response">
+                                                <label for="type{{i}}" class="mb-0 font-blueGrey font-12px" (click)="selectType(item?.Id)">{{item?.Value}}</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="f.paymentType.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.paymentType.errors.required">Payment Type is required</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="form-row align-items-center mb-4">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Value date</label>
+                                </div>
+                                <div class="col-xl-3 col-md-5">
+                                    <input
+                                    formControlName="valueDate"
+                                    [minDate]="minDate"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                    class="form-control input-field"
+                                    #dp="bsDatepicker"
+                                    bsDatepicker
+                                    [bsValue]="bsValue">
+                                    <div *ngIf="f.valueDate.invalid && submitted">
+                                        <div class="txt-sm text-danger" *ngIf="f.valueDate.errors.required">Value Date is required</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="form-row mb-4">
+                                <div class="col-xl-2 col-md-3">
+                                    <button type="submit" class="btn btn-add-beneficiary bg-blue text-white">Submit</button>
+                                </div>
+                                <div class="col-xl-2 col-md-3">
+                                    <span class="btn btn-add-beneficiary bg-white text-blue" (click)="ResetForm()">Reset Form</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <ng-container >
+                    <!-- <app-single-table [PaymentDetails]="BeneficiaryList"></app-single-table> -->
+                </ng-container>
+        
+            </div>
+        </main>
+        <!-- END MAIN CONTENT-->
+        <!-- END PAGE CONTAINER-->
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="instructionModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">                            
+            <app-papss-modal [Details]='Details'></app-papss-modal>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

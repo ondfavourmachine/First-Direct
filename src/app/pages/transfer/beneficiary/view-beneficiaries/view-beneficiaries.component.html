@@ -1,0 +1,248 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Transfer Services</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Beneficiaries</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-4">
+                        <div class="p-2">
+                            <button class="btn-add-beneficiary" (click)="ActionModal('Add','null')">ADD SINGLE BENEFICIARY</button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn-add-beneficiary" (click)="UploadModal()">ADD BULK BENEFICIARY</button>
+                        </div>
+                        
+                        <!-- <div class="col-xl-2 col-lg-3">
+                            <div>
+                                <button class="btn-add-beneficiary" (click)="ActionModal('Add','null')">ADD BENEFICIARY</button>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="account-summary-div mt-2">
+                        <div class="row justify-content-between align-items-center mt-3">
+                            <div class="col-xl-8 col-md-12 col-12 mb-3">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+                                        <h3 class="div-title font-blue font-14px mb-0">Beneficiary List</h3>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="position-relative">
+                                            <input type="text" class="table-search-field"  [(ngModel)]="term" placeholder="Input Search Term">
+                                            <div class="position-absolute search-icon-position">
+                                                <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>                            
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+                                <div class="table-responsive table-div">
+                                    <table class="table table-borderless table-transaction-history">
+                                        <thead>
+                                            <tr>
+                                                <td>ACCOUNT NUMBER</td>
+                                                <td>ACCOUNT NAME</td>
+                                                <td>BANK NAME</td>
+                                                <td>TELEPHONE</td>
+                                                <td>EMAIL</td>
+                                                <td colspan="2">ACTIONS</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="BeneficiaryList?.length">
+                                            <tr *ngFor="let item of (BeneficiaryList | filter:term) | paginate: { itemsPerPage: 20, currentPage: p } ; let i = index">
+                                                <td>{{item?.AccountNumber}}</td>
+                                                <td>{{item?.AccountName}}</td>
+                                                <td>{{item?.BankName}}</td>
+                                                <td>{{item?.PhoneNumber}}</td>
+                                                <td>{{item?.Email}}</td>
+                                                <td>
+                                                    {{item?.Error}}
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" (click)="PayBeneficiary(item)" class="text-info" *ngIf="item?.StatusId === 1">Pay</a>
+                                                </td>
+                                                <!-- <td>
+                                                    <a href="javascript:void(0);" (click)="ActionModal('Delete',item?.BeneficiaryId)" class="text-danger">Delete</a>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <ng-container *ngIf="BeneficiaryList?.length">
+                                            <div class="float-right">
+                                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                            </div>
+                                    </ng-container>
+                                    <div class="table-bg" *ngIf="!BeneficiaryList?.length">
+                                        <div class="d-flex align-items-center flex-column">
+                                            <div class="p-2">
+                                                <img src="assets/images/utils/empty-trans.svg" />
+                                            </div>
+                                            <div class="p-2 text-center mt-4">
+                                                  <h6>No Beneficiary Added Yet</h6>
+                                                  <p>You don't have beneficiaries yet.<br /> Added Beneficiaries will show up here.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="addBeneficiary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body">                            
+                            <!-- //<app-modal-content *ngIf="Action === 'Add'"></app-modal-content> -->
+                            <app-modal-content [Details]='Details'></app-modal-content>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="payBeneficiary" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header"></div>
+                                <div class="modal-body">  
+                                    <div>
+                                        <h5 class="font-blue">Pay beneficiary</h5>
+                                        <form [formGroup]="BeneficiaryForm" (ngSubmit)="InitiateProcess(BeneficiaryForm.value)">
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-3">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Transfer funds from</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8 position-relative">
+                                                    <select class="input-field form-select-custom" id="inlineFormCustomSelect" formControlName="accountId" (change)="selectSource($event)">
+                                                        <option selected>Select account</option>
+                                                        <option value="{{item?.AccountId}}" *ngFor="let item of localResponse?.Accounts">{{item?.AccountName}}-{{item.AccountNumber}}</option>
+                                                    </select>
+                                                    <div class="position-absolute abs-pos">
+                                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row position-relative mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account number</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <input type="text" class="input-field" id="accountNumber" formControlName="accountNumber" placeholder="Enter account number">
+                                                </div>
+                                            </div>
+                                            <div class="form-row position-relative mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account name</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <input type="text" id="accountName" class="input-field" formControlName="accountName" placeholder="Enter account name">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Amount</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <input type="text" [value]="Amount" class="form-control input-field" (blur)="formatCurrency_TaxableValue($event)" formControlName="amount">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Narration</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <input type="text" class="form-control input-field" formControlName="narration">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-3">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Method</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <div class="row align-items-center">
+                                                        <div class="form-check col-lg-4 align-items-center" *ngFor="let item of localResponse?.PaymentMethod; let i = index">
+                                                            <p class="mb-0 d-flex">
+                                                                <input type="radio" id="method{{i}}" name="method-response">
+                                                                <label for="method{{i}}" class="mb-0 font-blueGrey font-12px" (click)="selectMethod(item?.Id)">{{item?.Value}}</label>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-3">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Type</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <div class="row align-items-center">
+                                                        <div class="form-check col-lg-4 align-items-center" *ngFor="let item of localResponse?.PaymentType; let i = index">
+                                                            <p class="mb-0 d-flex">
+                                                                <input type="radio" id="type{{i}}" name="type-response">
+                                                                <label for="type{{i}}" class="mb-0 font-blueGrey font-12px" (click)="selectType(item?.Id)">{{item?.Value}}</label>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-lg-3">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Value date</label>
+                                                </div>
+                                                <div class="col-xl-7 col-md-8">
+                                                    <input type="date" class="form-control input-field" formControlName="valueDate" id="txtDate">
+                                                </div>
+                                            </div>
+                                            <div class="form-row position-relative mt-5 justify-content-between">
+                                                <div class="col-xl-5 col-md-6">
+                                                    <span class="btn btn-add-beneficiary pointer" data-dismiss="modal" (click)="ClearData()">Cancel</span>
+                                                </div>
+                                                <div class="col-xl-5 col-md-6">
+                                                    <button class="btn btn-submit" [disabled]="BeneficiaryForm.invalid">Pay beneficiary</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            <div class="modal-footer"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<div class="modal fade" id="uploadBeneficiary" tabindex="-1" role="dialog" aria-labelledby="uploadBeneficiary" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">                            
+             <app-upload-beneficiary></app-upload-beneficiary>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

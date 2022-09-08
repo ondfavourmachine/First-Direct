@@ -1,0 +1,119 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <ng-container *ngIf="Details?.action === 'Delete'" >
+            <h5 class="font-blue text-center">Action Confirmation</h5>
+            <p class="font-14px text-center f-weight500">You are about to delete this beneficiary,<br /> Do you wish to proceed?</p>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-xl-6 col-md-6">
+                    <button class="btn btn-add-beneficiary" data-dismiss="modal">No</button>
+                </div>
+                <div class="col-xl-6 col-md-6">
+                    <button class="btn btn-submit" (click)="DeleteBeneficiary()">Yes</button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.action === 'Approve'" >
+            <h5 class="font-blue">Token</h5>
+            <p class="font-14px text-center f-weight500">Enter token to approve this beneficiary</p>
+            <div class="row mt-4 justify-content-center">
+                <form [formGroup]="TokenForm" (ngSubmit)="ApproveBeneficiary(TokenForm.value)">
+                    <div class="form-group">
+                        <label for="token">Token</label>
+                        <input type="number" class="form-control" formControlName="token" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-add-beneficiary" [disabled]="TokenForm.invalid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.action === 'Reject'" >
+            <h5 class="font-blue">Token</h5>
+            <p class="font-14px text-center f-weight500">Enter token to reject this beneficiary</p>
+            <div class="row mt-4 justify-content-center">
+                <form [formGroup]="ReasonForm" (ngSubmit)="RejectBeneficiary(ReasonForm.value)">
+                    <div class="form-group">
+                        <label for="reason">Reason</label>
+                        <textarea class="text-area form-control" rows="4" formControlName="reason"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="token">Token</label>
+                        <input type="number" class="form-control" formControlName="token" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-add-beneficiary" [disabled]="ReasonForm.invalid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.action ==='Add'">
+            <div>
+                <h5 class="font-blue">Add beneficiary</h5>
+                <form [formGroup]="BeneficiaryForm" (ngSubmit)="AddBeneficiary(BeneficiaryForm.value)">
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500 required">Select Bank</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8 position-relative">
+                            <select class="input-field form-select-custom" id="inlineFormCustomSelect"  formControlName="bankCode" (change)="selectSource($event)">
+                                <option selected>Select account</option>
+                                <option value="{{item?.bankCode}}" *ngFor="let item of BankList">{{item?.bankName}}</option>
+                            </select>
+                            <div class="position-absolute abs-pos">
+                                <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid z-30" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500 required">Account number</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8">
+                            <input type="text" class="input-field" formControlName="accountNumber" (change)="validateAccount($event)" placeholder="Enter account number">
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account name</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8">
+                            <input type="text" id="accountName" class="input-field" formControlName="accountName" placeholder="Enter account name">
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Preferred Name</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8">
+                            <input type="text" class="input-field" formControlName="prefferredName" placeholder="Enter preferred name">
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Phone number</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8">
+                            <input type="number" class="input-field" formControlName="phone" placeholder="Enter phone number">
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-4">
+                        <div class="col-xl-4 col-md-4">
+                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Email address</label>
+                        </div>
+                        <div class="col-xl-7 col-md-8">
+                            <input type="email" formControlName="email" class="input-field" placeholder="Enter email address">
+                        </div>
+                    </div>
+                    <div class="form-row position-relative mt-5">
+                        <div class="col-xl-5 col-md-6">
+                            <span class="btn btn-add-beneficiary" data-dismiss="modal" (click)="ClearData()">Cancel</span>
+                        </div>
+                        <div class="col-xl-5 col-md-6">
+                            <button class="btn btn-submit" [disabled]="BeneficiaryForm.invalid">Save beneficiary</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+    </div>
+</div>

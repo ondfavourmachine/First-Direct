@@ -1,0 +1,59 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>   
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Reports</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Transaction reports</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item font-12px">
+                                      <a 
+                                      class="nav-link active" id="pills-neft-tab" 
+                                      data-toggle="pill" href="#pills-neft" role="tab" 
+                                      aria-controls="pills-neft" 
+                                      aria-selected="true">NEFT transactions</a>
+                                    </li>
+                                    <li class="nav-item font-12px">
+                                      <a
+                                      class="nav-link" id="pills-rtgs-tab" data-toggle="pill" href="#pills-rtgs" 
+                                      role="tab" aria-controls="pills-rtgs" aria-selected="true">RTGS transactions</a>
+                                    </li>
+                                    <!-- <li class="nav-item font-12px">
+                                        <a class="nav-link" href="#Upload">Upload reports</a>
+                                    </li>
+                                    <li class="nav-item font-12px">
+                                        <a class="nav-link" href="#MT940">MT940 transactions</a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-neft" role="tabpanel" aria-labelledby="pills-neft-tab">
+                                <app-neft-reports></app-neft-reports>
+                            </div>
+                            <div class="tab-pane fade" id="pills-rtgs" role="tabpanel" aria-labelledby="pills-rtgs-tab">
+                                <app-rtgs-reports></app-rtgs-reports>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>

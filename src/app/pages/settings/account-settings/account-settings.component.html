@@ -1,0 +1,47 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Accounts settings</h5>
+                </div>
+                <div class="accounts-overview-div p-4">
+                    <!-- <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Accounts</h3>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="account-summary-div mt-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3 class="div-title font-blue font-14px mb-0">Balance Visibility</h3>
+                                <p class="font-12px">Configure how you want to view your balance</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mt-4">
+                            <div class="col-xl-3 col-md-3">
+                                <h6 class="mb-0 font-12px font-blue f-weight500">Hide Balance on dashboard</h6>
+                                <small>Toggle to change settings</small>
+                            </div>
+                            <div class="col-xl-3 col-md-4">
+                                <div class="d-flex">
+                                    <input type="checkbox" id="switchBalance" (change)="preferenceChange()" checked="{{hideBalance ? 'checked' : ''}}"/><label for="switchBalance" class="mb-0"></label>
+                                    <small class="pl-2">{{hideBalance ? 'On' : 'Off'}}</small>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+    

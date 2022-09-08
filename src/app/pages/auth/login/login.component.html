@@ -1,0 +1,107 @@
+<main>
+    <div class="login-top-bar">
+        <div class="container">
+            <div class="row">
+                <div class=col-lg-12>
+                    <div class="d-flex justify-content-end px-1">
+                        <img src="./assets/images/FirstDirect-white.svg" class="img-fluid logo-custom-size" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-in-area">
+        <div class="login-area-overlay">
+
+        </div>
+        <div class="container">
+            <div class="row align-items-center flex-wrap log-in-main justify-content-between px-2">
+                <div class="col-xl-5 col-lg-6 col-12">
+                    <div class="mt-5">
+                        <h4 class="text-light f-weight700 font-24px">Transact Easily</h4>
+                        <div class="yellow-horizontal-line mt-4"></div>
+
+                        <h3 class="f-weight400 text-light font-28px text-light mt-4">Flexible and Reliable Business <br/>Banking</h3>
+                        <div class="col-lg-6 px-0 mt-4">
+                            <button class="btn get-started-btn" [routerLink]="['/auth/onboarding']">GET STARTED</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 mt-5 col-12">
+                    <form [formGroup]="LoginForm" (ngSubmit)="Login(LoginForm.value)">
+                        <div class="login-form d-flex flex-column justify-content-center">
+                            <h6 class="font-18px font-blue text-left">Sign in with your account details</h6>
+                            <div class="mt-3">
+                                <div class="position-relative">
+                                    <input type="text" class="log-in-fields" formControlName="OrgCode" placeholder="Organization Code" id="org" autocomplete="off">
+                                    <div class="position-absolute login-form-icons">
+                                        <i class="fa fa-building icon-color"></i>
+                                    </div>
+                                </div>
+                                <div class="position-relative">
+                                    <input type="text" class="log-in-fields" formControlName="username" placeholder="Username" id="username" autocomplete="off">
+                                    <div class="position-absolute login-form-icons">
+                                        <i class="fa fa-user icon-color"></i>
+                                    </div>
+                                </div>
+                                <div class="position-relative">
+                                    <input type="password" class="log-in-fields" formControlName="password" placeholder="Password" id="pass">
+                                    <div class="position-absolute login-form-icons">
+                                        <i class="fa fa-lock icon-color"></i>
+                                    </div>
+                                    <div class="position-absolute login-form-icons2" (click)="Reveal('pass')">
+                                        <i class="fa fa-eye icon-color"></i>
+                                    </div>
+                                </div>
+                                <div class="position-relative" *ngIf="tokenReq">
+                                    <input type="text" class="log-in-fields" formControlName="token" placeholder="Enter Token">
+                                    <div class="position-absolute login-form-icons">
+                                        <i class="fa fa-lock icon-color"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-login" [disabled]="LoginForm.invalid" *ngIf="!tokenReq">SIGN IN</button>
+                                    <span class="btn btn-login" (click)="ValidateToken()" *ngIf="tokenReq">Validate Token</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <a class="font-12px f-weight700" href="javascript:void(0);" [routerLink]="['/auth/reset-username']" >Forgot Username</a>
+                                    <a href="javascript:void(0);" [routerLink]="['/auth/reset-password']" class="font-12px f-weight700">Forgot Password</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="login-bottom-bar"></div>
+</main>
+
+
+<div class="modal fade" id="loggedIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h4 class="font-blue text-center">You are already logged in</h4>
+                    <p class="text-center">Will you like to log in again?</p>
+                    <div class="form-row justify-content-between mt-5">
+                        <div class="col-xl-5 col-md-6">
+                            <span class="btn btn-add-beneficiary" data-dismiss="modal">NO</span>
+                        </div>
+                        <div class="col-xl-5 col-md-6">
+                            <button class="btn btn-submit" (click)="confirmLogout()">YES</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,19 @@
+.bg-blue{
+  background-color: #022E64;
+}
+.text-blue{
+    color: #022E64;
+}
+.txt-sm{
+  font-size: 12px;
+}
+.fs-14px{
+  font-size: 14px;
+}
+.abs-pos{
+  right:20px; 
+  top:15%;
+}
+.z-30{
+  z-index:30;
+}

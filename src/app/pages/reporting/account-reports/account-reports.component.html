@@ -1,0 +1,53 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>   
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Reports</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Corporate Account reports</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item font-12px">
+                                      <a 
+                                      class="nav-link active" id="pills-accounts-tab" 
+                                      data-toggle="pill" href="#pills-accounts" role="tab" 
+                                      aria-controls="pills-accounts" 
+                                      aria-selected="true">Accounts</a>
+                                    </li>
+                                    <!-- <li class="nav-item font-12px">
+                                      <a
+                                      class="nav-link" id="pills-suspense-tab" data-toggle="pill" href="#pills-suspense" 
+                                      role="tab" aria-controls="pills-suspesne" aria-selected="true">Corporate Suspense Accounts Report</a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-accounts" role="tabpanel" aria-labelledby="pills-accounts-tab">
+                                <app-Corpaccount-reports [Corporate]="Corporate"></app-Corpaccount-reports>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="pills-suspense" role="tabpanel" aria-labelledby="pills-suspense-tab">
+                                <app-suspense-reports [Suspense]="Suspense"></app-suspense-reports>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>3092895990	

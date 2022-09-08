@@ -1,0 +1,106 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Transfer Services</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Approve Beneficiaries</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-summary-div mt-2">
+                        <div class="row justify-content-between align-items-center mt-3">
+                            <div class="col-xl-8 col-md-12 col-12 mb-3">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+                                        <h3 class="div-title font-blue font-14px mb-0">Beneficiary List</h3>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="position-relative">
+                                            <input type="text" class="table-search-field"  [(ngModel)]="term" placeholder="Input Search Term">
+                                            <div class="position-absolute search-icon-position">
+                                                <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>                            
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+                                <div class="table-responsive table-div">
+                                    <table class="table table-borderless table-transaction-history">
+                                        <thead>
+                                            <tr>
+                                                <td>ACCOUNT NUMBER</td>
+                                                <td>ACCOUNT NAME</td>
+                                                <td>BANK NAME</td>
+                                                <td>TELEPHONE</td>
+                                                <td>EMAIL</td>
+                                                <td colspan="2">ACTIONS</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="BeneficiaryList?.length">
+                                            <tr *ngFor="let item of (BeneficiaryList | filter:term) | paginate: { itemsPerPage: 20, currentPage: p } ; let i = index">
+                                                <td>{{item?.AccountNumber}}</td>
+                                                <td>{{item?.AccountName}}</td>
+                                                <td>{{item?.BankName}}</td>
+                                                <td>{{item?.PhoneNumber}}</td>
+                                                <td>{{item?.Email}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0);"(click)="ActionModal('Approve',item?.BeneficiaryId)" class="text-info">Approve</a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" (click)="ActionModal('Reject',item?.BeneficiaryId)" class="text-danger">Reject</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <ng-container *ngIf="BeneficiaryList?.length">
+                                            <div class="float-right">
+                                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                            </div>
+                                    </ng-container>
+                                    <div class="table-bg" *ngIf="!BeneficiaryList?.length">
+                                        <div class="d-flex align-items-center flex-column">
+                                            <div class="p-2">
+                                                <img src="assets/images/utils/empty-trans.svg" />
+                                            </div>
+                                            <div class="p-2 text-center mt-4">
+                                                  <h6>No Pending Beneficiary at this moment</h6>
+                                                  <p>You don't have pending beneficiaries yet.<br /> Beneficiaries awaiting approval will show up here.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="addBeneficiary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body">                            
+                            <!-- //<app-modal-content *ngIf="Action === 'Add'"></app-modal-content> -->
+                            <app-modal-content [Details]='Details'></app-modal-content>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.btn-primary{
+    background-color: #022E64;
+}
+.btn-sm{
+    /* width: 100px; */
+}
+#content{
+    display: none;
+}
+.mtp-50{
+    margin-top: 50px;
+}

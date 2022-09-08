@@ -1,0 +1,78 @@
+<div class="account-summary-div mt-4">
+    <div class="row justify-content-between align-items-center mt-3">
+        <div class="col-xl-8 col-md-12 col-12 mb-3">
+            <div class="row align-items-center">
+                <div class="col-lg-3">
+                    <h3 class="div-title font-blue font-14px mb-0">Report Summary</h3>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="position-relative">
+                        <input type="text" class="table-search-field"
+                        [(ngModel)]="term"  placeholder="Input search term">
+                        <div class="position-absolute search-icon-position">
+                            <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg">
+                    <div class="d-flex justify-content-between">
+                        <a (click)="export()" class="font-12px f-weight500 pointer mr-2">Download CSV<span><img src="./assets/images/excel-icon.svg" class="img-fluid" alt=""></span></a>
+                        <a (click)="convert()" class="font-12px f-weight500 pointer">Download PDF<span><img src="./assets/images/pdf-icon.svg" class="img-fluid" alt=""></span></a>                
+                    </div>
+                </div>
+            </div> 
+        </div>   
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="table-responsive table-div">
+                <table class="table table-borderless table-transaction-history">
+                    <thead>
+                        <tr>
+                            <td>ACCOUNT NAME</td>
+                            <td>ACCOUNT NUMBER</td>
+                            <td>CURRENCY</td>
+                            <td>AVAILABLE BALANCE</td>
+                            <td>LEDGER BALANCE</td>
+                            <td>OVERDRAFT BALANCE</td>
+                            <td>SUBSIDIARY NAME</td>
+                            <td>PREFERRED NAME</td>
+                            <td>STATUS</td>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="Corporate">
+                        <tr *ngFor="let item of (Corporate | filter:term) | paginate: { itemsPerPage: 30, currentPage: p };
+                         let i = index">
+                            <td> {{item?.AccountName}} </td>
+                            <td> {{item?.AccountNumber}} </td>
+                            <td> {{item?.Currency}} </td>
+                            <td> {{item?.AvailableBalance }} </td>
+                            <td> {{item?.LedgerBalance }} </td>
+                            <td> {{item?.OverDraftBalance}} </td>
+                            <td> {{item?.OrganisationName}} </td>
+                            <td> {{item?.PreferredName}} </td>
+                            <td> {{item?.Status}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-container *ngIf="Corporate?.length">
+                    <div class="float-right">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="table-bg" *ngIf="!Corporate?.length">
+                <div class="d-flex align-items-center flex-column">
+                    <div class="p-2">
+                        <img src="assets/images/utils/empty-trans.svg" />
+                    </div>
+                    <div class="p-2 text-center mt-4">
+                          <h6>No Pending Reports</h6>
+                          <p>You don't have reports yet</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

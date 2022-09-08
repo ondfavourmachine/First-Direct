@@ -1,0 +1,209 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>   
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Reports</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Upload reports</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <div class="account-summary-div mt-4">
+                                    <div class="row justify-content-between align-items-center mt-3">
+                                        <div class="col-xl-8 col-md-12 col-12 mb-3">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-3">
+                                                    <h3 class="div-title font-blue font-14px mb-0">Report Summary</h3>
+                                                </div>
+                                                <div class="col-lg-4 col-12">
+                                                    <div class="position-relative">
+                                                        <input type="text" class="table-search-field" [(ngModel)]="term" placeholder="Input search filter">
+                                                        <div class="position-absolute search-icon-position">
+                                                            <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>   
+                                    </div>
+                                    <div class="d-flex justify-content-between flex-wrap">
+                                        <div class="p-2">
+                                            <form [formGroup]="FilterForm" (ngSubmit)="filterReports(FilterForm.value)">
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="">
+                                                        <input
+                                                            placeholder="Start date"
+                                                            formControlName="startDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                            class="form-control input-field"
+                                                            #dp="bsDatepicker"
+                                                            bsDatepicker>
+                                                    </div>
+                                                    <div class="px-2 align-self-center">
+                                                        <span class="text-muted">to</span>
+                                                    </div>
+                                                    <div class="">
+                                                        <input
+                                                            placeholder="End date"
+                                                            formControlName="endDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                            class="form-control input-field"
+                                                            #dp="bsDatepicker"
+                                                            bsDatepicker>
+                                                    </div>
+                                                    <div class="ml-1">
+                                                        <button class="btn-sm btn btn-primary btn-go" [disabled]="FilterForm.invalid">Go</button>
+                                                    </div>
+                                                </div>  
+                                            </form>  
+                                        </div>
+                                        <div class="p-2 ml-4">
+                                            <div class="d-flex justify-content-between">
+                                                <a (click)="export()" class="font-12px f-weight500 pointer mr-2">Download CSV<span><img src="./assets/images/excel-icon.svg" class="img-fluid" alt=""></span></a>
+                                                <a (click)="convert()" class="font-12px f-weight500 pointer">Download PDF<span><img src="./assets/images/pdf-icon.svg" class="img-fluid" alt=""></span></a>                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive table-div">
+                                                <table class="table table-borderless table-transaction-history">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>UPLOAD DATE</td>
+                                                            <td>PROCESSED DATE</td>
+                                                            <td>UPLOADER</td>
+                                                            <td>SUBSIDIARY</td>
+                                                            <td>BATCH ID</td>
+                                                            <td>TOTAL AMOUNT</td>
+                                                            <td>TRANSACTION COUNT</td>
+                                                            <td>PENDING COUNT</td>
+                                                            <td>ACTION</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngIf="Uploads">
+                                                        <tr *ngFor="let item of (Uploads | filter:term) | paginate: { itemsPerPage: 40, currentPage: p };
+                                                         let i = index">
+                                                            <td> {{item?.DateCreated | date : 'short'}} </td>
+                                                            <td> {{item?.ProcessedDate | date : 'short' }} </td>
+                                                            <td>{{item?.Initiator}}</td>
+                                                            <td> {{item?.Organisation}} </td>
+                                                            <td> {{item?.BatchID}} </td>
+                                                            <td> {{item?.TotalAmount}} </td>
+                                                            <td> {{item?.TransactionCount}} </td>
+                                                            <td> {{item?.PendingCount}} </td>
+                                                            <td>
+                                                                <div class="dropdown" *ngIf="item?.batchID !== null">
+                                                                    <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <img src="./assets/images/bulk-menu-icon.svg" class="img-fluid" alt="">
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                         <a class="dropdown-item font-12px font-blueGrey" href="javascript:void(0);" (click)="viewBatch(item)">View Batch Details</a>                                           
+                                                                    </div>
+                                                                </div> 
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <ng-container *ngIf="Uploads?.length">
+                                                    <div class="float-right">
+                                                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                                    </div>
+                                                </ng-container>
+                                            </div> 
+                                            <div class="table-bg" *ngIf="!Uploads?.length">
+                                                <div class="d-flex align-items-center flex-column">
+                                                    <div class="p-2">
+                                                        <img src="assets/images/utils/empty-trans.svg" />
+                                                    </div>
+                                                    <div class="p-2 text-center mt-4">
+                                                          <h6>No Upload Reports</h6>
+                                                          <p>You don't have upload reports yet</p>
+                                                    </div>
+                                                </div>
+                                            </div>           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="batchDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">   
+            <div class="text-end">
+                <i class="fa fa-times" data-dismiss="modal"></i>
+            </div>               
+        </div>
+        <div class="modal-body">
+          <h5 class="font-blue">Batch Details List</h5>
+            <p class="font-12px font-blue mb-0">View batch details</p>
+            <div class="mt-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="font-12px font-blue">PAYMENT DATE</th>
+                            <th class="font-12px font-blue">SUBSIDIARY</th>
+                            <th class="font-12px font-blue">SOURCE ACCOUNT</th>
+                            <th class="font-12px font-blue">BATCH ID</th>
+                            <th class="font-12px font-blue">AMOUNT</th>
+                            <th class="font-12px font-blue">CHARGES</th>
+                            <th class="font-12px font-blue">TRANSACTION STATUS</th>
+                            <th class="font-12px font-blue">BENEFICIARY ACCOUNT</th>
+                            <th class="font-12px font-blue">BENEFICIARY NAME</th>
+                            <th class="font-12px font-blue">BENEFICIARY BANK</th>
+                            <th class="font-12px font-blue">APPROVER</th>
+                            <th class="font-12px font-blue">NARRATION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of batchDetails | paginate: { itemsPerPage: 40, currentPage: p }; let i = index">
+                            <td class="font-12px">{{item?.PaymentDate | date }}</td>
+                            <td class="font-12px">{{item?.Organisation}}</td>
+                            <td class="font-12px">{{item?.DrAccount}}</td>
+                            <td class="font-12px">{{item?.batchid}}</td>
+                            <td class="font-12px">&#8358;{{item?.Amount}}</td>
+                            <td class="font-12px">{{item?.Charges === null ? '0.0' : item?.Charges}}</td>
+                            <td class="font-12px">{{item?.TransactionStatus}}</td>
+                            <td class="font-12px">{{item?.CrAccount}}</td>
+                            <td class="font-12px">{{item?.CrAccountName}}</td>
+                            <td class="font-12px">{{item?.CrBank}}</td>
+                            <td class="font-12px">{{item?.Approver}}</td>
+                            <td class="font-12px">{{item?.Narration}}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+                <ng-container *ngIf="batchDetails?.length">
+                    <div class="float-right">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </ng-container>
+            </div>                 
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>
+

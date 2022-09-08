@@ -1,0 +1,129 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom p-3 shadow-sm">
+        <a class="navbar-brand" href="#"><img src="./assets/images/FirstDirect-blue.svg" class="w-50" alt=""></a>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="mr-auto">
+              <h5 class="ml-90">&nbsp;</h5>
+          </div>
+          <div class="p-2">
+                <small class="company_logo">
+                    C.J
+                </small>
+          </div>
+          <div class="p-2">
+            <span class="fs-12">{{userRoles}}</span>
+          </div>
+            <div class="dropdown change-susidiary">
+                <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="./assets/images/subsidiary-icon.svg" alt="">
+                    <span class="px-2 font-grey font-12px">Change subsidiary</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
+                    <a class="dropdown-item pointer" *ngFor="let item of subsidiaries" (click)="switchSub(item.SubsidiaryId)" [ngClass]="{'active-head': getActive(item)}">{{item?.SubsidiaryName}}</a>
+                </div>
+            </div>
+            <div class="dropdown change-susidiary">
+                <a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bell text-gold" (click)="GetNotifications()"></i>
+                    <!-- <img src="./assets/images/question.svg" alt=""><span class="px-2 font-grey font-12px">Help</span> -->
+                </a>
+            </div>
+            <div class="dropdown user-profile">
+                <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="px-2 base-color font-12px">{{fullName}}</span>
+                </a>
+                <div class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+                    <button class="btn btn-primary" (click)="ConfirmLogout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+<div class="modal fade" id="logoutMoodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+          <div class="row justify-content-center">
+              <div class="col-lg-10">
+                  <form [formGroup]="CommentForm" (ngSubmit)="SubmitLogout(CommentForm.value)">
+                      <h4 class="font-blue text-center">You are about to logout</h4>
+                      <p class="mt-4 text-center">How was your experience using FirstDirect 2.0?</p>
+                      <div id="full-stars-example-two">
+                          <div class="rating-group">
+                              <input disabled checked class="rating__input rating__input--none" name="rating3" (click)="SelectRating(0)" id="rating3-none" value="0" type="radio">
+                              <label aria-label="1 star" class="rating__label" for="rating3-1"  (click)="SelectRating(1)"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                              <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio"  (click)="SelectRating(1)">
+                              <label aria-label="2 stars" class="rating__label" for="rating3-2"  (click)="SelectRating(1)"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                              <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio"  (click)="SelectRating(2)">
+                              <label aria-label="3 stars" class="rating__label" for="rating3-3"  (click)="SelectRating(1)"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                              <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio"  (click)="SelectRating(3)">
+                              <label aria-label="4 stars" class="rating__label" for="rating3-4"  (click)="SelectRating(1)"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                              <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio"  (click)="SelectRating(4)">
+                              <label aria-label="5 stars" class="rating__label" for="rating3-5"  (click)="SelectRating(1)"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                              <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio"  (click)="SelectRating(5)">
+                          </div>
+                      </div>
+                      <div class="my-3">
+                        <label>Comments (optional)</label>
+                        <textarea rows="5" class="form-control" formControlName="comment"></textarea>
+                      </div>
+                      <div class="form-row justify-content-between mt-5">
+                          <div class="col-xl-5 col-md-6">
+                              <span class="btn btn-add-beneficiary" data-dismiss="modal">DON'T LOGOUT</span>
+                          </div>
+                          <div class="col-xl-5 col-md-6">
+                              <button class="btn btn-submit" [disabled]="CommentForm.invalid">RATE & LOGOUT</button>
+                          </div>
+                      </div>
+                      <div class="mt-3 d-flex justify-content-center">
+                          <small class="pointer text-bold base-color" (click)="Skip()">Skip Rating & Logout</small>
+                      </div>
+                    </form>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let item of notifications">{{item?.Message}} <br /> <small class="base-color">{{item?.SubsidiaryName}}</small></li>
+    </ul>
+  </div>
+
+  <div class="modal fade" id="overTimeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Inactivity</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="notIdle()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <p>You have been inactive for too long<br /> Do you wish to logout?</p>
+          <div class="d-flex justify-content-center">
+              <div class="p-2">
+                <button class="btn btn-secondary" data-dismiss="modal" (click)="reset()">No,Continue</button>
+              </div>
+              <div class="p-2">
+                <button class="btn btn-primary" (click)="Logout()">Yes, Logout</button>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

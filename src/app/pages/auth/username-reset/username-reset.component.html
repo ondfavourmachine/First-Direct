@@ -1,0 +1,57 @@
+<main>
+    <div class="login-top-bar">
+        <div class="container">
+            <div class="row">
+                <div class=col-lg-12>
+                    <div class="d-flex justify-content-end px-1">
+                        <img src="./assets/images/FirstDirect-white.svg" class="img-fluid logo-custom-size" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-in-area">
+        <div class="login-area-overlay">
+
+        </div>
+        <div class="container">
+            <div class="row align-items-center flex-wrap log-in-main justify-content-between px-2">
+                <div class="col-xl-5 col-lg-6 col-12">
+                    <div class="mt-5">
+                        <h4 class="text-light f-weight700 font-24px">Transact Easily</h4>
+                        <div class="yellow-horizontal-line mt-4"></div>
+
+                        <h3 class="f-weight400 text-light font-28px text-light mt-4">Flexible and Reliable Business <br/>Banking</h3>
+                        <div class="col-lg-6 px-0 mt-4">
+                            <!-- <button class="btn get-started-btn">GET STARTED</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 mt-5 col-12">
+                    <form [formGroup]="ResetForm" (ngSubmit)="RetrieveUsername(ResetForm.value)">
+                        <div class="login-form d-flex flex-column justify-content-center">
+                            <h6 class="font-18px font-blue text-left">Enter your Email to retrieve your username</h6>
+                            <div class="mt-3">
+                                <div class="position-relative">
+                                    <input type="email" class="log-in-fields" formControlName="email" placeholder="Email" autocomplete="off">
+                                    <div class="position-absolute login-form-icons">
+                                        <i class="fa fa-envelope icon-color"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-login" [disabled]="ResetForm.invalid">Retrieve Username</button>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <p class="font-12px f-weight700">Got an account?<a href="javascript:void(0);" [routerLink]="['/auth/login']" >Login </a></p>
+                                    <a href="javascript:void(0);" [routerLink]="['/auth/reset-password']" class="font-12px f-weight700">Forgot Password</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="login-bottom-bar"></div>
+</main>

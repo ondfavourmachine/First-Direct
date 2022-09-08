@@ -1,0 +1,215 @@
+<div class="pt-90">
+    <button class="menu-button px-3">
+        <img src="./assets/images/menu.svg" class="img-fluid" alt="" style="height:24px; width:24px;">
+    </button>
+    <div class="side-nav scrollbar thin-scroll">
+
+        <ul class="nav-items p-0">
+            <li [routerLink]="['/dashboard']" [routerLinkActive]="['active']">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-dashboard"></i>
+                    &nbsp;&nbsp; Dashboard
+                </a>
+            </li>
+            <li [ngClass]="checkActiveMain('account-management')">
+                <a data-toggle="collapse" href="#accountsList">
+                    <i class="fa fa-tasks"></i>
+                    &nbsp; Account Management &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="accountsList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('account-center')"
+                        [routerLink]="['/account-management/account-center']">
+                        <a>Account Center</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('exchange-rate')"
+                        [routerLink]="['/account-management/exchange-rate']">
+                        <a>Exchange Rate</a>
+                    </li>
+                </ul>
+            </div>
+            <li [ngClass]="checkActiveMain('transfer-services')">
+                <a data-toggle="collapse" href="#paymentList">
+                    <i class="fa fa-credit-card"></i>
+                    &nbsp; Local Payments &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="paymentList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('single-payments')"
+                        [routerLink]="['/transfer-services/single-payments']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[0]?.Allowed">
+                        <a>Single payment</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('bulk-payments')" [routerLink]="['/transfer-services/bulk-payments']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[1]?.Allowed">
+                        <a>Bulk payment</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('beneficiaries')" [routerLink]="['/transfer-services/beneficiaries']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[4]?.Allowed">
+                        <a>Beneficiaries</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('approve-payments')"
+                        [routerLink]="['/transfer-services/approve-payments']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[3]?.Allowed">
+                        <a>Approve payments</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('pending-beneficiaries')"
+                        [routerLink]="['/transfer-services/pending-beneficiaries']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[5]?.Allowed">
+                        <a>Approve beneficiary</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('payment-reports')"
+                        [routerLink]="['/transfer-services/payment-reports']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[2]?.Allowed">
+                        <a>Payment report</a>
+                    </li>
+                </ul>
+            </div>
+            <li  [ngClass]="checkActiveMain('papps')">
+                <a data-toggle="collapse" href="#pappsList">
+                    <i class="fa fa-credit-card"></i>
+                        &nbsp; PAPSS Payments &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="pappsList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('initiate-papps')" 
+                        [routerLink]="['/papps/initiate-papps']"
+                        *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[9]?.Allowed">
+                        <a>Initiate PAPSS</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('approve-papps')" 
+                        [routerLink]="['/papps/approve-papps']"
+                        *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[10]?.Allowed">
+                        <a>Approve PAPSS</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('papps-reports')" 
+                        [routerLink]="['/papps/papps-reports']"
+                        *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[11]?.Allowed">
+                        <a>PAPSS Report</a>
+                    </li>
+                </ul>
+            </div>
+            <li  [ngClass]="checkActiveMain('foreign-payments')">
+                <a data-toggle="collapse" href="#foreignList">
+                    <i class="fa fa-money"></i>
+                    &nbsp; Foreign Payments &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="foreignList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('initiate')" [routerLink]="['/foreign-payments/initiate']"
+                        *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[6]?.Allowed">
+                        <a>Initiate payment</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('approve')" [routerLink]="['/foreign-payments/approve']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[7]?.Allowed">
+                        <a>Approve payment</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('foreign-reports')"
+                        [routerLink]="['/foreign-payments/foreign-reports']"
+                        *ngIf="allowedRoutes[1]?.Allowed && allowedRoutes[1]?.GetSubModules[8]?.Allowed">
+                        <a>Payment report</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('settlement-instructions')"
+                        [routerLink]="['/foreign-payments/settlement-instructions']">
+                        <a>Settlement instructions</a>
+                    </li>
+                </ul>
+            </div>
+            <li [ngClass]="checkActiveMain('services')">
+                <a data-toggle="collapse" href="#ServiceList">
+                    <i class="fa fa-ticket"></i>
+                    &nbsp;Cheque Services &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="ServiceList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('create-instruction')" [routerLink]="['/services/create-instruction']"
+                        *ngIf="allowedRoutes[7]?.Allowed && allowedRoutes[7]?.GetSubModules[0]?.Allowed">
+                        <a>Create Request</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('approve-request')" [routerLink]="['/services/approve-request']"
+                        *ngIf="allowedRoutes[7]?.Allowed && allowedRoutes[7]?.GetSubModules[1]?.Allowed">
+                        <a>Approve Request</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('view-report')" [routerLink]="['/services/view-report']"
+                        *ngIf="allowedRoutes[7]?.Allowed && allowedRoutes[7]?.GetSubModules[2]?.Allowed">
+                        <a>View Report</a>
+                    </li>
+                </ul>
+            </div>
+           
+
+            <li [ngClass]="checkActiveMain('reports')">
+                <a data-toggle="collapse" href="#ReportList">
+                    <i class="fa fa-file-text"></i>
+                    &nbsp;Reports &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="ReportList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('account-reports')" [routerLink]="['/reports/account-reports']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[0]?.Allowed">
+                        <a>Account reports</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('neft-reports')" [routerLink]="['/reports/neft-reports']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[1]?.Allowed">
+                        <a>NEFT reports</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('rtgs-reports')" [routerLink]="['/reports/rtgs-reports']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[2]?.Allowed">
+                        <a>RTGS reports</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('upload-reports')" [routerLink]="['/reports/upload-reports']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[3]?.Allowed">
+                        <a>Upload reports</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('reversal-reports')" [routerLink]="['/reports/reversal-reports']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[4]?.Allowed">
+                        <a>Reversal reports</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('all-transactions')" [routerLink]="['/reports/all-transactions']"
+                        *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[4]?.Allowed">
+                        <a>Transaction reports</a>
+                    </li>
+                </ul>
+            </div>
+        </ul>
+        <hr class="hr-menu" />
+        <ul class="nav-items p-0">
+            <li [ngClass]="checkActiveMain('settings')">
+                <a data-toggle="collapse" href="#SettingsList">
+                    <i class="fa fa-cog"></i>
+                    &nbsp;&nbsp;Settings <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="SettingsList">
+                <ul class="nav-items__submenu">
+                    <li [ngClass]="CheckActiveSub('change-password')" [routerLink]="['/settings/change-password']">
+                        <a>Password Reset</a>
+                    </li>
+                    <li [ngClass]="CheckActiveSub('accounts-settings')" [routerLink]="['/settings/accounts-settings']">
+                        <a>Accounts Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </ul>
+    </div>
+</div>
+
+<div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let item of notifications">{{item?.message}} <br />
+            <small>{{item?.subsidiaryName}}</small></li>
+    </ul>
+</div>

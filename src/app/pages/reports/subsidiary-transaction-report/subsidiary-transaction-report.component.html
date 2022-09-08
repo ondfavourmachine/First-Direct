@@ -1,0 +1,402 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar> 
+<main class="main-content">
+    <div class="main-content-padding">
+        <div class="mb-3">
+            <h5 class="font-18px text-grey">Report</h5>
+        </div>
+        <div class="accounts-overview-div p-4">
+            <div class="mb-4">
+                <h3 class="div-title font-blue font-16px">Bill Payment Reports</h3>
+            </div>
+            <div class="account-summary-div mt-5">
+                <div class="row">
+                    <form autocomplete="off" [formGroup]="FilterForm" (ngSubmit)="GetTransHistory()">
+                        <div class="d-flex flex-wrap">
+                            <div class="form-group">
+                                <input type="date" class="date-select-field" formControlName="startDate" formControlName="startDate">
+                            </div>
+                            <div class="px-2 align-self-center form-group">
+                                <span class="text-muted">to</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" class="date-select-field" formControlName="endDate" formControlName="endDate">
+                            </div>
+                            <!-- <div class="col-lg-3">
+                                <div class="position-relative">
+                                    <input type="text" class="table-search-field"
+                                        placeholder="Search by keyword" formControlName="keyword">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid"
+                                            alt="Search">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-lg-3">
+                                <div class="position-relative">
+                                    <input type="text" class="table-search-field"
+                                        placeholder="Search by account no" formControlName="accountNo">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid"
+                                            alt="Search">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                    <input type="text" class="table-search-field"
+                                        placeholder="Search by payment reference" formControlName="paymentReference">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid"
+                                            alt="Search">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                    <input type="text" class="table-search-field"
+                                        placeholder="Search by Amount" formControlName="amount">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid"
+                                            alt="Search">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                    <input type="text" class="table-search-field"
+                                        placeholder="Search by source account" formControlName="sourceAccount">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid"
+                                            alt="Search">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                        <select class="input-field form-select-custom" required
+                                            formControlName="paymentChannel">
+                                            <option selected [value]="null" disabled>Select Channel...</option>
+                                            <option *ngFor="let item of channelsArray" [value]="item.Key">
+                                                {{item.Value}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid"
+                                                style="z-index:30;" alt="">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                        <select class="input-field form-select-custom" required
+                                            formControlName="paymentStatus">
+                                            <option selected [value]="null" disabled>Select Status...</option>
+                                            <option *ngFor="let item of statusArray" [value]="item.Key">
+                                                {{item.Value}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid"
+                                                style="z-index:30;" alt="">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="position-relative">
+                                        <select class="input-field form-select-custom" required
+                                            formControlName="billerId" (change)="GetSchemeByBillers($event.target.value)">
+                                            <option selected [value]="null" disabled>Select Billers...</option>
+                                            <option *ngFor="let item of billersArray" [value]="item.Key">
+                                                {{item.Value}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid"
+                                                style="z-index:30;" alt="">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" *ngIf="FilterForm.value.billerId != null">
+                                <div class="position-relative">
+                                        <select class="input-field form-select-custom" required
+                                            formControlName="schemeId">
+                                            <option selected [value]="null" disabled>Select Schemes...</option>
+                                            <option *ngFor="let item of billersSchemeArray" [value]="item.Id">
+                                                {{item.ProductName }}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid"
+                                                style="z-index:30;" alt="">
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-3">
+                                <div class="position-relative">
+                                        <select class="input-field form-select-custom" required
+                                            formControlName="paymentChannel">
+                                            <option selected value='' disabled>Select...</option>
+                                            <option *ngFor="let item of paymentMethods" [ngValue]="item.key">
+                                                {{item.key}}-{{item.value}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid"
+                                                style="z-index:30;" alt="">
+                                        </div>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-4 mt-2">
+                                <div class="ml-1 form-group">
+                                    <button class="btn-sm btn btn-primary" type="submit">GO</button>
+                                </div>
+                                <div class="ml-1 form-group">
+                                    <a class="pointer" type="button" (click)="reset()">Reset</a>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <input type="text" class="table-search-field"  formControlName="productName" placeholder="Product Name">
+                                    <div class="position-absolute search-icon-position">
+                                        <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="position-relative">
+                                <input type="text" class="table-search-field" placeholder="Search by product name" [ngModel]="searchString" (ngModelChange)="setSearchText($event)"
+                                    id="searchScheme">
+                                <div class="position-absolute search-icon-position">
+                                    <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                </div>
+                            </div> -->
+
+                            
+                            
+                           
+                        </div>  
+                    </form>
+                    <div class="col-lg-3">
+                        <a (click)="export()" class="font-12px f-weight500 pointer mr-2">Download CSV<span><img src="./assets/images/excel-icon.svg" class="img-fluid" alt=""></span></a>
+                        <a (click)="convert()" class="font-12px f-weight500 pointer">Download PDF<span><img src="./assets/images/pdf-icon.svg" class="img-fluid" alt=""></span></a>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="table-responsive table-div">
+                            <table class="table table-borderless table-transaction-history">
+                                <thead>
+                                    <tr>
+                                        <td>S/N</td>
+                                        <!-- <td>SOURCE ACCOUNT</td> -->
+                                        <!-- <td>ACCOUNT NUMBER</td> -->
+                                        <td>MERCHANT</td>
+                                        <td>PRODUCT NAME</td>
+                                        <td>REFERENCE</td>
+                                        <td>SOURCE ACCOUNT</td>
+                                        <td>STATE</td>
+                                        <td>CHANNEL</td>
+                                        <td>PAYMENT STATUS</td>
+                                        <!-- <td>CURRENCY</td> -->
+                                        <td>FEE</td>
+                                        <td>AMOUNT</td>
+                                        <!-- <td>MSC</td> -->
+                                        <!-- <td>TOTAL</td> -->
+                                        <td>REMARK</td>
+                                        <!-- <td>SUCCESS STATUS</td> -->
+                                        <td>CREATED ON</td>
+                                        <!-- <td>SETTLEMENT DATE</td> -->
+                                        <td>ACTED ON</td>
+                                        <td>ACTION</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of (history | paginate: { itemsPerPage: 20, currentPage: p }) | filter:term; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <!-- <td>{{item?.sourceAccount}}</td> -->
+                                        <!-- <td>{{item?.accountNumber}}</td> -->
+                                        <td>{{item?.ProductOwner}}</td>
+                                        <td>{{item?.ProductName}}</td>
+                                        <td><a class="btn btn-sm btn-link" (click)="viewDetails(item.Id)">{{item?.PaymentReference}}</a></td>
+                                        <td>{{item?.SourceAccount}}</td>
+                                        <td>{{item?.State}}<a *ngIf="item.State == 'REJECTED'" class="pointer d-block" (click)="viewRejectReason(item)">View Reason</a></td>
+                                        <td>{{item?.ChannelDescription}}</td>
+                                        <td>{{item?.PaymentStatus}}</td>
+                                        <td>{{item?.Currency}} {{ item?.Charge |  number : '1.2-2' }}</td>
+                                        <td>{{item?.Currency}} {{item?.Amount | number : '1.2-2'}}</td>
+                                        <!-- <td>{{item?.Currency}} {{item?.Msc | number : '1.2-2'}}</td> -->
+                                        <td>{{item?.Message}}</td>
+                                        <td>{{item?.CreatedOn | date:'dd:MMM:yyyy hh:mm:ss' }}</td>
+                                        <!-- <td>{{item?.SettlementDate | date:'dd:MMM:yyyy' }}</td> -->
+                                        <td>{{item?.AuthorisedOn | date:'dd:MMM:yyyy hh:mm:ss' }}</td>
+                                        <td>
+                                            <a  *ngIf="item.State == 'APPROVED' && item.SuccessStatus == 'Y'" (click)="GetReport(item?.Id)" class="font-12px f-weight500 pointer">Print Receipt<span><img src="./assets/images/pdf-icon.svg" class="img-fluid" alt=""></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ng-container *ngIf="history?.length">
+                                <div class="float-right">
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </div>
+                            </ng-container>  
+                            <div >
+                                <div style="background-color: #fff; height: auto;padding: 5%;" *ngIf="!history?.length">
+                                    <div class="d-flex align-items-center flex-column">
+                                        <div class="p-2">
+                                            <img src="assets/images/utils/empty-trans.svg" />
+                                        </div>
+                                        <div class="p-2 text-center mt-4">
+                                              <h6>No Transaction History</h6>
+                                              <p>You haven’t performed any transaction yet.<br /> Completed transactions will show up here.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+        <div class="modal fade" id="rejectReason" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" modal-backdrop>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-9 col-md-10">
+                            <h4 class="font-blue text-center">Remark</h4>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{rejectReason}}</td>
+                                                </tr>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" modal-backdrop>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-9 col-md-10">
+                            <h4 class="font-blue text-center">RRR Number</h4>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{Reciept?.Fields[0]?.FieldValue}}</td>
+                                                </tr>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+</div>
+
+<div class="modal fade"  id="showRRRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" modal-backdrop>
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <div class="row justify-content-center">
+                <div class="col-xl-9 col-md-10">
+                    <h4 class="font-blue text-center">Transaction Details</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive mt-4">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-blue f-weight500"><small>Account</small></td>
+                                            <td><small>{{Reciept?.Account }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-blue f-weight500"><small>Amount</small></td>
+                                            <td><small>{{ Reciept?.Amount }}</small></td>
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td class="font-blue f-weight500"><small>Convenience Fee</small></td>
+                                            <td><small>{{Reciept?.CustomerCharge }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-blue f-weight500"><small>Total Amount</small></td>
+                                            <td><small>{{ Reciept?.AmountPaid }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-blue f-weight500"><small>Initiated On</small></td>
+                                            <td><small>{{Reciept?.PaymentDate }}</small></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            
+                                        <!-- <tr>
+                                            <td colspan="6"><span>Summary details</span></td>
+                                            <td></td>
+
+                                        </tr> -->
+                                
+                                        <div class="mt-5">
+                                            <small>Product summary</small>
+                                            <hr>
+                                        </div>
+                                        
+                                        <div class="row mt-3 mb-5">
+                                            <div class="col-4 mb-2" *ngFor="let item of Reciept?.Fields; let i=index;">
+                                                <small class="font-blue f-weight500">{{item?.FieldDescription}}</small><br>
+                                                <small>{{item?.FieldValue}}</small>
+                                            </div>
+                                        </div>
+                                
+                            
+                                    
+                                 
+                               
+                            </div>
+                           
+                            <div class="row mt-4 justify-content-center">
+                                <div class="col-lg-6">
+                                    <button class="btn btn-add-beneficiary" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,216 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mt-3 accounts-overview-div py-4">
+                    <div class="bg-light-blue mt-5">
+                        <div class="px-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="font-blue font-16px">Approve Foreign Payments</h5>
+                                    <div class="account-summary-div mt-4">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-xl-8 col-md-12 col-12 mb-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-3">
+                                                        <h3 class="div-title font-blue font-14px mb-0">Accounts</h3>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive table-div">
+                                                    <table class="table table-borderless table-transaction-history">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>ACCOUNT NUMBER</td>
+                                                                <td>ACCOUNT NAME</td>
+                                                                <td>CURRENCY</td>
+                                                                <td>BALANCE</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of foreignAccounts">
+                                                                <td>{{item?.AccountNumber}}</td>
+                                                                <td>{{item?.AccountName}}</td>
+                                                                <td>{{item?.Currency}}</td>
+                                                                <td>{{item?.AvailableBalance | number:'.2'}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div style="background-color: #fff; height: auto;padding: 1%;" *ngIf="!foreignAccounts?.length">
+                                                    <div class="d-flex align-items-center flex-column">
+                                                        <div class="p-2">
+                                                            <img src="assets/images/utils/empty-trans.svg" />
+                                                        </div>
+                                                        <div class="p-2 text-center mt-4">
+                                                              <h6>Reporting Accounts Not Available</h6>
+                                                              <p>You don't have accounts waiting to be debitted currently.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>                          
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="account-summary-div mt-70">
+                                        <div class="row justify-content-between align-items-center mt-3">
+                                            <div class="col-xl-6 col-md-8 mb-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-xl-4 col-md-6">
+                                                        <h3 class="div-title font-blue font-14px mb-0">Batch Summary</h3>
+                                                    </div>
+                                                    <div class="col-xl-7 col-md-6">
+                                                        <div class="position-relative">
+                                                            <input type="text" class="table-search-field"  [(ngModel)]="term" placeholder="Input search term">
+                                                            <div class="position-absolute search-icon-position">
+                                                                <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                        
+                                            <!-- <div class="col-xl-4 mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <button class="btn btn-submit" (click)="ShowData('Approve')">Approve {{ToApprove.length}}</button>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <button class="btn btn-submit" (click)="ShowData('Reject')">Reject {{ToApprove.length}}</button>
+                                                    </div>
+                                                </div>
+                                            </div>                                             -->
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- <form [formGroup]="FilterForm" (ngSubmit)="FilterReports(FilterForm.value)">
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="">
+                                                        <input
+                                                            placeholder="Start date"
+                                                            formControlName="startDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                            class="form-control input-field"
+                                                            #dp="bsDatepicker"
+                                                            bsDatepicker>
+                                                    </div>
+                                                    <div class="px-2 align-self-center">
+                                                        <span class="text-muted">to</span>
+                                                    </div>
+                                                    <div class="">
+                                                        <input
+                                                            placeholder="End date"
+                                                            formControlName="endDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                            class="form-control input-field"
+                                                            #dp="bsDatepicker"
+                                                            bsDatepicker>
+                                                    </div>
+                                                    <div class="ml-1">
+                                                        <button class="btn-sm btn btn-primary btn-go" [disabled]="FilterForm.invalid">Go</button>
+                                                    </div>
+                                                </div>  
+                                            </form>   -->
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive table-div">
+                                                    <table class="table table-borderless table-transaction-history">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>DATE</td>
+                                                                <td>BATCH ID</td>
+                                                                <td>BENEFICIARY  BANK</td>
+                                                                <td>BENEFICIARY ACCOUNT</td>
+                                                                <td>BENEFICIARY</td>
+                                                                <td>CURRENCY</td>
+                                                                <td>AMOUNT</td>
+                                                                <td>BENEFICIARY ADDRESS</td>
+                                                                <td>PURPOSE OF PAYMENT</td>
+                                                                <td>SORT CODE</td>
+                                                                <td>SWIFT CODE</td>
+                                                                <td>ACTIONS</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let list of (foreignPayments | filter:term) | paginate: { itemsPerPage: 20, currentPage: p }; let i = index">
+                                                                <td>{{list?.DateAdded | date}}</td> 
+                                                                <td>{{ list?.AccountId}}</td>
+                                                                <td>{{list?.ReceivingBank}}</td>   
+                                                                <td>{{list?.AccountNumber}}</td>
+                                                                <td>{{list?.Beneficiary}}</td>
+                                                                <td>{{list?.Currency}}</td>
+                                                                <td>{{list?.Amount |number:'.2'}}</td>
+                                                                <td>{{list?.BeneficiaryAddress}}</td>
+                                                                <td>{{list?.Purpose}}</td>
+                                                                <!--  ask joel"currencyId": 0, -->
+                                                                <td>{{list?.SortCode}}</td>
+                                                                <td>{{list?.SwiftCode}}</td>
+                                                                <td>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            <img src="./assets/images/bulk-menu-icon.svg" class="img-fluid" alt="">
+                                                                        </a>
+                                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">   
+                                                                            <a class="dropdown-item font-12px font-blueGrey" href="javascript:void(0);"
+                                                                                (click)="ShowData(list,'approve')">Approve</a>                                           
+                                                                            <a class="dropdown-item font-12px font-blueGrey" href="javascript:void(0);" 
+                                                                                (click)="ShowData(list,'reject')">Reject</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <!-- "paymentStatusId": 0,
+                                                                "approvalStatusId": 0, -->
+                                                            </tr>                                    
+                                                        </tbody>
+                                                    </table>
+                                                    <ng-container *ngIf="foreignPayments?.length">
+                                                        <div class="float-right">
+                                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                                <div style="background-color: #fff; height: auto;padding: 5%;" *ngIf="!foreignPayments?.length">
+                                                    <div class="d-flex align-items-center flex-column">
+                                                        <div class="p-2">
+                                                            <img src="assets/images/utils/empty-trans.svg" />
+                                                        </div>
+                                                        <div class="p-2 text-center mt-4">
+                                                            <h6>Foreign Payments Not Available</h6>
+                                                            <p>You don't have pending foreign payments yet.<br /> items will show up here.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+        
+
+<div class="modal fade" id="foreignModal" tabindex="-1" role="dialog" aria-labelledby="instructionModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">                            
+            <app-foreign-modal [Details]='Details'></app-foreign-modal>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

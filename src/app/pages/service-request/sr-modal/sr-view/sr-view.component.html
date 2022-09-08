@@ -1,0 +1,155 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <ng-container *ngIf="mode === 'request'">
+            <h5 class="text-center">Review Request Details</h5>
+            <div class="row mt-4 justify-content-center">
+               <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Leaves</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.noLeaves}}</p>
+                    </div>
+               </div>
+               <!-- <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Booklet Number</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.noOfBooklet}}</p>
+                    </div>
+                </div> -->
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Type</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeTypeName}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Pickup Branch</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{extra?.branch[0]?.branchName}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-neutral w-250" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-strong w-250" (click)="ConfirmRequest()">Initiate</button>
+                    </div>
+               </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="mode === 'stop'">
+            <h5 class="text-center">Review Cheque Stop Details</h5>
+            <div class="row mt-4 justify-content-center">
+               <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Number</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeNumber}}</p>
+                    </div>
+               </div>
+               <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Form</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeForm}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Stop Reason</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{extra?.reason[0]?.refDesc}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Leaflet Number </h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.leafletNo}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-neutral w-250" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-strong w-250" (click)="StopRequest()">Initiate</button>
+                    </div>
+               </div>
+            </div>
+        </ng-container>  
+        <ng-container *ngIf="mode === 'confirm'">
+            <h5 class="text-center">Review Cheque Confirmation Details</h5>
+            <div class="row mt-4 justify-content-center">
+               <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Number</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeNumber}}</p>
+                    </div>
+               </div>
+               <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Security Number</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeSecurityNumber}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Bene Amount</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeAmount | number : '.2'}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Beneficiary Name</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.payeeName}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>ID Type</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{extra?.idType[0]?.value}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2">
+                        <h6>Cheque Date</h6>
+                    </div>
+                    <div class="p-2">
+                        <p>{{Info?.chequeDate}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-neutral w-250" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="p-2 mb-3">
+                        <button class="btn btn-strong w-250" (click)="ConfirmCheque()">Initiate</button>
+                    </div>
+               </div>
+            </div>
+        </ng-container>  
+    </div>
+</div>

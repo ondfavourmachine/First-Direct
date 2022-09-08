@@ -1,0 +1,220 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <ng-container *ngIf="Details?.message === 'Review Initiation'" >
+            <h5 class="font-blue text-center">
+                Transaction Details</h5>
+            <p class="font-14px text-center f-weight500">Kindly review your details</p>
+            <div class="row mt-4 justify-content-center">
+                <table class="table table-borderless text-end">
+                    <tbody>
+                        <tr>
+                            <td>Beneficiary Account</td>
+                            <td>{{PaymentData?.accountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Name</td>
+                            <td>{{PaymentData?.beneficiary}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Bank</td>
+                            <td>{{PaymentData?.receivingBank}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Address</td>
+                            <td>{{PaymentData?.beneficiaryAddress}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sort Code</td>
+                            <td>{{PaymentData?.sortCode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Swift Code</td>
+                            <td>{{PaymentData?.swiftCode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{PaymentData?.currency}} {{PaymentData?.amount |number:'.2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Purpose Description</td>
+                            <td>{{PaymentData?.purposeDescription}}</td>
+                        </tr>
+                        <tr>
+                            <td>Charge Bearer</td>
+                            <td>{{ returnBearer(PaymentData?.chargeBeneficiary)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Charge</td>
+                            <td>{{PaymentData?.currency}} {{ charges }}</td>
+                        </tr>
+                        <!-- <tr *ngIf="PaymentData?.docUrl || PaymentData?.docUrl == ''">
+                            <td>Document Link</td>
+                            <td> <a class="link" (click)="viewDocument(PaymentData?.id)">View Document</a></td>
+                        </tr> -->
+                        <ng-container *ngIf="PaymentData?.hasIntermediary">
+                            <tr>
+                                <td>Intermediary Bank Name</td>
+                                <td>{{PaymentData?.intermediaryBankName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Bank Address</td>
+                                <td>{{PaymentData?.intermediaryBankAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Sort code</td>
+                                <td>{{PaymentData?.intermediarySortCode}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Swift Code</td>
+                                <td>{{PaymentData?.intermediarySwiftCode}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Account Number</td>
+                                <td>{{PaymentData?.intermediaryAccountNumber}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="Details?.mode === 'initiate'"> 
+                            <td>
+                                <button class="btn btn-neutral w-50" data-dismiss="modal">Cancel</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-submit w-100" (click)="InitiatePayment()">Initiate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div></div>
+                <ng-container *ngIf="Details?.mode === 'decision'">
+                    <!-- <div class="text-center">
+                        <h5 class="font-blue">Token</h5>
+                    </div>                     -->
+                    <div class="row mt-4 justify-content-center">
+                        <form [formGroup]="approveForm" (ngSubmit)="ApproveForeign(approveForm.value)">
+                            <div class="form-group">
+                                <label for="token">Token</label>
+                                <input type="text" class="form-control" formControlName="token" />
+                            </div>
+                            <div class="form-group" *ngIf="Details?.action === 'reject'">
+                                <label for="token">Reject Reason</label>
+                                <textarea class="form-control" formControlName="rejectReason"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-submit" [disabled]="approveForm.invalid">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.message === 'Review Decision'" >
+            <h5 class="font-blue text-center">
+                Transaction Details</h5>
+            <p class="font-14px text-center f-weight500">Kindly review your details</p>
+            <div class="row mt-4 justify-content-center">
+                <table class="table table-borderless text-end">
+                    <tbody>
+                        <tr>
+                            <td>Beneficiary Account</td>
+                            <td>{{PaymentData?.AccountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Name</td>
+                            <td>{{PaymentData?.Beneficiary}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Bank</td>
+                            <td>{{PaymentData?.ReceivingBank}}</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Address</td>
+                            <td>{{PaymentData?.BeneficiaryAddress}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sort Code</td>
+                            <td>{{PaymentData?.SortCode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Swift Code</td>
+                            <td>{{PaymentData?.SwiftCode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{PaymentData?.Currency}} {{PaymentData?.Amount |number:'.2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Puprose Description</td>
+                            <td>{{PaymentData?.PurposeDescription}}</td>
+                        </tr>
+                        <tr>
+                            <td>Charge</td>
+                            <td>{{PaymentData?.currency}} {{ PaymentData?.Charges }}</td>
+                        </tr>
+                        <tr>
+                            <td>Charge Bearer</td>
+                            <td>{{ returnBearer(PaymentData?.ChargeBeneficiary)}}</td>
+                        </tr>
+                        <tr *ngIf="PaymentData?.DocUrl || PaymentData?.DocUrl !== ''">
+                            <td>Document Link</td>
+                            <td> <a class="link pointer" (click)="viewDocument(PaymentData?.ID)">View Document</a></td>
+                        </tr>
+                        <ng-container *ngIf="PaymentData?.HasIntermediary">
+                            <tr>
+                                <td>Intermediary Bank Name</td>
+                                <td>{{PaymentData?.IntermediaryBankName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Bank Address</td>
+                                <td>{{PaymentData?.IntermediaryBankAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Sort code</td>
+                                <td>{{PaymentData?.IntermediarySortCode}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Swift Code</td>
+                                <td>{{PaymentData?.IntermediarySwiftCode}}</td>
+                            </tr>
+                            <tr>
+                                <td>Intermediary Account Number</td>
+                                <td>{{PaymentData?.IntermediaryAccountNumber}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr> 
+                            <td>
+                                <button class="btn btn-neutral w-50" data-dismiss="modal">Cancel</button>
+                            </td>
+                            <td *ngIf="Details?.mode === 'initiate'">
+                                <button class="btn btn-submit w-100" (click)="InitiatePayment()">Initiate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div></div>
+                <ng-container *ngIf="Details?.mode === 'decision'">
+                    <div class="d-flex flex-column">
+                            <div class="text-center">
+                                <h6 class="font-blue">Token serial number</h6>
+                                <small>{{Details?.token}}</small>
+                            </div>                    
+                            <div class="row mt-2 justify-content-center">
+                                <form [formGroup]="approveForm" (ngSubmit)="ApproveForeign(approveForm.value)">
+                                    <div class="form-group">
+                                        <label for="token">Token</label>
+                                        <input type="text" class="form-control" formControlName="token" />
+                                    </div>
+                                    <div class="form-group" *ngIf="Details?.action === 'reject'">
+                                        <label for="token">Reject Reason</label>
+                                        <textarea class="form-control" formControlName="rejectReason"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-submit" [disabled]="approveForm.invalid">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                    
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>

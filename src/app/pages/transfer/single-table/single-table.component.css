@@ -1,0 +1,27 @@
+.bg-white{
+    background-color: #fff !important;
+    border: 1px solid #022E64;
+}
+
+.btn-submit{
+    width: 50%;
+}
+
+.bg-blue{
+    background-color: #022E64;
+}
+.text-white{
+    color: #fff;
+}
+.text-blue{
+    color: #022E64;
+}
+.btn-250{
+    width: 200px !important;
+}
+.btn-150{
+    width: 150px !important;
+}
+.pry-color{
+    color: #022E64 !important;
+}

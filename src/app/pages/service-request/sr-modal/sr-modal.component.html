@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <ng-container *ngIf="Decision?.action === 'Approve'" >
+            <h5 class="font-blue text-center">Token</h5>
+            <p class="font-14px text-center f-weight500">Enter token to approve this request</p>
+            <div class="row mt-4 justify-content-center">
+                <form [formGroup]="approveForm" (ngSubmit)="ApproveRequest(approveForm.value)">
+                    <div class="form-group">
+                        <label for="token">Token</label>
+                        <input type="text" class="form-control" formControlName="token" />
+                    </div>
+                    <div class="my-3 d-flex">
+                        <div class="p-2">
+                            <button class="btn btn-neutral w-120" (click)="clearForm()" data-dismiss="modal" type="button">Cancel</button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-strong w-120" [disabled]="approveForm.invalid">Submit</button>
+                        </div>                       
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Decision?.action === 'Reject'" >
+            <h5 class="font-blue text-center">Token</h5>
+            <p class="font-14px text-center f-weight500">Enter token to reject this instruction</p>
+            <div class="row mt-4 justify-content-center">
+                <form [formGroup]="approveForm" (ngSubmit)="ApproveRequest(approveForm.value)">
+                    <div class="form-group">
+                        <label for="token">Token</label>
+                        <input type="text" class="form-control" formControlName="token" />
+                    </div>
+                    <div class="form-group">
+                        <label for="token">Reject Reason</label>
+                        <textarea class="form-control" formControlName="rejectReason"></textarea>
+                    </div>
+                    <div class="my-3 d-flex">
+                        <div class="p-2">
+                            <button class="btn btn-neutral w-120" (click)="clearForm()" data-dismiss="modal" type="button">Cancel</button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-strong w-120" [disabled]="approveForm.invalid">Submit</button>
+                        </div>                       
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+    </div>
+</div>

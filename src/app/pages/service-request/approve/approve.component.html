@@ -1,0 +1,64 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Approvals</h5>
+                </div>
+                <div class="accounts-overview-div mt-3 p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Pending Approvals</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item font-12px">
+                                      <a 
+                                      class="nav-link active" id="pills-request-tab" 
+                                      data-toggle="pill" href="#pills-request" role="tab" 
+                                      aria-controls="pills-request" 
+                                      aria-selected="true">Approve Request  <span class="badge bg-white text-primary ml-2">{{Details?.ChequeRequests?.length}}</span> </a>
+                                    </li>
+                                   <li class="nav-item font-12px">
+                                      <a
+                                      class="nav-link" id="pills-stop-tab" data-toggle="pill" href="#pills-stop" 
+                                      role="tab" aria-controls="pills-stop" aria-selected="true">Pending Stop Requests
+                                      <span class="badge bg-white text-primary ml-2">{{Details?.ChequeStops?.length}}</span>
+                                    </a>
+                                    </li>
+                                    <li class="nav-item font-12px">
+                                        <a
+                                        class="nav-link" id="pills-confirm-tab" data-toggle="pill" href="#pills-confirm" 
+                                        role="tab" aria-controls="pills-confirm" aria-selected="true">Pending Confirmation Requests
+                                        <span class="badge bg-white text-primary ml-2">{{Details?.ChequeConfirms?.length}}</span>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-request" role="tabpanel" aria-labelledby="pills-request-tab">
+                                <app-pending-requests [Details]="Details"></app-pending-requests>
+                            </div>
+                            <div class="tab-pane fade" id="pills-stop" role="tabpanel" aria-labelledby="pills-stop-tab">
+                                <app-pending-stops [Details]="Details"></app-pending-stops>
+                            </div>
+                            <div class="tab-pane fade" id="pills-confirm" role="tabpanel" aria-labelledby="pills-confirm-tab">
+                                <app-pending-confirmations [Details]="Details"></app-pending-confirmations>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

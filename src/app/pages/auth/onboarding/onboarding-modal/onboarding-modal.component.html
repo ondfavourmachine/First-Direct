@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <ng-container *ngIf="Details?.action === 'Confirm OTP'" >
+            <h5 class="font-blue text-center">Token</h5>
+            <p class="font-14px text-center f-weight500">{{Details?.message}}</p>
+            <div class="d-flex mt-4 justify-content-center">
+                <div class="p-2">
+                    <button class="btn btn-strong" (click)="SendEmail()">Yes, it is</button>
+                </div>
+                <div class="p-2">
+                    <button class="btn btn-neutral" data-dismiss="modal">No, it isn't</button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.action === 'Download Form'">
+                <h5 class="font-blue text-center">Registration completed</h5>
+                <p class="font-14px text-center font-grey">Your account has been successfully created, welcome to FirstDirect 2.0</p>
+                <ul class="mt-4">
+                    <li class="font-14px font-grey">Download the onboarding form and present the signed form to your Relationship Manager to complete the registration. </li>
+                    <li class="font-14px font-grey mt-4">Attach a letter stating your organisation’s workflow on how initiated transactions would be approved. It should be on your company’s letter headed paper and should be duly signed.</li>
+                    <li class="font-14px font-grey mt-4">Foreign currency transaction limit request should be submitted to your Relationship Manager.</li>
+                </ul>
+                <div class="row mt-5">
+                    <div class="col-xl-7 col-md-8">
+                        <button class="btn btn-submit" (click)="DownloadForm(Details?.data)">DOWNLOAD ONBOARDING FORM</button>
+                    </div>
+                </div>
+        </ng-container>
+        <ng-container *ngIf="Details?.action === 'Resend Code'">
+            <h5 class="font-blue text-center">Enter Onboarding Code</h5> 
+            <form [formGroup]="CodeForm" (ngSubmit)="FetchCode(CodeForm.value)">
+                <div class="form-row align-items-center mt-4">
+                    <div class="col-xl-4 col-md-4">
+                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Onboarding Code</label>
+                    </div>
+                    <div class="col-xl-8 col-md-8">
+                        <input type="text" formControlName="code" class="form-control input-field">
+                    </div>
+                </div>
+                <div class="form-row justify-content-end">
+                    <div class="col-xl-8 col-md-8">
+                        <span class="font-12px" data-dismiss="modal">Want to start afresh? <a href="javascript:void(0);" class="font-12px f-weight500">Enter here</a></span>
+                    </div>
+                </div>
+                <div class="form-row justify-content-between mt-5">
+                    <div class="col-xl-5 col-md-6 mb-3">
+                        <button type="submit" [disabled]="CodeForm.invalid" class="btn btn-submit">NEXT</button>
+                    </div>
+                </div>
+            </form> 
+        </ng-container>
+        <ng-container *ngIf="Details?.action === 'Resend Onboarding'">
+            <h5 class="font-blue text-center">Enter Account Number</h5> 
+            <form [formGroup]="AccountForm" (ngSubmit)="ResendCode(AccountForm.value)">
+                <div class="form-row align-items-center mt-4">
+                    <div class="col-xl-4 col-md-4">
+                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account Number</label>
+                    </div>
+                    <div class="col-xl-8 col-md-8">
+                        <input type="text" formControlName="accountNumber" class="form-control input-field">
+                    </div>
+                </div>
+                <div class="form-row justify-content-end">
+                </div>
+                <div class="form-row justify-content-between mt-5">
+                    <div class="col-xl-5 col-md-6 mb-3">
+                        <button type="submit" [disabled]="AccountForm.invalid" class="btn btn-submit">NEXT</button>
+                    </div>
+                </div>
+            </form> 
+        </ng-container>
+    </div>
+</div>

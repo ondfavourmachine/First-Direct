@@ -1,0 +1,319 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar> 
+        <main class="main-content">
+        <div class="main-content-padding">
+            <div class="mb-3">
+                <h5 class="font-18px text-grey">Account Management</h5>
+            </div>
+            <div class="accounts-overview-div p-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="div-title font-blue font-16px">Accounts</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3 account-card-wrapper flex-wrap">
+                    <div class="col-lg-3">
+                        <div class="total-accounts h-100">
+                            <div>
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-14px">Company accounts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-16px f-weight500">{{allAccounts?.length}}</td>
+                                        </tr>
+                                        <tr *ngIf="!allAccounts?.length">
+                                            <td class="font-16px f-weight500">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 flex-column" *ngFor="let item of accountGroup">
+                        <div class="naira-account h-100">
+                            <div>
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fs-12px">Total Available balance</td>
+                                            <td class="fs-12px text-right">Total Ledger balance</td>
+                                        </tr>
+                                        <tr> 
+                                            <td class="fs-12px f-weight500 font-blue">{{item?.Currency}}&nbsp;{{item?.TotalAvailableBalance | number: '1.2-2'}}</td>
+                                            <td class="fs-12px f-weight500 font-blue">{{item?.Currency}}&nbsp;{{item?.TotalLedgerBalance | number: '1.2-2'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 transaction-history-div p-4">
+                <div class="row justify-content-between">
+                    <div class="col-lg-4 col-xs-4">
+                        <h3 class="div-title font-blue font-16px">Account list<span class="px-2"> <i class="fa fa-info-circle font-14px" tooltip="List of available accounts with corresponding details"></i> </span></h3>
+                        <!-- <div class="mt-4">
+                            <h6 class="font-14px font-lightBlack">Select an account for more details</h6>
+                            <div>
+                                <button onclick="dropDown(event);" class="menu-btn" type="button">
+                                    Select account <img src="./assets/images/blue-caret-down.svg" class="img-fluid" alt="">
+                                </button>
+                                <div class="d-none shadow rounded menu">
+                                    <span class="d-block menu-option" *ngFor="let item of allAccounts; let i = index">
+                                        <label class="mb-0 font-12px d-flex align-items-center" for="item{{i}}">
+                                            <input type="checkbox" (change)="MarkPayment(i, item)" value="{{ transformString(item)}}" id="item{{i}}"
+                                            [checked]="newArr?.includes(item)">&nbsp;
+                                            {{item?.AccountName}} - {{item?.AccountNumber}}
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-none" id="overlay" onclick="hide(event)"></div>
+                        </div> -->
+                    </div> 
+                </div>
+
+                <div class="row mt-4 account-card-wrapper">
+                    <div class="col-xl-4 col-md-6 mb-4 d-flex flex-column flex-grow-1"  *ngFor="let item of allAccounts; let i = index">
+                        <div class="account-card-mgt h-100" [ngClass]="{'active': selectedNumber === item?.AccountNumber}">
+                            <div class="px-3">
+                                <div class="mt-3 row justify-content-between align-items-center">
+                                    <div class="col-lg-6 col-md-6 d-flex">
+                                        <h6 class="fs-12px mb-0" *ngIf="item?.BankName" >{{item?.BankName}}</h6>
+                                        <small [ngClass]="getClass(item?.Status)">&nbsp; {{item?.Status}}</small>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <p class="mb-0 d-flex justify-content-end">
+                                            <input type="radio" id="test{{i}}" name="radio-group" checked="{{item?.PrimaryAccount ? 'checked': ''}}">
+                                            <label for="test{{i}}" class="mb-0 fs-12px" (click)="SetDefault(item)">Set as default</label>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="yellow-underline mb-3" />
+                            <div class="px-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!--<p class="font-blueGrey font-12px mb-0">Account</p>-->
+                                        <h5 class="fs-14px f-weight500 mb-0" [tooltip]="item?.AccountName">{{cutString(item?.AccountName)}}</h5>
+                                        <p class="fs-12px">{{item?.AccountNumber}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <p class="font-12px mb-0">Currency</p>
+                                            <h5 class="fs-14px f-weight500 mb-0">{{item?.Currency}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-3 my-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md-4">
+                                        <ng-container *ngIf="item?.Currency === 'NGN'">
+                                            <div class="text-right">
+                                                <p class="fs-12px mb-0">Available</p>
+                                                <h5 class="fs-12px f-weight500 mb-0 values zoom-in overflow-hidden" [tooltip]="item?.AvailableBalance">{{item?.AvailableBalance | number:'.2'}}</h5>                                            
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item?.Currency !== 'NGN'">
+                                            <div class="text-right">
+                                                <p class="fs-12px mb-0">Telegraphic Balance</p>
+                                                <h5 class="fs-12px f-weight500 mb-0 values zoom-in overflow-hidden" [tooltip]="item?.TelegraphicBalance">{{item?.TelegraphicBalance | number:'.2'}}</h5>                                            
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <a href="javascript:void(0);"  (click)="switchAcc(item)" class="font-12px f-weight500 values text-right">
+                                            View &nbsp;<i class="fa fa-caret-right"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ng-container *ngIf="item?.Currency === 'NGN'">
+                                            <div class="text-right">
+                                                <p class="fs-12px mb-0">Ledger</p>
+                                                <h5 class="fs-12px f-weight500 mb-0 values zoom-in overflow-hidden" [tooltip]="item?.LedgerBalance">{{item?.LedgerBalance | number:'.2'}}</h5>                                            
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item?.Currency !== 'NGN'">
+                                            <div class="text-right">
+                                                <p class="fs-12px mb-0">Telegraphic Cash Balance</p>
+                                                <h5 class="fs-12px f-weight500 mb-0 values zoom-in overflow-hidden" [tooltip]="item?.TelegraphicCashBalance">{{item?.TelegraphicCashBalance | number:'.2'}}</h5>                                            
+                                            </div>
+                                        </ng-container>
+                                
+                                        <!-- <div class="d-flex justify-content-end ">
+                                            <a href="javascript:void(0);"  (click)="switchAcc(item)" class="font-10px f-weight500 text-right text-right">
+                                                View account summary <i class="fa fa-caret-right"></i>
+                                            </a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end w-100 p-3">
+                        <ng-container  *ngIf="pager?.pages && pager?.pages.length">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                <li class="page-item" (click)="setPage(pager.currentPage - 1)" [ngClass]="{disabled: pager.currentPage === 1}">
+                                    <a class="page-link" href="javascript:void(0)">Previous</a>
+                                    </li>
+                                <li class="page-item" *ngFor="let page of pager.pages">
+                                    <a class="page-link" href="javascript:void(0)" (click)="setPage(page)" [ngClass]="{activePage: pager.currentPage === page}">{{page}}</a>
+                                    </li>
+                                <li class="page-item" [ngClass]="{disabled: pager.currentPage === pager.totalPages}">
+                                    <a class="page-link" href="javascript:void(0)" (click)="setPage(pager.currentPage + 1 )">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </ng-container>
+                    </div>
+                    
+                   
+
+                </div>
+                <div class="account-summary-div mt-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="div-title font-blue font-16px mb-0">Account Summary<span class="px-2"><img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="" data-toggle="tooltip" data-placement="top" data-title="Account summary for selected account"></span></h3>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between align-items-center mt-3">
+                        <div class="col-xl-8 col-md-9 col-12 mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <form [formGroup]="FilterForm" (ngSubmit)="filterHistory(FilterForm.value)">
+                                        <div class="d-flex">
+                                            <div class="">
+                                                <input
+                                                placeholder="Start date"
+                                                formControlName="startDate"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                class="form-control input-field"
+                                                #dp="bsDatepicker"
+                                                bsDatepicker>    
+                                            </div>
+                                            <div class="px-1 align-self-center form-group">
+                                                <span class="text-muted">to</span>
+                                            </div>
+                                            <div class="">
+                                                <input
+                                                placeholder="End date"
+                                                formControlName="endDate"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                class="form-control input-field"
+                                                #dp="bsDatepicker"
+                                                bsDatepicker>
+                                            </div>
+                                            <div class="ml-1">
+                                                <button class="btn btn-primary btn-sm" [disabled]="FilterForm.invalid">Go</button>
+                                            </div>
+                                        </div>  
+                                    </form>                                                                     
+                                </div>
+                                <!-- <div class="col-lg-3">
+                                    <div class="">
+                                        <input type="date" class="date-select-field">
+                                    </div>
+                                </div> -->
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <input type="text" class="table-search-field"  [(ngModel)]="term" placeholder="Input search term">
+                                        <div class="position-absolute search-icon-position">
+                                            <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-3">
+                                    <span class="pointer" (click)="downloadStatement()" class="font-12px f-weight500">Download statement<span><img src="./assets/images/pdf-icon.svg" class="img-fluid" alt=""></span></span>
+                                </div> -->
+                            </div> 
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-3 d-flex justify-content-between">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn active" (click)="sortHistory('all')">
+                                  <input type="radio" name="options" id="option1" checked> <small>All</small> 
+                                </label>
+                                <label class="btn" (click)="sortHistory('D')">
+                                  <input type="radio" name="options" id="option2"> <small>Debit</small> 
+                                </label>
+                                <label class="btn" (click)="sortHistory('C')">
+                                  <input type="radio" name="options" id="option3"> <small>Credit</small> 
+                                </label>
+                            </div>                         
+                            <div class="btn-group" role="group">
+                                  <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle text-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Download
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" (click)="downloadStatement()" href="javascript:void(0);">PDF</a>
+                                    <a class="dropdown-item" (click)="downloadXLs()" href="javascript:void(0);">XLS</a>
+                                    <!-- <a class="dropdown-item" (click)="downloadMT940()" href="javascript:void(0);">MT940</a> -->
+                                  </div>
+                            </div>
+                        </div>                            
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-div">
+                                <table class="table table-borderless table-transaction-history">
+                                    <thead>
+                                        <tr>
+                                            <td>S/N</td>
+                                            <td>TRANSACTION DATE</td>
+                                            <td>VALUE DATE</td>
+                                            <td>DESCRIPTION</td>
+                                            <td>AMOUNT</td>                                            
+                                            <td>BALANCE</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="transHistory?.length">
+                                        <tr *ngFor="let item of (transHistory | paginate: { itemsPerPage: 20, currentPage: p } ) | filter:term ; let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item?.TransDate}}</td>
+                                            <td>{{item?.ValueDate}}</td>
+                                            <td>{{item?.Narration}}</td>
+                                            <td>
+                                                <span [ngClass]="gVars?.StyleAmount(item?.DRCR)">
+                                                    <span [innerHtml]="selectedCurrency"></span>{{item?.TransAmountString}}
+                                                </span>
+                                            </td>                                            
+                                            <td><span [innerHtml]="selectedCurrency"></span> {{item?.BalanceString}}</td>
+                                        </tr>                                       
+                                    </tbody>                                     
+                                </table>
+                                <ng-container *ngIf="transHistory?.length">
+                                        <div class="float-right">
+                                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                    </div>
+                                </ng-container>                                   
+                                <div >
+                                    <div class="table-bg" *ngIf="!transHistory?.length">
+                                        <div class="d-flex align-items-center flex-column">
+                                            <div class="p-2">
+                                                <img src="assets/images/utils/empty-trans.svg" />
+                                            </div>
+                                            <div class="p-2 text-center mt-4">
+                                                  <h6>No Transaction History</h6>
+                                                  <p>You haven’t performed any transaction yet.</p>
+                                            </div>
+                                            <!-- <div class="p-2">
+                                                <a class="btn send-money" [routerLink]="['/transfer/single-payments']">Initiate Payment</a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

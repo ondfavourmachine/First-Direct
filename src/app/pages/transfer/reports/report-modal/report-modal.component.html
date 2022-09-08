@@ -1,0 +1,105 @@
+<div class="row">
+    <div>
+        <ng-container *ngIf="Details?.mode === 'approvalHistory'">
+            <tabset>
+                <tab heading="Previous Approvers" id="tab1">
+                    <div class="col-lg-12 mt-3">
+                        <div class=table-responsive>
+                            <table class="table table-borderless table-transaction-history">
+                                <thead>
+                                    <tr>
+                                        <td>FIRST NAME</td>
+                                        <td>LAST NAME</td>
+                                        <td>EMAIL</td>
+                                        <td>PHONE NUMBER</td>
+                                        <td>USERNAME</td>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="previousApprovers?.length">
+                                    <tr class="hover-table" *ngFor="let item of (previousApprovers  | filter:term ) | paginate: { itemsPerPage: 30, currentPage: p }; let i = index">
+                                        <td>{{item?.firstname}}</td>
+                                        <td>{{item?.surname}}</td>
+                                        <td>{{item?.email}}</td>
+                                        <td>{{item?.phonE_NUMBER}}</td>
+                                        <td>{{item?.username}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Next Approvers">
+                    <div class="col-lg-12 mt-3">
+                        <div class=table-responsive>
+                            <table class="table table-borderless table-transaction-history">
+                                <thead>
+                                    <tr>
+                                        <td>FIRST NAME</td>
+                                        <td>LAST NAME</td>
+                                        <td>EMAIL</td>
+                                        <td>PHONE NUMBER</td>
+                                        <td>USERNAME</td>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="nextApprovers?.length">
+                                    <tr class="hover-table" *ngFor="let item of (nextApprovers  | filter:term ) | paginate: { itemsPerPage: 30, currentPage: p }; let i = index">
+                                        <td>{{item?.firstname}}</td>
+                                        <td>{{item?.surname}}</td>
+                                        <td>{{item?.email}}</td>
+                                        <td>{{item?.phonE_NUMBER}}</td>
+                                        <td>{{item?.username}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </ng-container>
+
+        <ng-container *ngIf="Details?.mode === 'cancelTransaction'">
+            <h5 class="font-blue">{{Details?.message}}</h5>
+            <p class="font-12px font-blue mb-0">Amount</p>
+            <h4 class="font-18px font-grey">&#8358;{{Details?.Data?.Amount | number: '.2'}}</h4>
+            <div class="mt-4">
+                <!-- <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="font-12px font-blue">Beneficiary name</th>
+                            <th class="font-12px font-blue">Beneficiary account</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let account of ToApprove">
+                            <td class="font-12px">{{account?.BeneficiaryName}}</td>
+                            <td class="font-12px">{{account?.AccountNumber}}</td>
+                        </tr>
+                    </tbody>
+                </table> -->
+            </div>
+            <form [formGroup]="TokenForm" (ngSubmit)="CancelPayment(TokenForm.value)">
+                <div class="form-row justify-content-center">
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="d-flex flex-column align-items-center">
+                            <h5 class="font-blue font-12px">Enter token</h5>
+                            <div class="form-group">
+                                <input type="password" formControlName="token" class="input-field">
+                            </div>
+                        </div>
+                        <!-- <small>Token sn: {{this.tokenSerial}} </small> -->
+                    </div>
+                </div>
+                <div class="form-row justify-content-center mt-4">
+                    <div class="col-xl-5 col-md-5 mb-4">
+                        <span class="btn btn-add-beneficiary pointer" (click)="ClearForm()" data-dismiss="modal">CANCEL</span>
+                    </div>
+                    <div class="col-xl-5 col-md-5 mb-4">
+                        <button type="submit"[disabled]="TokenForm.invalid" class="btn btn-submit">APPROVE TRANSACTION</button>
+                    </div>
+                </div>
+            </form>
+
+        </ng-container>
+        
+    </div>    
+</div>

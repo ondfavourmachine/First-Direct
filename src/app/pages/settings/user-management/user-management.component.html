@@ -1,0 +1,175 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+        <div class="page-container">
+            <main class="main-content">
+                <div class="main-content-padding">
+                    <div class="mb-3">
+                        <h5 class="font-18px text-grey">Main settings</h5>
+                    </div>
+                    <div class="accounts-overview-div p-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h3 class="div-title font-blue font-16px">User Management</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="mt-4">
+                            <form [formGroup]="UserForm" (ngSubmit)="AddUser(UserForm.value)">
+                                <div class="mb-4">
+                                    <h3 class="div-title font-blue font-14px">Add a user</h3>
+                                    <p class="font-10px font-dark f-weight500">Fill the form below to add a user to your organization</p>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">First name</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="text" formControlName="firstname" class="form-control input-field">
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Last name</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="text"  formControlName="surname" class="form-control input-field">
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Phone no</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="number"  formControlName="phone" class="form-control input-field">
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Role</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect"formControlName="roleId">
+                                            <option selected>Select role</option>
+                                            <option value="{{item?.id}}" *ngFor="let item of UserRoles">{{item?.value}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:10%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Username</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="text"  formControlName="newUsername" class="form-control input-field">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-1 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Email</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="email"  formControlName="email" class="form-control input-field">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col-xl-2 col-md-3">
+                                        <button type="submit" class="btn btn-add-beneficiary" [disabled]="UserForm.invalid">ADD USER </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> -->
+                        <div class="account-summary-div mt-2">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h3 class="div-title font-blue font-14px mb-0">User list</h3>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between align-items-center mt-3">
+                                <div class="col-xl-8 col-md-12 col-12 mb-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-4 col-12">
+                                            <div class="position-relative">
+                                                <input type="text"  [(ngModel)]="term" class="table-search-field" placeholder="Input Search Term">
+                                                <div class="position-absolute search-icon-position">
+                                                    <img src="./assets/images/search-icon.svg" class="img-fluid" alt="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>    
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-div">
+                                        <table class="table table-borderless table-transaction-history">
+                                            <thead>
+                                                <tr>
+                                                    <td>S/N</td>
+                                                    <td>USERNAME</td>
+                                                    <td>FIRST NAME</td>
+                                                    <td>LAST NAME</td>
+                                                    <td>EMAIL</td>
+                                                    <td>PHONE NO</td>
+                                                    <td>STATUS</td>                                                  
+                                                    <!-- <td colspan="2">ACTION</td> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="UserList?.length">
+                                                <tr *ngFor="let item of (UserList | paginate: { itemsPerPage: 10, currentPage: p } ) |  filter:term ; let i = index">
+                                                    <td>{{i + 1}}</td>
+                                                    <td>{{item?.Username}}</td>
+                                                    <td>{{item?.Firstname}}</td>
+                                                    <td>{{item?.Surname}}</td>
+                                                    <td>{{item?.Email}}</td>
+                                                    <td>{{item?.PhonE_NUMBER}}</td>
+                                                    <td>{{item?.UserStatus}}</td>
+                                                    <!-- <td>
+                                                        <a href="ja">Edit</a>
+                                                    </td> -->
+                                                    <td>
+                                                        <ng-container *ngIf="item?.status === 1">
+                                                              <a href="javascript:void(0);" (click)="ChangeStatus(item)">{{CastStatus(item?.Status)}}</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item?.status !== 1">
+                                                            &nbsp;
+                                                            <!-- <a href="javascript:void(0);" (click)="ChangeStatus(item)">{{CastStatus(item?.status)}}</a> -->
+                                                        </ng-container>                                                    
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ng-container *ngIf="UserList?.length">
+                                            <div class="float-right">
+                                                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                            </div>
+                                        </ng-container>
+                                        <div class="table-bg" *ngIf="!UserList?.length">
+                                            <div class="d-flex align-items-center flex-column">
+                                                <div class="p-2">
+                                                    <img src="assets/images/utils/empty-trans.svg" />
+                                                </div>
+                                                <div class="p-2 text-center mt-4">
+                                                    <h6>No Users at the moment</h6>
+                                                    <p>You don't have users at the moment.<br /> Created Users will show up here.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+</div>

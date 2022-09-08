@@ -1,0 +1,330 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>   
+        
+        <!-- MAIN CONTENT-->
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="accounts-overview-div p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-14px">Accounts  Overview
+                                    <span>
+                                        <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""
+                                        data-toggle="tooltip" data-placement="top" data-title="Brief overview of available accounts" class="red-tooltip">
+                                    </span>
+                                </h3>                                                    
+                                <a href="javascript:void(0);" [routerLink]="['/account-management/account-center']" class="font-10px f-weight400" *ngIf="accounts?.length">
+                                    See all <i class="fa fa-caret-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 account-card-wrapper">
+                        <ng-container  *ngIf="loading">
+                             <a href="javascript:void(0);" class="col-lg-4 col-md-6 mb-4 d-flex flex-column flex-grow-1" *ngFor="let item of accounts; let i = index" >
+                                <div class="account-card p-3 h-100" [ngClass]="{'active': selectedNumber === item.AccountNumber}" (click)="switchAcc(item)">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 mt-2">
+                                            <div>
+                                                <h4 class="font-blueGrey font-16px acct-name">{{cutString(item?.AccountName)}}</h4>
+                                                <p class="font-blueGrey font-12px acct-numb">{{item?.AccountNumber}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 mt-2">
+                                            <div class="card-btn-grid">
+                                                <div class="">
+                                                    <button class="btn account-card-btn" [routerLink]="['/transfer-services/single-payments']">PAY</button>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn account-card-btn" [routerLink]="['/transfer-services/single-payments']">PURCHASE</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12">
+                                            <div class="d-flex justify-content-between">
+                                                <h1 class="font-20px font-orange">{{item?.Currency}}<span id="availBalance{{i}}">{{item?.AvailableBalance | number: '.2'}}</span></h1>
+                                                <i class="fa fa-eye" id="eye{{i}}" (click)="toggleView(i,item)"></i>
+                                            </div> 
+                                            <p class="acct-name font-blueGrey fs-12">Ledger Balance: {{item?.Currency}} <span id="ledBalance{{i}}"> {{item?.LedgerBalance | number: '.2'}}</span> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </ng-container>
+                        
+                      
+                        <ng-container  *ngIf="!loading">
+                            <div class="col-lg-4 col-md-6 mb-4 d-flex flex-column flex-grow-1">
+                                <div class="acccount-card shadow p-3">
+                                    <app-skeleton></app-skeleton>
+                                    <app-skeleton Cwidth="100"></app-skeleton>
+
+                                    <app-skeleton Cheight="15"></app-skeleton>
+                                    <app-skeleton Cheight="15"></app-skeleton>
+                                </div>
+                            </div>
+                        </ng-container> 
+                         <ng-container *ngIf="loading">
+                            <div class="p-5" *ngIf="!accounts?.length">
+                                <h5>You are not allowed to view accounts at this time, kindly contact your administrator</h5>
+                            </div>
+                        </ng-container>                         
+                    </div>
+                </div>
+                <div class="mt-3 mb-4">
+                    <div class="transaction-trend-div p-4 vh-100">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-8">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                                        <h3 class="div-title font-blue font-16px mb-0">Spend trend
+                                            <span>
+                                                <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""
+                                                data-toggle="tooltip" data-placement="top" data-title="Periodic spend pattern for selected account" class="red-tooltip">
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-5 col-md-6 col-6 px-0">
+                                        <!-- <div>
+                                            <button  class="menu-btn" type="button">
+                                                Select account <img src="./assets/images/blue-caret-down.svg" class="img-fluid" alt="">
+                                            </button>
+                                            <div class="d-none shadow rounded menu">
+                                                <span class="d-block menu-option"><label class="mb-0 font-12px d-flex align-items-center"><input type="checkbox">&nbsp;
+                                                    Halal foods - 928924</label></span>
+                                                <span class="d-block menu-option"><label class="mb-0 font-12px d-flex align-items-center"><input type="checkbox">&nbsp;
+                                                    Mega Chicken - 9029002</label></span>
+                                                <span class="d-block menu-option"><label class="mb-0 font-12px d-flex align-items-center"><input type="checkbox">&nbsp;
+                                                    Balogun and Balogun - 9223..</label></span>
+                                            </div>
+                                        </div> -->
+                                        <div class="d-none" id="overlay" ></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn active" (click)="calculateStyles('weekly')">
+                                      <input type="radio" name="options" id="option1" checked> <small>Weekly view</small> 
+                                    </label>
+                                    <label class="btn" (click)="calculateStyles('monthly')">
+                                      <input type="radio" name="options" id="option2"> <small>Monthly view</small> 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100 align-items-center mt-3">
+                            <ng-container *ngIf="spendPattern?.length">
+                                        <ngx-charts-line-chart
+                                    [view]="view"
+                                    [scheme]="colorScheme"
+                                    [legend]="legend"
+                                    [showXAxisLabel]="showXAxisLabel"
+                                    [showYAxisLabel]="showYAxisLabel"
+                                    [xAxis]="xAxis"
+                                    [yAxis]="yAxis"
+                                    [xAxisLabel]="xAxisLabel"
+                                    [yAxisLabel]="yAxisLabel"
+                                    [timeline]="timeline"
+                                    [results]="single"
+                                    (select)="onSelect($event)"
+                                    (activate)="onActivate($event)"
+                                    (deactivate)="onDeactivate($event)"
+                                    >
+                                </ngx-charts-line-chart>
+                            </ng-container>
+                            <ng-container *ngIf="trendLoading === false">
+                                <app-skeleton></app-skeleton>
+                                <app-skeleton></app-skeleton>
+                                <app-skeleton></app-skeleton>
+                                <app-skeleton></app-skeleton>
+                            </ng-container>
+                            <ng-container *ngIf="trendLoading === true">
+                                <div class="p-5" *ngIf="!spendPattern.length">
+                                    <h5>Spend trend not available for the selected account and period</h5>
+                                </div>
+                            </ng-container> 
+                            
+                        </div>                        
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <div class="row">
+                        <div class="col-lg-6 d-flex flex-column flex-grow-1">
+                            <div class="workplace-summary bg-white p-4 h-100">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h3 class="div-title font-blue font-14px">Workspace Summary
+                                                <span>
+                                                    <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""
+                                                    data-toggle="tooltip" data-placement="top" data-title="Report of transactions" class="red-tooltip">
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 mt-3 d-flex flex-column flex-grow-1">
+                                        <div class="workplace-summary-divs h-100 text-center">
+                                            <img src="./assets/images/uil_transaction.svg" class="img-fluid" alt="Total transactions">
+                                            <h6 class="pt-3">{{Summary?.TotalTransaction}}</h6>
+                                            <h6 class="fs-12">Total Transactions</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 mt-3 d-flex flex-column flex-grow-1">
+                                        <div class="workplace-summary-divs h-100 text-center">
+                                            <img src="./assets/images/completed-tasks-icon.svg" class="img-fluid" alt="Total transactions">
+                                            <h6 class="pt-3">{{Summary?.CompletedTransaction}}</h6>
+                                            <h6 class="fs-12">Completed Transactions</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 mt-3 d-flex flex-column flex-grow-1">
+                                        <div class="workplace-summary-divs h-100 text-center">
+                                            <img src="./assets/images/pending-tasks-icon.svg" class="img-fluid" alt="Total transactions">
+                                            <h6 class="pt-3">{{Summary?.PendingTransaction + Summary?.RejectTransaction }}</h6>
+                                            <h6 class="fs-12">Uncompleted Transactions</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex flex-column flex-grow-1">
+                            <div class="exchange-rate bg-white p-4 h-100">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h3 class="div-title font-blue font-14px">Exchange Rates
+                                                <span>
+                                                    <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""
+                                                    data-toggle="tooltip" data-placement="top" data-title="Exchange Rate for selected currencies" class="red-tooltip">
+                                                </span>
+                                            </h3>
+                                            <a href="javascript:void(0);" [routerLink]="['/account-management/exchange-rate']" class="font-10px f-weight400">
+                                                Go to Exchange Rate <i class="fa fa-caret-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 mt-3">
+                                        <div class="exchange-rate-div py-4">
+                                            <div class="table-responsive">                                                
+                                                <table class="table table-borderless">                                                    
+                                                    <tbody *ngIf="exchangeRate?.length">
+                                                        <tr>
+                                                            <th class="font-blue font-12px">Currency</th>
+                                                            <ng-container *ngFor="let item of exchangeRate">                                                           
+                                                                    <th class="font-blue font-12px">{{item?.CurrencyName}}</th>                                                                
+                                                            </ng-container>  
+                                                        </tr>         
+                                                        <tr>
+                                                            <th class="font-blue font-12px">Rate BUY/SELL</th>
+                                                            <ng-container *ngFor="let item of exchangeRate">
+                                                                    <td class="font-blue font-12px">{{item?.Buy|number:'.2'}}/{{item?.Sell |number: '.2'}}</td>
+                                                            </ng-container>   
+                                                        </tr>                                             
+                                                    </tbody>
+                                                    <ng-container *ngIf="!rateLoading">
+                                                        <div class="p-4">
+                                                             <h6>Fetching Rates Table...</h6>
+                                                        </div>                                                       
+                                                    </ng-container>
+                                                    <ng-container *ngIf="rateLoading">
+                                                        <div class="p-4" *ngIf="!exchangeRate?.length">
+                                                            <h6>Exchange Rate Data Not Available Currently</h6>
+                                                        </div>
+                                                    </ng-container>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 transaction-history-div p-4">
+                    <div class="row justify-content-between">
+                        <div class="col-lg-4 col-xs-4">
+                            <h3 class="div-title font-blue font-14px">Transaction History
+                                <span>
+                                    <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""
+                                    data-toggle="tooltip" data-placement="top" data-title="Most recent transactions on selected account" class="red-tooltip">
+                                </span>
+                            </h3>
+                        </div>
+                        <!-- <div class="col-xl-3 col-lg-4 col-xs-8">
+                            <div class="row justify-content-end">
+                                <div class="col-lg-5 col-xl-5">
+                                    <a href="#" class="font-lightBlue font-10px f-weight400">Funds Transfer</a>
+                                </div>
+                                <div class="col-lg-5 col-xl-5">
+                                    <a href="#" class="font-blue font-10px f-weight400">Bills Payment</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-div">
+                                <table class="table table-borderless table-transaction-history">
+                                    <thead>
+                                        <tr>
+                                            <td>TRANSACTION DATE</td> 
+                                            <td>VALUE DATE</td>
+                                            <td>DESCRIPTION</td>
+                                            <td>AMOUNT</td>                                           
+                                            <td>BALANCE</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let history of HistoryList; let i = index">
+                                            <td>{{history?.TransDate}}</td>
+                                            <td>{{history?.ValueDate}}</td>
+                                            <td>{{history?.Narration}}</td>  
+                                            <td> 
+                                                <span [ngClass]="gVars?.StyleAmount(history?.DRCR)">
+                                                    <span [innerHtml]="selectedCurrency"></span> {{history?.TransAmount | number: '1.2-2'}}
+                                                </span>
+                                            </td>                                            
+                                            <td>
+                                                
+                                                <span [innerHtml]="selectedCurrency"></span>   {{history?.Balance | number: '1.2-2'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div >
+                                    <div class="table-bg" *ngIf="!HistoryList?.length">
+                                        <div class="d-flex align-items-center flex-column">
+                                            <div class="p-2">
+                                                <img src="assets/images/utils/empty-trans.svg" />
+                                            </div>
+                                            <div class="p-2 text-center mt-4">
+                                                  <h6>No Transaction History</h6>
+                                                  <p>You haven’t performed any transaction yet</p>
+                                            </div>
+                                            <!-- <div class="p-2">
+                                                <a class="btn send-money" [routerLink]="['/transfer-services/single-payments']">Initiate Payments</a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    <!-- MAIN CONTENT-->
+  
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
+
+

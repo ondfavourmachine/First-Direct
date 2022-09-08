@@ -1,0 +1,294 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Service Requests</h5>
+                    
+                </div>
+                <div class="accounts-overview-div p-4">
+                    <div class="row">
+                        <!-- <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Service Request</h3>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="single-payment-form mt-4">
+                        <div class="form-row align-items-center mb-4">
+                            <div class="col-xl-2 col-lg-3">
+                                <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Select Request Type</label>
+                                <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="tooltip"  tooltip="Select the type of service request">
+                            </div>
+                            <div class="col-xl-3 col-md-5 position-relative">
+                                <select class="input-field form-select-custom" id="sourceAcc" (change)="selectType($event)">
+                                    <option selected>Choose Request</option>
+                                    <!-- <option value="requestOverdraft">Request OverDraft</option> -->
+                                    <option value="requestCheque">Request Cheque</option>
+                                    <option value="stopCheque">Stop Cheque</option>
+                                    <option value="confirmCheque">Confirm Cheque</option>
+                                </select>
+                                <div class="position-absolute" style="right:20px; top:15%;">
+                                    <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="requestMode ==='requestCheque'" >
+                            <form [formGroup]="requestForm" (ngSubmit)="RequestCheque(requestForm.value)">
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Select Account</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" (change)="selectAccount($event)" id="inlineFormCustomSelect" formControlName="accountId">
+                                            <option selected>Select Account</option>
+                                            <option value="{{item.AccountId}}" *ngFor="let item of localResponse?.Accounts">{{item?.AccountName}} - {{item?.AccountNumber}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div> 
+                                <!-- <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Number of Booklets</label>
+                                        <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="tooltip"  tooltip="Choose desired booklet number">
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="number" (input)="CheckValue($event)" class="form-control input-field" formControlName="noOfBooklet">
+                                    </div>
+                                </div> -->
+                                <div *ngIf="chequeTypes" class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Select Cheque Type</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect" (change)="selectCheque($event)">
+                                            <option selected>Select Cheque Type</option>
+                                            <option value="{{ StringifyString(item)}}" *ngFor="let item of chequeTypes">{{item?.chequeTypeField}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Number of Leaves</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="tel" class="form-control input-field" formControlName="noLeaves" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Pickup Branch</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <select class="input-field form-select-custom" (change)="selectPickup($event)" id="inlineFormCustomSelect" formControlName="branchCode">
+                                            <option selected>Select Branch</option>
+                                            <option *ngFor="let item of branches" [value]="item.branchCode">{{item.branchName}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col-xl-2 col-md-3">
+                                        <button type="submit" class="btn btn-add-beneficiary" [disabled]="requestForm.invalid">Request Cheque</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-container>
+                        <ng-container *ngIf="requestMode ==='stopCheque'" >
+                            <form [formGroup]="stopForm" (ngSubmit)="StopCheque(stopForm.value)">
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Select Account</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" (change)="selectAccount($event)" id="inlineFormCustomSelect" formControlName="accountId" >
+                                            <option selected>Select Account</option>
+                                            <option value="{{item.AccountId}}" *ngFor="let item of localResponse?.Accounts">{{item?.AccountName}} - {{item?.AccountNumber}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Stop Reason</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect" formControlName="stopReason">
+                                            <option selected>Select Reason</option>
+                                            <option value="{{item.refCode}}" *ngFor="let item of reasons">{{item?.refDesc}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Start Cheque Number</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="tel" class="form-control input-field" formControlName="chequeNumber">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Cheque Form</label>
+                                        <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="tooltip"  tooltip="Specify if you wish to stop a single leaf or a range of leaves">
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect" (change)="setMissingCheque($event)">
+                                            <option selected>Select Form</option>
+                                            <option value="single">Single</option>
+                                            <option value="range">Range</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="numberMode === 'range'">
+                                    <div class="form-row align-items-center mb-4">
+                                        <div class="col-xl-2 col-lg-3">
+                                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Leaflet Range</label>
+                                            <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="tooltip"  tooltip="Input the range of leaves separated by a comma">
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <input type="number" formControlName="leafletNo"
+                                            max="100"
+                                            min="1"
+                                            popover="Enter the cheque number you wish to stop"
+                                            triggers="keypress:focusout" 
+                                            class="form-control input-field">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                               
+                                <div class="form-row mb-4">
+                                    <div class="col-xl-2 col-md-3">
+                                        <button type="submit" class="btn btn-add-beneficiary" [disabled]="stopForm.invalid">Stop Cheque</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-container>
+                        <ng-container *ngIf="requestMode ==='confirmCheque'" >
+                            <form [formGroup]="confirmForm" (ngSubmit)="ConfirmCheque(confirmForm.value)">
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Select Account</label>
+                                        <span>
+                                            <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""  tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                        </span> 
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect" formControlName="accountId"  (change)="selectAccount($event)">
+                                            <option selected>Select Account</option>
+                                            <option value="{{item.AccountId}}" *ngFor="let item of localResponse?.Accounts">{{item?.AccountName}}-{{item?.AccountNumber}}</option>
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Cheque Number</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="tel" class="form-control input-field" formControlName="chequeNumber">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Cheque Amount</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="text" class="form-control input-field"
+                                        (blur)="formatCurrency_TaxableValue($event)"
+                                        [value]="Amount" 
+                                        (input)="CheckValue($event)"
+                                        formControlName="chequeAmount">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500" >Cheque Security Number</label>
+                                     <span>
+                                        <img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt=""  tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                    </span>   
+                                    </div>                                    
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="tel" class="form-control input-field" formControlName="chequeSecurityNumber">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">ID Type</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 position-relative">
+                                        <select class="input-field form-select-custom" id="inlineFormCustomSelect" formControlName="idType">
+                                            <option selected>Select ID TYPE</option>
+                                            <option value="{{item?.id}}" *ngFor="let item of Idtype">{{item?.value}}</option>
+                                           <!-- <option value="">National SET FROM BACKEND ID</option> -->
+                                        </select>
+                                        <div class="position-absolute" style="right:20px; top:15%;">
+                                            <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Beneficiary Name</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="text" class="form-control input-field" formControlName="payeeName">
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Cheque Date</label>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <input type="date" class="form-control input-field" formControlName="chequeDate">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col-xl-2 col-md-3">
+                                        <button type="submit" class="btn btn-add-beneficiary" [disabled]="confirmForm.invalid">Confirm Cheque</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="serviceModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">                     
+            <app-sr-view-modal [Details]=Details></app-sr-view-modal>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

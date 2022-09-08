@@ -1,0 +1,86 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+
+        <main class="main-content">
+            <div class="main-content-padding">
+                <div class="mb-3">
+                    <h5 class="font-18px text-grey">Main settings</h5>
+                </div>
+                <div class="accounts-overview-div p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="div-title font-blue font-16px">Subsidiary management</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row mt-4">
+                        <div class="col-xl-2 col-md-5">
+                            <button class="btn btn-add-beneficiary">ADD SUBSIDIARY</button>
+                        </div>
+                    </div> -->
+                    <div class="account-summary-div mt-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3 class="div-title font-blue font-14px mb-0">Edit subsidiaries</h3>
+                                <p class="font-12px">Choose which accounts are active</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-subsidiary">
+                                        <thead>
+                                            <tr>
+                                                <td>Subsidiary name</td>
+                                                <td>Accounts</td>
+                                                <td>Daily limit</td>
+                                                <!-- <td>Actions</td> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of SubsidiaryList; let i = index">
+                                                <td>
+                                                    <div class="">
+                                                        <p class="mb-0">{{item.SubsidiaryName}}</p>
+                                                        <small class="fs-10px">Activate or Deactivate Subsidiary</small>
+                                                        <div class="mt-2">
+                                                            <input type="checkbox" id="switch{{i}}" (change)="preferenceChange(item)"  checked="{{item?.Status ? 'checked' : ''}}"/><label for="switch{{i}}">Toggle</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="font-blueGrey fs-12px" *ngFor="let accounts of item?.Accounts">
+                                                           {{accounts?.AccountName}} : {{accounts?.AccountNumber}},
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <input type="text" class="input-field max-width-250" id="limit{{i}}" value="{{item.DailyLimit}}" disabled 
+                                                         >
+                                                        <!-- <a href="javascript:void(0);" (click)="allowEdit(i)" class="font-12px px-2">Edit</a> -->
+                                                    </div>
+                                                </td>
+                                                <!-- <td>
+                                                    &nbsp;
+                                                    <button class="btn btn-submit"(click)="UpdateLimit(item,i)">Update</button>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+</div>

@@ -1,0 +1,29 @@
+.fs-12{
+    font-size: 12px;
+}
+.tr-item {
+    box-shadow: 0px 3px 6px #468ee526;
+}
+.send-money{
+    background-color: #022E64;
+    color: #fff;
+    padding: 1rem;
+}
+.btn-group-toggle .active{
+    color: #fff!important;
+    background-color: #022E64!important;   
+}
+
+.vh-100{
+    height:100vh;
+}
+.z-200{
+    z-index:200;
+}
+
+.fa-eye, .fa-eye-slash{
+    color: #022E64;
+}
+.active .fa-eye, .active .fa-eye-slash{
+    color: #fff !important;
+}

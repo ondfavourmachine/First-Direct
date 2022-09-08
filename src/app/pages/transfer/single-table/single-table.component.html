@@ -1,0 +1,79 @@
+<div class="transaction-history-div mt-3 p-4">
+    <div class="account-summary-div mt-2">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="div-title font-blue font-14px mb-0">Batch Summary</h3>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <div class="table-responsive table-div">
+                    <table class="table table-borderless table-transaction-history">
+                        <thead>
+                            <tr>
+                                <td>S/N</td>
+                                <td>SOURCE ACCOUNT</td>
+                                <td>BENEFICIARY ACCOUNT</td>
+                                <td>BANK NAME</td>
+                                <td>NARRATION</td>
+                                <td>AMOUNT</td>
+                                <td>CHARGE</td>
+                                <td>ACTIONS</td>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="PaymentDetails?.length">
+                            <tr *ngFor="let item of (PaymentDetails | filter:term ) | paginate: { itemsPerPage: 20, currentPage: p }; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item?.sourceAccount}}</td>
+                                <td>{{item?.accountNumber}}</td>
+                                <td>{{item?.bankName}}</td>
+                                <td>{{item?.narration}}</td>
+                                <td>&#8358;{{item?.amount | number:'.2'}}</td> 
+                                <td>{{ item?.charges }}</td>
+                                <td><a href="javascript:void(0);" (click)="removeBeneficiary(i)"><img src="assets/images/table-delete-icon.svg" class="img-fluid" alt=""></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ng-container *ngIf="PaymentDetails?.length">
+                        <div class="float-right">
+                             <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    </ng-container>
+                    <div class="table-pos" *ngIf="!PaymentDetails?.length">
+                        <div class="d-flex align-items-center flex-column">
+                            <div class="p-2">
+                                <img src="assets/images/utils/empty-trans.svg" />
+                            </div>
+                            <div class="p-2 text-center mt-4">
+                                <h6>No Pending Transaction</h6>
+                                <p>You don't have pending transactions at the moment.<br /> Pending transactions will show up here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 justify-content-end" >
+                    <div class="col-xl-3 col-md-4" *ngIf="PaymentDetails.length > 1">
+                        <!-- <div class="form-row align-items-center mb-4">
+                            <div class="col-xl col-lg">
+                                <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Enable multiple debit</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="row align-items-center">
+                                    <div class="form-check col-lg-4 align-items-center">
+                                        <p class="mb-0 d-flex">
+                                            <input type="checkbox" id="enableMulti" name="radio-debit" (change)="MarkPayment()">
+                                            <label for="enableMulti" class="mb-0 font-blueGrey font-12px"></label>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>                    
+                    <div class="col-xl-3 col-md-4">                        
+                        <button class="btn btn-submit btn-250" (click)="InitiatePayment()">INITIATE TRANSACTION </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

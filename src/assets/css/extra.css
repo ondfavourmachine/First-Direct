@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Work Bold";
+    src: url("../fonts/WorkSans/static/WorkSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Work Light";
+    src: url("../fonts/WorkSans/static/WorkSans-Light.ttf");
+}
+@font-face {
+    font-family: "Work Regular";
+    src: url("../fonts/WorkSans/static/WorkSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Work Medium";
+    src: url("../fonts/WorkSans/static/WorkSans-Medium.ttf");
+}
+
+/* h1,h2,h3,h4,h5,h6, strong{
+    font-family: "Work Bold" !important;
+}
+a,button{
+    font-family: "Work Medium" !important;
+}
+small{
+    font-family: "Work Light" !important;
+}
+body, p{
+    font-family: "Work Regular" !important;
+} */
+.pointer{
+    cursor: pointer;
+}
+.required:after {
+    content:" *";
+    color: red;
+  }
+  .reaction{
+    width: 45px;
+    cursor: pointer;
+} 
+.grayScale{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    -moz-filter:grayscale(100%);
+}
+.btn-strong,.btn-strong:hover{
+    background-color:#022E64;
+    color:#fff;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.btn-neutral{
+    color: #022E64;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid #022E64;
+}
+.text-gold{
+    color:#DDAD31;
+}
+.date-select-field{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important
+}
+.table-bg{
+    background-color: #fff;
+    height: auto;
+    padding: 5%; 
+}
+.login-form-icons2
+{
+    right:5% !important;
+    top: 27%;
+}
+.border-bottom__dashed
+{
+    border-bottom: #022E64 dashed 1px;
+}

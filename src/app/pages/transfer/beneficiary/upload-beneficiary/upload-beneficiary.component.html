@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="">
+        <div>
+            <h5 class="font-blue">Upload bulk beneficiary</h5>
+            <form [formGroup]="BeneficiaryForm" (ngSubmit)="AddBeneficiary(BeneficiaryForm.value)">
+                <div class="form-row align-items-center mt-4">
+                    <div class="col-xl-5 col-lg-5">
+                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Upload file</label>
+                    </div>
+                    <div class="col-xl-7 col-md-7">
+                        <input type="file" class="display-none" (change)="handleUpload($event)" #fileInput/>
+                        <div class="text-center" *ngIf="sheet">
+                            <p>{{sheet}} <img src="./assets/images/xls-icon.jpg" width="18px"/></p>
+                         </div>
+                        <span class="btn input-field" (click)="fileInput.click()">
+                            Upload file from computer <span class="px-2"><img src="./assets/images/upload-file-icon.svg" class="img-fluid img-custom-size2" alt=""></span>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end">
+                            <div class="">
+                                <a href="./assets/static/beneficiary-upload.xlsx" target="_blank"  class="font-12px">Download sample</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-between mt-4">
+                    <div class="col-xl-5 col-md-6">
+                        <span class="btn btn-add-beneficiary" data-dismiss="modal" (click)="ClearData()">Cancel</span>
+                    </div>
+                    <div class="col-xl-5 col-md-6">
+                        <button class="btn btn-submit" [disabled]="BeneficiaryForm.invalid">Upload beneficiary</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

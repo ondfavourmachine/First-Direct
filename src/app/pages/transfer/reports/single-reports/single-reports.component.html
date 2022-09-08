@@ -1,0 +1,138 @@
+<div class="mt-5">
+    <div class="d-flex flex-wrap justify-content-between">
+        <div class="d-flex justify-content-between flex-wrap">
+            <div class="py-2">
+                <form [formGroup]="FilterForm" (ngSubmit)="FilterReports(FilterForm.value)">
+                    <div class="d-flex flex-wrap">
+                        <div class="">
+                            <input
+                                placeholder="Start date"
+                                formControlName="startDate"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                class="form-control input-field"
+                                #dp="bsDatepicker"
+                                bsDatepicker>
+                        </div>
+                        <div class="px-2 align-self-center">
+                            <span class="text-muted">to</span>
+                        </div>
+                        <div class="">
+                            <input
+                                placeholder="End date"
+                                formControlName="endDate"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                class="form-control input-field"
+                                #dp="bsDatepicker"
+                                bsDatepicker>
+                        </div>
+                        <div class="ml-1">
+                            <button class="btn-sm btn btn-primary btn-go" [disabled]="FilterForm.invalid">Go</button>
+                        </div>
+                    </div>  
+                </form>  
+            </div>
+            <div class="p-2 ml-4">
+                <input class="form-control" type="text" [(ngModel)]="term" placeholder="search" />
+            </div>
+        </div>
+        <div class="p-2 align-self-center">
+             <a (click)="export()" class="font-12px f-weight500 pointer mr-2">Download CSV<span><img src="./assets/images/excel-icon.svg" class="img-fluid" alt=""></span></a>
+        </div>
+        <div class="p-2 align-self-center">
+            <a href="javascript:void(0);" (click)="refreshBatch()" class="font-12px f-weight500"><img src="./assets/images/filter-icon.svg" class="img-fluid" alt="">&nbsp;<span>Refresh</span></a>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class=table-responsive>
+                <table class="table table-borderless table-transaction-history">
+                    <thead>
+                        <tr>
+                            <td>REQUEST DATE</td>
+                            <td>VALUE DATE</td>
+                            <td>AMOUNT</td>
+                            <td>SOURCE ACCOUNT</td>
+                            <td>BENEFICIARY NAME</td>
+                            <td>BENEFICIARY ACCOUNT</td>
+                            <td>BENEFICIARY BANK</td>
+                            <td>APPROVAL STATUS</td>
+                            <td>PAYMENT STATUS</td>
+                            <td>REMARK</td>
+                            <td>CHARGE</td>
+                            <td>ACTIONS</td>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="SingleReports?.length">
+                        <tr class="hover-table" *ngFor="let item of (SingleReports  | filter:term ) | paginate: { itemsPerPage: 30, currentPage: p }; let i = index">
+                            <td>{{item?.RequestDate}}</td>
+                            <td>{{item?.ValueDate}}</td>
+                            <td>&#8358;{{item?.Amount | number:'.2' }}</td>
+                            <td>{{ MapAccount(item?.AccountId)}}</td>
+                            <td>{{item?.BeneficiaryName}}</td>
+                            <td>{{item?.AccountNumber}}</td>
+                            <td>{{item?.BankName}}</td>
+                            <td>{{item?.ApprovalStatus}}</td>
+                            <td>{{item?.PaymentStatus}}</td>
+                            <td>{{item?.PaymentRemark}}</td>
+                            <td>&#8358;{{item?.Charges  | number: '.2'}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="./assets/images/bulk-menu-icon.svg" class="img-fluid" alt="">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a *ngIf="item?.PaymentStatusId === 10" 
+                                                class="dropdown-item font-12px font-blueGrey" 
+                                                href="javascript:void(0);" 
+                                                (click)="DownloadReceipt(item)">
+                                                Generate Receipt</a>
+                                            <a  class="dropdown-item font-12px font-blueGrey" 
+                                                href="javascript:void(0);" 
+                                                (click)="ViewHistory(item)">
+                                                Approval History</a>
+                                            <a *ngIf="item?.ApprovalStatus == 10 && item?.PaymentStatusId == 1" 
+                                                class="dropdown-item font-12px font-blueGrey" 
+                                                href="javascript:void(0);" 
+                                                (click)="CancelTransaction(item)">
+                                                Cancel Transaction</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-container *ngIf="SingleReports?.length">
+                    <div class="float-right">
+                    <pagination-controls (pageChange)="s = $event"></pagination-controls>
+                </div>
+            </ng-container>
+            </div>
+            <div class="table-bg" *ngIf="!SingleReports?.length">
+                <div class="d-flex align-items-center flex-column">
+                    <div class="p-2">
+                        <img src="assets/images/utils/empty-trans.svg" />
+                    </div>
+                    <div class="p-2 text-center mt-4">
+                        <h6>Reports Not Available</h6>
+                        <p>You don't have reports yet.<br /> Reports will show up here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="instructionModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body justify-content-center">                            
+            <app-report-modal [Details]='Details'></app-report-modal>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

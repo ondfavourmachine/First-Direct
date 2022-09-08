@@ -1,0 +1,197 @@
+<div class="page-wrapper">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <div class="page-container">
+            <main class="main-content">
+                <div class="main-content-padding">
+                    <div class="mb-3">
+                        <h5 class="font-18px text-grey">Transfer Services</h5>
+                    </div>
+                    <div class="accounts-overview-div p-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h3 class="div-title font-blue font-16px">Bulk Payment</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-payment-form mt-4">
+                            <form [formGroup]="BulkPaymentForm" (ngSubmit)="ProcessDocument(BulkPaymentForm.value)">
+                                <div class="mb-4">
+                                    <h3 class="div-title font-blue font-14px">Make a bulk payment<span class="px-2"><img src="./assets/images/tool-tip-icon.svg" class="img-fluid tooltip-icon-size" alt="" data-toggle="tooltip" data-placement="top" data-title="this is a tooltip nnsnsnnsnsnsnsnsnsn"></span></h3>
+                                    <p class="font-10px font-dark f-weight500">Please fill the form  below to initiate a payment</p>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Upload file</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="file" class="display-none" (change)="handleUpload($event)" #fileInput/>
+                                        <!-- <div class="text-center">
+                                            <button class="btn btn-upload" (click)="fileInput.click()"> 
+                                                <img src="assets/images/utils/cloud.svg"/>
+                                                Browse</button>
+                                        </div> -->
+                                        <div class="text-center" *ngIf="sheet">
+                                            <p>{{sheet}} <img src="./assets/images/xls-icon.jpg" width="18px"/></p>
+                                         </div>
+                                        <span class="btn input-field" (click)="fileInput.click()">
+                                            Upload file from computer <span class="px-2"><img src="./assets/images/upload-file-icon.svg" class="img-fluid img-custom-size2" alt=""></span>
+                                        </span>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <div class="d-flex flex-column">
+                                            <a href="./assets/static/BankCode.pdf" target="_blank"  class="font-12px">Download bank code</a>
+                                            <a href="./assets/static/Proposed Template.xlsx" target="_blank" class="font-12px">Download sample template</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Value date</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <!-- <input type="date" class="form-control input-field" (keydown)="disableDate()"  id="txtDate" formControlName="valueDate"> -->
+                                        <input
+                                        formControlName="valueDate"
+                                        [minDate]="minDate"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        class="form-control input-field"
+                                        #dp="bsDatepicker"
+                                        bsDatepicker
+                                        [bsValue]="bsValue">
+                                        <div *ngIf="f.valueDate.invalid && submitted">
+                                            <div class="txt-sm text-danger" *ngIf="f.valueDate.errors.required">Value Date is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Narration</label>
+                                    </div>
+                                    <div class="col-xl-3 col-md-5">
+                                        <input type="text" class="form-control input-field" formControlName="narration">
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment channel</label>
+                                    </div>
+                                    <div class="col-xl-6 col-md-8">
+                                        <div class="row align-items-center">
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="1" name="radio-group">
+                                                    <label for="1" class="mb-0 font-blueGrey font-12px" (click)="selectMethod(1)">Instant Payment</label>
+                                                </p>                                                
+                                            </div>
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="2" name="radio-group">
+                                                    <label for="2" class="mb-0 font-blueGrey font-12px" (click)="selectMethod(2)">NEFT</label>
+                                                </p>                                                
+                                            </div>
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="3" name="radio-group">
+                                                    <label for="3" class="mb-0 font-blueGrey font-12px" (click)="selectMethod(3)">RTGS</label>
+                                                </p>                                                
+                                            </div>
+                                        </div>
+                                        <div *ngIf="f.paymentMethod.invalid && submitted">
+                                            <div class="txt-sm text-danger" *ngIf="f.paymentMethod.errors.required">Payment Method is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Payment Type</label>
+                                    </div>
+                                    <div class="col-xl-6 col-md-8">
+                                        <div class="row align-items-center">
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="type1" name="type-group">
+                                                    <label for="type1" class="mb-0 font-blueGrey font-12px" (click)="selectType(1)">Salary Payment</label>
+                                                </p>                                                
+                                            </div>
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="type2" name="type-group">
+                                                    <label for="type2" class="mb-0 font-blueGrey font-12px" (click)="selectType(2)">Vendor Payment</label>
+                                                </p>                                                
+                                            </div>
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="radio" id="type3" name="type-group">
+                                                    <label for="type3" class="mb-0 font-blueGrey font-12px" (click)="selectType(3)">Other Payment</label>
+                                                </p>                                                
+                                            </div>
+                                        </div>
+                                        <div *ngIf="f.paymentType.invalid && submitted">
+                                            <div class="txt-sm text-danger" *ngIf="f.paymentType.errors.required">Payment Type is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Enable multiple debit</label>
+                                    </div>
+                                    <div class="col-xl-6 col-md-8">
+                                        <div class="row align-items-center">
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="checkbox" id="debit" name="radio-debit"  (change)="enableMulti()" formControlName="multipleDebits">
+                                                    <label for="debit" class="mb-0 font-blueGrey font-12px"></label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Save Beneficiary</label>
+                                    </div>
+                                    <div class="col-xl-6 col-md-8">
+                                        <div class="row align-items-center">
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="checkbox" id="saveBene" name="radio-debit"  (change)="saveBene()" formControlName="saveBeneficiary">
+                                                    <label for="saveBene" class="mb-0 font-blueGrey font-12px"></label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center mb-4">
+                                    <div class="col-xl-2 col-lg-3">
+                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Validate Records</label>
+                                    </div>
+                                    <div class="col-xl-6 col-md-8">
+                                        <div class="row align-items-center">
+                                            <div class="form-check col-lg-4 align-items-center">
+                                                <p class="mb-0 d-flex">
+                                                    <input type="checkbox" id="records" name="radio-record"  (change)="validateRecord()" formControlName="validateRecords">
+                                                    <label for="records" class="mb-0 font-blueGrey font-12px"></label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col-xl-2 col-md-3">
+                                        <button type="submit" class="btn btn-submit">UPLOAD FILE</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <app-bulk-table></app-bulk-table>
+                </div>
+            </main>
+    </div>
+</div>

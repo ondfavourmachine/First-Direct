@@ -1,0 +1,512 @@
+<main>
+    <div class="registration-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex justify-content-end py-2">
+                        <a [routerLink]="['/login']">
+                            <img src="./assets/images/FirstDirect-blue.svg" class="img-fluid logo-custom-size" alt="">
+                        </a>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="onboarding-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-between mt-4">
+                <div class="col-xl-5 col-lg-6 col-12 mb-3 position-relative">
+                    <img src="./assets/images/onboarding-img.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-xl-6 col-lg-6 mb-3 col-12">
+                    <ng-container *ngIf="pageStatus === 'Initiate'">
+                        <div class="onboarding-form-div p-4">
+                           
+                            <div class="d-flex align-items-center flex-wrap">
+                                <h6 class="font-18px f-weight700 font-blue">Company registration</h6>
+                                <div class="px-2 d-flex align-items-center">
+                                    <div class="active-onboarding-step font-16px">1</div>
+                                    <span class="px-2 font-16px font-blue">of 7</span>
+                                </div>
+                            </div>
+                            <div class="yellow-horizontal-line mt-3"></div>
+                            <div class="mt-4">
+                                <h6 class="font-18px font-blue mb-0">Please enter corporate account number</h6>
+                                <p class="text-danger font-12px">You must have an account with FirstBank to use FirstDirect 2.0</p>
+                                <form [formGroup]="ResumeForm" (ngSubmit)="FetchReg(ResumeForm.value)">
+                                    <div class="form-row align-items-center mt-4">
+                                        <div class="col-xl-4 col-md-4">
+                                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account number</label>
+                                        </div>
+                                        <div class="col-xl-7 col-md-8">
+                                            <input type="text" maxlength="10" (input)="CheckValue($event)" formControlName="account" class="form-control input-field">
+                                        </div>
+                                    </div>
+                                    <div class="form-row justify-content-between mt-3">
+                                        <div class="col-xl-6 col-md-6">
+                                            <span class="font-12px" (click)="EnterCode()"> 
+                                                <a href="javascript:void(0);" class="font-12px f-weight500 text-primary">Enter onboarding code?</a>
+                                            </span>
+                                        </div>
+                                        <div class="col-xl-6 col-md-6 text-center">
+                                            <span class="font-12px pointer" (click)="ResendOnboarding()">
+                                                <a href="javascript:void(0);" class="font-12px f-weight500 text-primary">
+                                                    Regenerate onboarding code
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-row justify-content-between mt-5">
+                                        <div class="col-xl-5 col-md-6 mb-3">
+                                            <button type="submit" [disabled]="ResumeForm.invalid" class="btn btn-submit">NEXT</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="pageStatus === 'Code'">
+                        <div class="onboarding-form-div p-4">
+                            <div class="d-flex align-items-center flex-wrap">
+                                <h6 class="font-18px f-weight700 font-blue">Onboarding Code</h6>
+                                <div class="px-2 d-flex align-items-center">
+                                    <div class="active-onboarding-step font-16px">2</div>
+                                    <span class="px-2 font-16px font-blue">of 7</span>
+                                </div>
+                            </div>
+                            <div class="yellow-horizontal-line mt-1"></div>
+                            <div class="mt-4">
+                                <h6 class="font-18px font-blue mb-0">Please enter your onboarding code</h6>
+                                <form [formGroup]="CodeForm" (ngSubmit)="ValidateCode(CodeForm.value)">
+                                    <div class="form-row align-items-center mt-4">
+                                        <div class="col-xl-4 col-md-4">
+                                            <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Onboarding Code</label>
+                                        </div>
+                                        <div class="col-xl-8 col-md-8">
+                                            <input type="text" formControlName="code" class="form-control input-field">
+                                        </div>
+                                    </div>
+                                    <div class="form-row justify-content-end">
+                                        <div class="col-xl-8 col-md-8">
+                                            <span class="font-12px"><a href="javascript:void(0);" (click)="ReEnterCode()" class="font-12px f-weight500">Resend onboarding code</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-row justify-content-between mt-5">
+                                        <div class="col-xl-5 col-md-6 mb-3">
+                                            <button type="submit" [disabled]="CodeForm.invalid" class="btn btn-submit">NEXT</button>
+                                        </div>
+                                    </div>
+                                </form>                                
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="pageStatus === 'Profile'">
+                        <div  *ngIf="pageName === 'Subsidiary'">
+                            <div class="d-flex align-items-center flex-wrap">
+                                <h6 class="font-18px f-weight700 font-blue">Company registration</h6>
+                                <div class="px-2 d-flex align-items-center">
+                                    <div class="active-onboarding-step font-16px">4</div>
+                                    <span class="px-2 font-16px font-blue">of 7</span>
+                                </div>
+                            </div>
+                            <div class="yellow-horizontal-line mt-3"></div>
+                            <h6 class="font-18px font-blue mb-0">Review your account details</h6>
+                            <div class="table-responsive mt-4">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">Account name</th>
+                                            <th class="font-12px font-blue f-weight500 py-0">Account number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-12px py-0 pl-0">{{mainAccount?.accountName}}</td>
+                                            <td class="font-12px py-0">{{mainAccount?.accountNumber}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <a href="javascript:void(0);" (click)="addAccounts()" class="font-blueGrey font-14px">Add account</a>
+                            </div>
+                        </div>
+                        
+                        <form [formGroup]="OnboardingForm">
+                            <ng-container *ngIf="pageName === 'Subsidiary'">
+                                <div class="onboarding-form-div p-4">
+                                    <div class="mt-3">
+                                        <ng-container 
+                                        formArrayName="accounts"
+                                        *ngFor="let item of accounts().controls; let subIndex = index;"
+                                        >
+                                            <div [formGroupName]="subIndex">
+                                                <div class="form-row align-items-center mt-3">
+                                                    <div class="col-xl-4 col-md-4">
+                                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account number {{subIndex+1}}</label>
+                                                    </div>
+                                                    <div class="col-xl-8 col-md-8">
+                                                        <input formControlName="accountNumber" id="Field{{subIndex}}" maxlength="10" type="text" (input)="CheckValue($event)" (change)="ValidateAccount($event,subIndex)" class="form-control input-field"/>                                                                
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-4">
+                                                        <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Account Name {{subIndex+1}}</label>
+                                                    </div>
+                                                    <div class="col-xl-8 col-md-8">
+                                                        <input formControlName="accountName" type="text" disabled class="form-control input-field"/>                                                                
+                                                    </div> 
+                                                    <span class="ml-1 font-12px text-danger pointer" (click)="removeAccounts(subIndex)">Remove</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-row justify-content-end mt-2">
+                                             
+                                            </div>
+                                        </ng-container>                            
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="pageName ==='Organization'">
+                                <div class="onboarding-form-div p-4">
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <h6 class="font-18px f-weight500 font-blue">Corporate details</h6>
+                                        <div class="px-2 d-flex align-items-center">
+                                            <div class="active-onboarding-step font-16px">4</div>
+                                            <span class="px-2 font-16px font-blue">of 7</span>
+                                        </div>
+                                        <div class="yellow-horizontal-line mt-3"></div>
+                                        <div class="mt-4">
+                                            <h6 class="font-18px font-blue mb-0">Please enter your organisation details </h6>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Organisation name</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" class="form-control input-field" formControlName="orgName" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">RC number</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" formControlName="rcNumber" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row justify-content-end">
+                                                <div class="col-xl-8 col-md-8">
+                                                    <p class="font-grey font-12px f-weight500 mb-0">Optional</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">TIN</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" formControlName="tin" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-4">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Type of institution</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8 position-relative">
+                                                    <select class="input-field form-select-custom" formControlName="institutionType" id="inlineFormCustomSelect">
+                                                        <option value="Corporate" selected>Corporate</option>
+                                                        <option value="Partnership">Partnership</option>
+                                                        <option value="Sole Proprietor">Sole Proprietor</option>
+                                                    </select>
+                                                    <div class="position-absolute" style="right:20px; top:13%;">
+                                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="pageName ==='Users'">
+                                <div class="onboarding-form-div p-4">
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <h6 class="font-18px f-weight500 font-blue">User creation</h6>
+                                        <div class="px-2 d-flex align-items-center">
+                                            <div class="active-onboarding-step font-16px">5</div>
+                                            <span class="px-2 font-16px font-blue">of 7</span>
+                                        </div>
+                                    </div>
+                                    <div class="yellow-horizontal-line mt-1"></div>
+                                    <div class="mt-3">
+                                        <h6 class="font-16px font-blue mb-0">Please enter details of your company</h6>
+                                        <ng-container 
+                                        formArrayName="users"
+                                        *ngFor="let item of users().controls; let subIndex = index;"
+                                        >
+                                        <div [formGroupName]="subIndex">
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">First name</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" (input)="checkAlpha($event)" formControlName="firstname" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Last name</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" (input)="checkAlpha($event)" formControlName="surname" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from"class="mb-0 font-12px font-blue f-weight500">Username</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" formControlName="username" (input)="checkSpace($event)" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Contact phone</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="text" formControlName="phone" (input)="CheckValue($event)" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Contact email</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8">
+                                                    <input type="email" formControlName="email" class="form-control input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-row align-items-center mt-3">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Role</label>
+                                                </div>
+                                                <div class="col-xl-8 col-md-8 position-relative">
+                                                    <select class="input-field form-select-custom" (change)="setRole($event,subIndex)" id="inlineFormCustomSelect" formControlName="roleId">
+                                                        <option [ngValue]="null" selected disabled>Select Role</option>
+                                                        <option value="{{item?.id}}" *ngFor="let item of roles">{{item?.value}}</option>
+                                                    </select>
+                                                    <div class="position-absolute" style="right:20px; top:15%;">
+                                                        <img src="./assets/images/drop-down-arrow-blue.svg" class="img-fluid" style="z-index:30;" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="form-row justify-content-end mt-2">
+                                                <div class="col-xl-6 col-md-6">
+                                                    <a href="javascript:void(0);" (click)="removeUser(subIndex)" class="text-danger font-14px">Remove User</a>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                         <hr />                                  
+                                        </ng-container>
+                                        
+                                        <div class="form-row mt-2">
+                                            <div class="col-xl-8 col-md-8">
+                                                <a href="javascript:void(0);" (click)="addUser()" class="font-blueGrey font-14px">Add User</a>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="pageName === 'Review'">
+                                <div class="onboarding-form-div p-4">
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <h6 class="font-18px f-weight500 font-blue">Confirm registration</h6>
+                                        <div class="px-2 d-flex align-items-center">
+                                            <div class="active-onboarding-step font-16px">7</div>
+                                            <span class="px-2 font-16px font-blue">of 7</span>
+                                        </div>
+                                    </div>
+                                    <div class="yellow-horizontal-line mt-1"></div>
+                                    <div class="mt-3">
+                                        <h6 class="font-16px font-blue mb-0">Review your organization details</h6>
+                                        <div class="mt-3">   
+                                            <div class="subsidiary-details">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="font-blue font-14px f-weight500">Corporate Details</h6>
+                                                    <a href="javascript:void(0);" (click)="editField('Organization')"><img src="./assets/images/edit-form-icon.svg" class="img-fluid" alt=""></a>
+                                                </div>
+                                                <table class="table table-borderless table-subsidiary">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">RC Number</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Organisation Name</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">TIN</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="font-12px py-0 pl-0">{{OnboardingForm.value.rcNumber}}</td>
+                                                            <td class="font-12px py-0">{{OnboardingForm.value.orgName}}</td> 
+                                                            <td class="font-12px py-0">{{OnboardingForm.value.tin}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr />                                     
+                                            <div class="subsidiary-details">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="font-blue font-14px f-weight500">Accounts</h6>
+                                                    <a href="javascript:void(0);" (click)="editField('Subsidiary')"><img src="./assets/images/edit-form-icon.svg" class="img-fluid" alt=""></a>
+                                                </div>
+                                                <table class="table table-borderless table-subsidiary">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">Account Number</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0" colspan="2">Account Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="font-12px py-0 pl-0">
+                                                                {{mainAccount?.accountNumber}}
+                                                            </td>
+                                                            <td class="font-12px py-0" colspan="2">{{mainAccount?.accountName}}</td> 
+                                                        </tr>
+                                                        <tr *ngFor="let item of OnboardingForm.value.accounts">
+                                                            <td class="font-12px py-0">
+                                                                {{item?.accountNumber}}
+                                                            </td>
+                                                            <td class="font-12px py-0" colspan="2">{{item?.accountName}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <div class="subsidiary-details">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="font-blue font-14px f-weight500">User</h6>
+                                                    <a href="javascript:void(0);" (click)="editField('Users')"><img src="./assets/images/edit-form-icon.svg" class="img-fluid" alt=""></a>
+                                                </div>
+                                                <table class="table table-borderless table-subsidiary">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">First name</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Last name </th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Username</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of OnboardingForm.value.users">
+                                                            <td class="font-12px py-0 pl-0">{{item?.firstname}}</td>
+                                                            <td class="font-12px py-0">{{item?.surname}}</td>
+                                                            <td class="font-12px py-0">{{item?.username}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">Role</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Phone </th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Email</th>
+                                                        </tr>
+                                                        <tr *ngFor="let item of OnboardingForm.value.users">
+                                                            <td class="font-12px py-0 pl-0">{{castRoleId(item?.roleId)}}</td>
+                                                            <td class="font-12px py-0">{{item?.phone}}</td>
+                                                            <td class="font-12px py-0">{{item?.email}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <div class="subsidiary-details">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="font-blue font-14px f-weight500">Limit</h6>
+                                                    <a href="javascript:void(0);" (click)="editField('Limit')"><img src="./assets/images/edit-form-icon.svg" class="img-fluid" alt=""></a>
+                                                </div>
+                                                <table class="table table-borderless table-subsidiary">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-12px font-blue f-weight500 py-0 pl-0">Daily Limit</th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Single Limit </th>
+                                                            <th class="font-12px font-blue f-weight500 py-0">Batch Limit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="font-12px py-0 pl-0">&#8358;{{OnboardingForm.value.dailyLimit | number}}</td>
+                                                            <td class="font-12px py-0">&#8358;{{OnboardingForm.value.singleLimit | number}}</td>
+                                                            <td class="font-12px py-0">&#8358;{{OnboardingForm.value.batchLimit | number}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container> 
+                            <ng-container *ngIf="pageName === 'Limit'">
+                                <div class="onboarding-form-div p-4">
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <h6 class="font-18px f-weight500 font-blue">Transaction limit</h6>
+                                        <div class="px-2 d-flex align-items-center">
+                                            <div class="active-onboarding-step font-16px">6</div>
+                                            <span class="px-2 font-16px font-blue">of 7</span>
+                                        </div>
+                                    </div>
+                                    <div class="yellow-horizontal-line mt-1"></div>
+                                    <div class="mt-4">
+                                        <h6 class="font-18px font-blue mb-0">Set up naira transaction limits</h6>
+                                        <p class="font-blueGrey font-12px">*There are no transaction limits on foreign currencies</p>
+                                        <div class="form-row align-items-center mt-4">
+                                            <div class="col-xl-5 col-md-4">
+                                                <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Daily transaction limit</label>
+                                            </div>
+                                            <div class="col-xl-7 col-md-8">
+                                                <input type="text" id="dL" formControlName="dailyLimit" (input)="CheckValue($event)" (blur)="formatCurrency($event, 'dL')" class="form-control input-field">
+                                            </div>
+                                        </div>
+                                        <div class="form-row align-items-center mt-4">
+                                            <div class="col-xl-5 col-md-4">
+                                                <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Single transaction limit</label>
+                                            </div>
+                                            <div class="col-xl-7 col-md-8">
+                                                <input type="text" id="sL" formControlName="singleLimit" (input)="CheckValue($event)" (blur)="formatCurrency($event, 'sL')" class="form-control input-field">
+                                            </div>
+                                        </div>
+                                        <div class="form-row align-items-center mt-4">
+                                            <div class="col-xl-5 col-md-4">
+                                                <label for="transfer-from" class="mb-0 font-12px font-blue f-weight500">Batch transaction limit</label>
+                                            </div>
+                                            <div class="col-xl-7 col-md-8">
+                                                <input type="text" id="bL" formControlName="batchLimit" (input)="CheckValue($event)" (blur)="formatCurrency($event, 'bL')" class="form-control input-field">
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="form-row justify-content-between mt-5">
+                                <ng-container *ngIf="pageStatus === 'Profile'">
+                                    <div class="col-xl-5 col-md-6 mb-3" *ngIf="pageName !== 'Subsidiary'">
+                                        <button class="btn btn-add-beneficiary" [disabled]="OnboardingForm.invalid" (click)="goBack(pageName)">BACK</button>
+                                    </div>
+                                </ng-container>
+                               
+                                <div class="col-xl-5 col-md-6 mb-3">
+                                    <button type="submit" class="btn btn-submit" [disabled]="OnboardingForm.invalid" (click)="SubmitInput(pageName)">NEXT</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">                            
+            <app-onboarding-modal (OtpValid)="handleOtpRes($event)" [Details]='Details'></app-onboarding-modal>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>

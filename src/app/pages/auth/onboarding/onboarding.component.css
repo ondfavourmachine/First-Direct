@@ -1,0 +1,13 @@
+.pointer{
+    cursor: pointer;
+}
+th{
+    min-width: 150px;
+}
+.onboardingImg {
+    position: fixed;
+    top: 19%;
+}
+.text-primary{
+    color: #003358 !important;
+}

@@ -1,0 +1,15 @@
+h6{
+    color: #003366;
+}
+.w-250{
+    width: 200px;
+}
+.w-150{
+    width: 150px;
+}
+.w-120{
+    width: 120px;
+}
+.rounded-pill{
+    border-radius: 15px;
+}

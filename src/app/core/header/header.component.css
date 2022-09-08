@@ -1,0 +1,93 @@
+.btn-primary, .btn-primary:hover{
+    background-color: #022E64;
+}
+.dropdown-menu{
+    left: -40px;
+}
+.active-head{
+    color: #FFF !important;
+    background-color: #022E64;
+}
+.fs-12{
+    font-size: 12px;
+}
+
+[type="radio"]:checked + label:before, [type="radio"]:not(:checked) + label:before {
+    z-index: -10;
+}
+[type="radio"]:checked + label:after, [type="radio"]:not(:checked) + label:after {
+    z-index: -10;
+}
+.dropdown-toggle::after, .base-color{
+    color: #022E64;
+}
+
+
+
+.sidepanel  {
+    width: 0;
+    position: fixed;
+    z-index: 999;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidepanel a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  .list-group-item{
+    font-size: 14px;
+  }
+
+  .sidepanel li{
+    padding:1rem;
+    text-decoration: none;
+    font-size:14px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidepanel a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color:#444;
+  }
+
+
+.company_logo{
+  /* width: 30px; */
+  background-color: #818181;
+  /* border-radius: 50%; */
+  color: #FFF;
+  font-size: 20px;
+  font-family: "Roboto";
+}

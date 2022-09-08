@@ -1,0 +1,37 @@
+.w-85{
+    width: 85% !important;
+}
+.btn-group-toggle .active{
+    color: #fff!important;
+    background-color: #022E64!important;   
+}
+.send-money{
+    background-color: #022E64;
+    color: #fff;
+    padding: 1rem;
+}
+.account-card-mgt.active{
+    color: #fff;
+}
+.active .values{
+    color: #DDAD31 !important;
+}
+.activePage{
+    color: #fff;
+    background-color: #DDAD31;
+}
+.btn-primary{
+    background-color: #022E64;
+}
+.btn-sm{
+    /* width: 100px; */
+}
+.text-sm{
+ font-size: 80%;
+}
+.fs-12px{
+    font-size: 12px;
+}
+.fs-14px{
+    font-size: 14px;
+}
