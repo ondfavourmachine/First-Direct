@@ -1,0 +1,42 @@
+@import '../../../../../customStyles/colors';
+
+.form {
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px;
+    color: $fbn-blue;
+    font-size: 14px;
+    & h1,
+    h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 5px 0;
+    }
+}
+
+.innerForm{
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem 0;
+    margin-top: 2rem;
+}
+
+form{
+    border: 2px solid $fbn-gray-bg;
+    padding: 1.2rem;
+    width: 50%;
+    margin-top: 1.5rem;
+    color: $fbn-text;
+    font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+}
+input{
+    background-color: $fbn-gray-bg;
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 51, 102, 0.2);
+    font-size: 16px;
+}
+.contact{
+    border-top: 1px solid rgba(0, 51, 102, 0.2);
+}

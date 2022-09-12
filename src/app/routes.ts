@@ -21,6 +21,10 @@ export const AppRoutes:Routes = [
       canActivate:[AuthGuard],
       loadChildren:()=> import('./pages/account-management/account-management.module').then(m=>m.AccountManagementModule)
     },
+    { path: 'scm',
+      canActivate:[AuthGuard],
+      loadChildren:()=> import('./pages/scm/onboarding/onboarding.module').then(m=>m.OnboardingModule)
+    },
     {
       path:'settings',
       canActivate:[AuthGuard],

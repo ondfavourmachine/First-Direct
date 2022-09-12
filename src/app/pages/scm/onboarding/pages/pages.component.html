@@ -1,0 +1,167 @@
+<div class="flex-between my-6">
+    <div class="centeredFlexRow">
+        <button (click)="toggleTabs(1)" [ngClass]="tabNumber === 1 ? 'active-btn-bg' : 'btn'">All</button>
+        <button [ngClass]="tabNumber === 2 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(2)">Buyers</button>
+        <button [ngClass]="tabNumber === 3 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(3)">Suppliers</button>
+    </div>
+
+    <div class="inputs flex-between">
+        <div class=" filter centeredRowFlex ">
+            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M2.49913 1H15.4991C15.6431 1.05051 15.7737 1.13331 15.8808 1.24206C15.9878 1.35082 16.0686 1.48264 16.1169 1.62742C16.1651 1.77221 16.1796 1.92612 16.1592 2.07737C16.1388 2.22861 16.084 2.37318 15.9991 2.5L10.9991 8V15L6.99913 12V8L1.99913 2.5C1.91422 2.37318 1.85947 2.22861 1.83906 2.07737C1.81865 1.92612 1.83313 1.77221 1.88139 1.62742C1.92966 1.48264 2.01042 1.35082 2.11749 1.24206C2.22457 1.13331 2.35511 1.05051 2.49913 1Z"
+                    stroke="#757D8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <div class="centeredRowFlex input">
+            <input type="text" placeholder="search">
+            <div class="search centeredRowFlex">
+                <!-- <fa-icon class="" [icon]="searchIcon"></fa-icon> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="tabNumber === 1 ? 'block' : 'hidden'">
+    <app-table [tableHeaders]='tableHeaders' ></app-table>
+</div>
+<div [ngClass]="tabNumber === 2 ? 'block' : 'hidden'">
+    <table>
+        <thead>
+            <tr class="headRow">
+                <th
+                    
+                >
+                 Date  Added
+                </th>
+                <th
+                    
+                >
+                    TIN
+                </th>
+                <th
+                    
+                >
+                 Company
+                </th>
+                <th
+                    
+                >
+                 Phone Number
+                </th>
+                <th
+                    
+                >
+                 Company Email
+                </th>
+                <th
+                    
+                >
+                Actions
+                </th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr class="bodyRow" >
+                    <th>
+                        22/06/21
+                    </th>
+                    <th>
+                        FBN1201
+                    </th>
+                    <th>
+                        chc kimited
+                    </th>
+                    <th
+                        
+                    >
+                       <p
+                       >
+                        07036777787
+                       </p>
+                    </th>
+                    <th>
+                        chc@gmail
+                    </th>
+                    <th class="flex">
+                        <!-- <fa-icon class="fbn-mx" [icon]="del"></fa-icon> -->
+                        <!-- <fa-icon class="fbn-mx" [icon]="edit"></fa-icon> -->
+                    </th>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div [ngClass]="tabNumber === 3 ? 'block' : 'hidden'">
+    <table>
+        <thead>
+            <tr class="headRow">
+                <th
+                    
+                >
+                 Date  Added
+                </th>
+                <th
+                    
+                >
+                    TIN
+                </th>
+                <th
+                    
+                >
+                 Company
+                </th>
+                <th
+                    
+                >
+                 Phone Number
+                </th>
+                <th
+                    
+                >
+                 Company Email
+                </th>
+                <th
+                    
+                >
+                Actions
+                </th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr class="bodyRow" >
+                    <th>
+                        22/06/21
+                    </th>
+                    <th>
+                        FBN1201
+                    </th>
+                    <th>
+                        chc kimited
+                    </th>
+                    <th
+                        
+                    >
+                       <p
+                       >
+                        07036777787
+                       </p>
+                    </th>
+                    <th>
+                        chc@gmail
+                    </th>
+                    <th class="flex">
+                        <!-- <fa-icon class="fbn-mx" [icon]="del"></fa-icon> -->
+                        <!-- <fa-icon class="fbn-mx" [icon]="edit"></fa-icon> -->
+                    </th>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- *ngFor="let contents of _tableContents" -->
+<!-- [ngClass]="contents?.role === 'buyer' ? 'buyer' : 'seller' " -->
+<!-- *ngFor="let headers of _tableHeaders" -->

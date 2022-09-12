@@ -1,0 +1,14 @@
+<table>
+    <thead>
+        <tr class="headRow">
+            <th *ngFor="let headers of _tableHeaders">
+                {{headers?.name}}
+            </th>
+        </tr>
+    </thead>
+
+    <ng-content></ng-content>
+</table>
+
+
+

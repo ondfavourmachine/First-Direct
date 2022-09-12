@@ -30,6 +30,34 @@
                     </li>
                 </ul>
             </div>
+
+            <!-- SCM -->
+            <li [ngClass]="checkActiveMain('scm')">
+                <a data-toggle="collapse" href="#scmList">
+                    <i class="fa fa-tasks"></i>
+                    &nbsp; SCM &nbsp;
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+            <div class="collapse" id="scmList">
+                <ul class="nav-items__submenu">
+                    <!-- Onboarding -->
+                    <li 
+                    [ngClass]="CheckActiveSub('onboarding')"
+                    [routerLink]="['/scm']">
+                        <a data-toggle="collapse" href="#onboardingList">
+                            &nbsp; Onboarding &nbsp;
+                        </a>
+                    </li>
+                    <!-- Invoices -->
+                    <li [ngClass]="CheckActiveSub('invoices')">
+                        <a data-toggle="collapse" href="#invoicesList">
+                            &nbsp; Invoices &nbsp;
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
             <li [ngClass]="checkActiveMain('transfer-services')">
                 <a data-toggle="collapse" href="#paymentList">
                     <i class="fa fa-credit-card"></i>
@@ -69,33 +97,30 @@
                     </li>
                 </ul>
             </div>
-            <li  [ngClass]="checkActiveMain('papps')">
+            <li [ngClass]="checkActiveMain('papps')">
                 <a data-toggle="collapse" href="#pappsList">
                     <i class="fa fa-credit-card"></i>
-                        &nbsp; PAPSS Payments &nbsp;
+                    &nbsp; PAPSS Payments &nbsp;
                     <i class="fa fa-plus"></i>
                 </a>
             </li>
             <div class="collapse" id="pappsList">
                 <ul class="nav-items__submenu">
-                    <li [ngClass]="CheckActiveSub('initiate-papps')" 
-                        [routerLink]="['/papps/initiate-papps']"
+                    <li [ngClass]="CheckActiveSub('initiate-papps')" [routerLink]="['/papps/initiate-papps']"
                         *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[9]?.Allowed">
                         <a>Initiate PAPSS</a>
                     </li>
-                    <li [ngClass]="CheckActiveSub('approve-papps')" 
-                        [routerLink]="['/papps/approve-papps']"
+                    <li [ngClass]="CheckActiveSub('approve-papps')" [routerLink]="['/papps/approve-papps']"
                         *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[10]?.Allowed">
                         <a>Approve PAPSS</a>
                     </li>
-                    <li [ngClass]="CheckActiveSub('papps-reports')" 
-                        [routerLink]="['/papps/papps-reports']"
+                    <li [ngClass]="CheckActiveSub('papps-reports')" [routerLink]="['/papps/papps-reports']"
                         *ngIf="allowedRoutes[1].Allowed && allowedRoutes[1].GetSubModules[11]?.Allowed">
                         <a>PAPSS Report</a>
                     </li>
                 </ul>
             </div>
-            <li  [ngClass]="checkActiveMain('foreign-payments')">
+            <li [ngClass]="checkActiveMain('foreign-payments')">
                 <a data-toggle="collapse" href="#foreignList">
                     <i class="fa fa-money"></i>
                     &nbsp; Foreign Payments &nbsp;
@@ -146,7 +171,7 @@
                     </li>
                 </ul>
             </div>
-           
+
 
             <li [ngClass]="checkActiveMain('reports')">
                 <a data-toggle="collapse" href="#ReportList">
@@ -210,6 +235,7 @@
     <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
     <ul class="list-group list-group-flush">
         <li class="list-group-item" *ngFor="let item of notifications">{{item?.message}} <br />
-            <small>{{item?.subsidiaryName}}</small></li>
+            <small>{{item?.subsidiaryName}}</small>
+        </li>
     </ul>
 </div>

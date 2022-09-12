@@ -1,0 +1,245 @@
+@import '../../../../../customStyles/colors';
+
+.headerTitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: $fbn-text;
+}
+
+.text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: $fbn-text ;
+}
+
+.input {
+    box-shadow: $fbn-light-shadow;
+   
+    // border: 1px solid $fbn-gray-bg !important;
+    border: none;
+    // padding: 8px;
+
+}
+
+.filter {
+    background-color: white;
+     margin: 0 8px;
+    width: 44px;
+    height: 44px;
+    box-shadow: $fbn-light-shadow;
+}
+
+.search {
+    background-color: $fbn-gray-bg;
+    width: 48px;
+    height: 44px;
+}
+
+input {
+    width: 384px;
+    height: 44px;
+    padding: 5px;
+}
+input:focus{
+    outline: none;
+}
+
+.buyer {
+    background: $fbn-light-green;
+    color: $fbn-text-green;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 11px;
+    width: 100% !important;
+}
+
+.seller {
+    background-color: $fbn-light-yellow;
+    color: $fbn-text-yellow;
+    text-align: center !important;
+    padding: 5px 10px;
+    border-radius: 11px;
+}
+
+.deleteInput{
+    background-color: $fbn-gray-bg;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 51, 102, 0.2);
+    font-size: 16px;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../../../../../customStyles/layouting.scss';
+
+
+.centeredRowFlex {
+    @include centered-flex-row;
+
+}
+
+.flex {
+    @include row-Flex;
+
+}
+
+.flex-startrow {
+    @include flex-start-row;
+
+}
+
+.flex-startend {
+    @include flex-end-row
+}
+
+.flex-between {
+    @include between-flex-row
+}
+.flex-even {
+    @include between-flex-row
+}
+
+.flex-col {
+    @include flex-column
+}
+
+.flex-colstart {
+    @include flex-column-start
+}
+
+.flex-colend {
+    @include flex-column-end
+}
+
+.flex-colcenter {
+    @include flex-column-center
+}
+
+.fbn-mx {
+    margin: 0 4px;
+}
+
+.hidden {
+    display: hidden;
+}
+
+.block {
+    display: block;
+}
+
+.modal-overlay {
+    @include centered-modal-with-overlay
+}
+
+.modal {
+    @include centeredModal
+}
+.right-modal{
+    @include rightModal
+}
+
+.fbn-bg-white {
+    background-color: white;
+}
+
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-px-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 2rem;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-fill-green-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    background-color: $fbn-text-green ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-yellow-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+   border: 1px solid $fbn-text-yellow;
+    color: $fbn-text-yellow;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+   border: 2px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-px-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+   border: 1px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+table {
+    width: 100%;
+    background-color: $fbn-gray-bg;
+    text-align: left;
+    color: $fbn-text;
+    margin: 10px 0;
+}
+
+.bodyRow,
+.headRow {
+    border-bottom: 3px solid $fbn-gray-bg;
+    background-color: white;
+
+    & th,
+    td {
+        padding: 10px;
+
+    }
+}
+
+.headRow {
+    th {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+
+.bodyRow {
+    td {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+
+        // margin: 1rem 0 !important;
+    }
+}

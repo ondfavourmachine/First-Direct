@@ -1,0 +1,8 @@
+@import '../../../../../customStyles/colors';
+
+input{
+    background-color: $fbn-gray-bg;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 51, 102, 0.2);
+    font-size: 16px;
+}
