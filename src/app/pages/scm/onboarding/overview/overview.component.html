@@ -1,9 +1,8 @@
-
 <div class="flex-between my-4">
-    <app-card cardTitle="All Customers" (clicker)="navigate()" figure={{stats?.ALL?.value}}></app-card>
-    <app-card cardTitle="All Buyers"  (clicker)="navigateToBuyer()" figure="900"></app-card>
-    <app-card cardTitle="All Suppliers" (clicker)="navigateToSupplier()" figure="900"></app-card>
-    <app-card cardTitle="Inactive Customers" figure="900"></app-card>
+    <app-card cardTitle="All Customers" (clicker)="navigate()" figure={{stats?.total}}></app-card>
+    <app-card cardTitle="All Buyers" (clicker)="navigateToBuyer()" figure={{stats?.buyers}}></app-card>
+    <app-card cardTitle="All Suppliers" (clicker)="navigateToSupplier()" figure="0"></app-card>
+    <app-card cardTitle="Inactive Customers" figure={{stats?.inactive}}></app-card>
 </div>
 
 <div class="flex-between">
@@ -14,23 +13,27 @@
     <div class="inputs flex-between">
         <div class=" filter centeredRowFlex ">
             <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.49913 1H15.4991C15.6431 1.05051 15.7737 1.13331 15.8808 1.24206C15.9878 1.35082 16.0686 1.48264 16.1169 1.62742C16.1651 1.77221 16.1796 1.92612 16.1592 2.07737C16.1388 2.22861 16.084 2.37318 15.9991 2.5L10.9991 8V15L6.99913 12V8L1.99913 2.5C1.91422 2.37318 1.85947 2.22861 1.83906 2.07737C1.81865 1.92612 1.83313 1.77221 1.88139 1.62742C1.92966 1.48264 2.01042 1.35082 2.11749 1.24206C2.22457 1.13331 2.35511 1.05051 2.49913 1Z" stroke="#757D8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                
+                <path
+                    d="M2.49913 1H15.4991C15.6431 1.05051 15.7737 1.13331 15.8808 1.24206C15.9878 1.35082 16.0686 1.48264 16.1169 1.62742C16.1651 1.77221 16.1796 1.92612 16.1592 2.07737C16.1388 2.22861 16.084 2.37318 15.9991 2.5L10.9991 8V15L6.99913 12V8L1.99913 2.5C1.91422 2.37318 1.85947 2.22861 1.83906 2.07737C1.81865 1.92612 1.83313 1.77221 1.88139 1.62742C1.92966 1.48264 2.01042 1.35082 2.11749 1.24206C2.22457 1.13331 2.35511 1.05051 2.49913 1Z"
+                    stroke="#757D8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
         </div>
         <div class="centeredRowFlex input">
             <input type="text" class="input" placeholder="search">
             <div class="search centeredRowFlex">
-                <!-- <fa-icon class="" [icon]="searchIcon" ></fa-icon> -->
+                <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <circle cx="10" cy="10" r="7" />
+                    <line x1="21" y1="21" x2="15" y2="15" />
+                </svg>
             </div>
         </div>
     </div>
 </div>
 
-<app-table 
-[tableHeaders]='tableHeaders' 
-(clciker)="closeDetailsModal()"
->
+<app-table [tableHeaders]='tableHeaders' (clciker)="closeDetailsModal()">
     <tbody>
         <tr (click)="toggleModal(contents?.role)" class="bodyRow cursor-pointer" *ngFor="let contents of tableContents">
             <td>
@@ -51,8 +54,17 @@
                 {{contents?.comapnyEmail}}
             </td>
             <td class="flex">
-                <!-- <fa-icon class="fbn-mx" [icon]="del"></fa-icon> -->
-                <!-- <fa-icon class="fbn-mx" [icon]="edit"></fa-icon> -->
+                <svg class=" text-gray-500" width="24" height="24"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                  
+
+                <svg class="h-5 w-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
             </td>
 
         </tr>
@@ -63,7 +75,8 @@
     <div class="">
         <div class="flex-between detailsModal my-3 py-3 ">
             <h1 class=" capitalize">{{role}} Details</h1>
-            <svg (click)="closeDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg (click)="closeDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M8.0056 9.06627C8.2985 9.35917 8.7734 9.35917 9.0663 9.06627C9.3591 8.77337 9.3591 8.29847 9.0663 8.00557L6.0611 5.00037L9.0662 1.99519C9.3591 1.7023 9.3591 1.22743 9.0662 0.934529C8.7734 0.641639 8.2985 0.641639 8.0056 0.934529L5.0004 3.93977L1.99519 0.934519C1.70229 0.641619 1.22742 0.641619 0.934529 0.934519C0.641629 1.22741 0.641629 1.70228 0.934529 1.99518L3.9397 5.00037L0.934519 8.00557C0.641619 8.29847 0.641619 8.77337 0.934519 9.06627C1.22741 9.35917 1.70228 9.35917 1.99518 9.06627L5.0004 6.06107L8.0056 9.06627Z"
                     fill="black" />
@@ -168,7 +181,8 @@
                         <p>Last Transactions</p>
                         <div class="flex items-center">
                             <p>Aug 1, 2022</p>
-                            <button class="font-semibold border text-fbn-blue border-fbn-blue p-1 ml-1">Request Payment</button>
+                            <button class="font-semibold border text-fbn-blue border-fbn-blue p-1 ml-1">Request
+                                Payment</button>
                         </div>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
@@ -197,7 +211,8 @@
     <div class="modal w-[50%]">
 
         <div class="flex-startend my-2 z-50">
-            <svg (click)="toggleDeleteModal()" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg (click)="toggleDeleteModal()" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M13 0C5.832 0 0 5.832 0 13C0 20.168 5.832 26 13 26C20.168 26 26 20.168 26 13C26 5.832 20.168 0 13 0ZM13 2C19.087 2 24 6.913 24 13C24 19.087 19.087 24 13 24C6.913 24 2 19.087 2 13C2 6.913 6.913 2 13 2ZM9.22 7.78L7.78 9.22L11.564 13L7.782 16.78L9.222 18.22L13 14.437L16.78 18.217L18.22 16.78L14.437 13L18.217 9.22L16.78 7.78L13 11.564L9.22 7.782V7.78Z"
                     fill="black" />

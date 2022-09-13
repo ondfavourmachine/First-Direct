@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from 'src/app/core/services/crudServices/crud.service';
+import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-form-page',

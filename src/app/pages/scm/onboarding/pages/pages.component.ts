@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // import { IconProp } from '@fortawesome/fontawesome-svg-core';
 // import { faSearch, faFilter, faFileEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { CrudService } from 'src/app/core/services/crudServices/crud.service';
+import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 
 @Component({
   selector: 'app-pages',

@@ -12,6 +12,7 @@ export const environment = {
     collectionService2: 'https://192.168.253.129/tesla_collection/api/',
     papsUrl:'https://192.168.253.129/Tesla_PaymentEncryption/api/'
   },
+  scmApiUrl: 'https://bridger-tesla.herokuapp.com',
   spmo:{ 
     mlm: stuff.pairs.sruff.mlmm,
     nlp: stuff.pairs.sruff.nnnn
