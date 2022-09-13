@@ -171,7 +171,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.getStats();
     this.getCustomers();
-    this.gVar.spinner.show();
+    // this.gVar.spinner.show();
   }
 
 }

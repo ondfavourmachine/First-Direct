@@ -6,6 +6,7 @@
     line-height: 19px;
     color: $fbn-blue;
     font-size: 14px;
+
     & h1,
     h2 {
         font-size: 1.1rem;
@@ -14,29 +15,98 @@
     }
 }
 
-.innerForm{
+.innerForm {
     background-color: white;
     padding: 1rem;
     margin: 1rem 0;
     margin-top: 2rem;
 }
 
-form{
+form {
     border: 2px solid $fbn-gray-bg;
     padding: 1.2rem;
     width: 50%;
     margin-top: 1.5rem;
     color: $fbn-text;
     font-weight: 400;
-font-size: 16px;
-line-height: 19px;
+    font-size: 16px;
+    line-height: 19px;
 }
-input{
+
+input, select {
     background-color: $fbn-gray-bg;
     padding: 8px 14px;
     border: 1px solid rgba(0, 51, 102, 0.2);
-    font-size: 16px;
+    font-size: 14px !important;
+    width: 50%;
 }
-.contact{
+
+.contact {
     border-top: 1px solid rgba(0, 51, 102, 0.2);
+}
+
+.headers {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+
+
+    color: #002855;
+}
+
+label {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+
+    color: #657889;
+
+}
+
+.fields{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-startend{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 2px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-px-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    border: 1px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
 }

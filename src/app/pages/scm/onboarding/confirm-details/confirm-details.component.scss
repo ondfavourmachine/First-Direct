@@ -1,3 +1,89 @@
+@import '../../../../../customStyles/layouting';
+@import '../../../../../customStyles/colors';
 .conf-d h1{
     font-size: 1rem !important;
+}
+
+.headers {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+
+
+    color: #002855;
+}
+
+.fields{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-startend{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-px-fill-blue-btn {
+    border-radius: 100px;
+    padding: 6px 4rem;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 19px;
+}
+
+
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 2px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-px-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    border: 1px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.form {
+    border: 2px solid $fbn-gray-bg;
+    padding: 1.5rem;
+    width: 55%;
+    margin-top: 1.5rem;
+    color: $fbn-text;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.modalTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: #002855 !important;
 }

@@ -5,88 +5,88 @@
     <!-- MAIN CONTENT-->
     <main class="main-content">
         <div class="main-content-padding p-3">
-            <div class="conf-d">
+            <div class="conf-d bg-white p-3">
                 <div class="flex py-5 my-2">
                     <h1 [routerLink]="['/scm']" class="text-fbn-blue font-semibold">Back</h1>
                 </div>
-            
-                <div class="my-3 bg-white p-5 px-8">
+
+                <div class="my-3 form ">
                     <div class="my-3">
-                        <h1 class="text-fbn-blue text-lg font-semibold">Preview Buyer's Information</h1>
-                        <p class="text-sm">Kindly go through the information before clicking the button below</p>
+                        <h1 class="text-fbn-blue headers text-lg font-semibold">Preview Buyer's Information</h1>
+                        <p class="text-xs">Kindly go through the information before clicking the button below</p>
                     </div>
-            
+
                     <div class="flex flex-col text-fbn-blue p-3 w-[50%] justify-start border-2 border-fbn-gray-bg">
                         <div class="my-3 p-3">
-                            <h1 class="text-fbn-blue text-lg font-semibold">Basic Information</h1>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <h1 class="text-fbn-blue headers text-lg font-semibold">Basic Information</h1>
+                            <div class="fields  my-5">
+                                <h1>{{customerDetails?.role}}'s name</h1>
+                                <p>{{customerDetails?.customerName}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Company name</h1>
+                                <p>{{customerDetails?.customerName}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Industry</h1>
+                                <p>{{customerDetails?.industryId}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>{{customerDetails?.role}}'s Code</h1>
+                                <p>{{customerDetails?.customerCode}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>RC Number</h1>
+                                <p>{{customerDetails?.rcNumber}}</p>
                             </div>
-                            <div class="flex-between my-5">
+                            <!-- <div class="fields  my-5">
                                 <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
-                            </div>
+                                <p>{{customerDetails?.}}</p>
+                            </div> -->
                         </div>
-            
+
                         <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
-                            <h1 class="text-fbn-blue text-lg font-semibold">Contact Information</h1>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <h1 class="text-fbn-blue headers text-lg font-semibold">Contact Information</h1>
+                            <div class="fields  my-5">
+                                <h1>Company Email</h1>
+                                <p>{{customerDetails?.email}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Company Phone No</h1>
+                                <p>{{customerDetails?.mobileNumber}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Country</h1>
+                                <p>{{customerDetails?.countryId}}</p>
                             </div>
                         </div>
-            
+
                         <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
-                            <h1 class="text-fbn-blue  text-lg font-semibold">Account Information</h1>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <h1 class="text-fbn-blue headers  text-lg font-semibold">Account Information</h1>
+                            <div class="fields  my-5">
+                                <h1>Currency</h1>
+                                <p>NGN</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Tier</h1>
+                                <p>{{customerDetails?.tierId}}</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Rank</h1>
+                                <p>XYZ</p>
                             </div>
-                            <div class="flex-between my-5">
-                                <h1>'s name</h1>
-                                <p>Blessing Ojediran</p>
+                            <div class="fields  my-5">
+                                <h1>Limit</h1>
+                                <p>{{customerDetails?.limits}}</p>
                             </div>
                         </div>
                         <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
-                            <p class="text-sm">Date Created: 12-03-2021  10:40 am</p>
+                            <p class="text-sm">Date Created: {{today | date: 'dd/MM/yyyy'}} </p>
                         </div>
-            
+
                     </div>
-            
-                    <div class="flex w-[50%] justify-end my-3">
+
+                    <div class="flex-startend">
                         <button class="fbn-blue-btn mx-3">Cancel</button>
                         <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Confirm</button>
                     </div>
@@ -100,14 +100,14 @@
 
 
 <app-centered-modal-wrapper *ngIf="isSuccessModalOpen">
-    <div class="modal bg-white w-[50%] px-4">
+    <div style="width: 50%;" class="modalAdd blowUp p-4">
         <div class="flex-colend my-2">
             <div class="my-2">
-                <h1 class="text-fbn-blue font-semibold text-lg">Success!</h1>
+                <h1 class="text-fbn-blue modalTitle font-semibold text-lg">Success!</h1>
             </div>
             <div class="my-2">
                 <p class=" text-fbn-text">
-                    New s created  successfully 
+                    New {{customerDetails?.role}}'s created successfully
                 </p>
             </div>
             <div class="my-2">

@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+@import './customStyles/_layouting.scss';
+@import './customStyles/_colors.scss';
+
+.fbn-bg-white {
+    background-color: white;
+}
+
+.blowUp {
+    animation: blowUp 0.4s ease-in-out;
+}
+
+@keyframes blowUp {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.modalAdd {
+   
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 10px;
+
+    height: fit-content;
+
+}
+
+
