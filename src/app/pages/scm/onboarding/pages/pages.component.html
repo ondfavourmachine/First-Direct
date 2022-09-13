@@ -1,5 +1,5 @@
 <div class="flex-between my-6">
-    <div class="centeredFlexRow">
+    <div class="centeredRowFlex">
         <button (click)="toggleTabs(1)" [ngClass]="tabNumber === 1 ? 'active-btn-bg' : 'btn'">All</button>
         <button [ngClass]="tabNumber === 2 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(2)">Buyers</button>
         <button [ngClass]="tabNumber === 3 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(3)">Suppliers</button>
@@ -14,18 +14,23 @@
             </svg>
         </div>
         <div class="centeredRowFlex input">
-            <input type="text" placeholder="search">
+            <input type="text" class="input" placeholder="search">
             <div class="search centeredRowFlex">
-                <!-- <fa-icon class="" [icon]="searchIcon"></fa-icon> -->
+                <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <circle cx="10" cy="10" r="7" />
+                    <line x1="21" y1="21" x2="15" y2="15" />
+                </svg>
             </div>
         </div>
     </div>
 </div>
 
-<div [ngClass]="tabNumber === 1 ? 'block' : 'hidden'">
+<div [ngClass]="tabNumber === 1 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders' ></app-table>
 </div>
-<div [ngClass]="tabNumber === 2 ? 'block' : 'hidden'">
+<div [ngClass]="tabNumber === 2 ? 'show' : 'hide'">
     <table>
         <thead>
             <tr class="headRow">
@@ -61,7 +66,6 @@
                 </th>
             </tr>
         </thead>
-    
         <tbody>
             <tr class="bodyRow" >
                     <th>
@@ -93,7 +97,7 @@
         </tbody>
     </table>
 </div>
-<div [ngClass]="tabNumber === 3 ? 'block' : 'hidden'">
+<div [ngClass]="tabNumber === 3 ? 'show' : 'hide'">
     <table>
         <thead>
             <tr class="headRow">

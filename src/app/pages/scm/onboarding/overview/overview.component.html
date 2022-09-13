@@ -35,31 +35,32 @@
 
 <app-table [tableHeaders]='tableHeaders' (clciker)="closeDetailsModal()">
     <tbody>
-        <tr (click)="toggleModal(contents?.role)" class="bodyRow cursor-pointer" *ngFor="let contents of tableContents">
+        <tr (click)="toggleModal(contents?.customerType)" class="bodyRow cursor-pointer" *ngFor="let contents of allCustomers">
             <td>
-                {{contents?.dateAdded}}
+                <!-- date pipe -->
+                {{contents?.dateAdded | date: 'dd/MM/yyyy'}}
             </td>
             <td>
                 {{contents?.tin}}
             </td>
             <td>
-                {{contents?.company}}
+                {{contents?.customerName}}
             </td>
             <td>
-                <p [ngClass]="contents?.role === 'buyer' ? 'buyer' : 'seller' ">
-                    {{contents?.role}}
+                <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
+                    {{contents?.customerType}}
                 </p>
             </td>
             <td>
-                {{contents?.comapnyEmail}}
+                {{contents?.address1}}
             </td>
             <td class="flex">
-                <svg class=" text-gray-500" width="24" height="24"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class=" text-gray-500" width="20" height="20"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                   </svg>
                   
 
-                <svg class="h-5 w-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24"
+                <svg class="h-5 w-5 mx-2 text-gray-500" width="20" height="20" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 20h9" />
@@ -72,8 +73,8 @@
 </app-table>
 
 <app-details-modal-wrapper *ngIf="detailsModal">
-    <div class="">
-        <div class="flex-between detailsModal my-3 py-3 ">
+    <div class="detailsModal">
+        <div class="flex-between  my-3 py-2 ">
             <h1 class=" capitalize">{{role}} Details</h1>
             <svg (click)="closeDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +94,7 @@
                             d="M1.39902 12.5934L1.45872 13.1904H1.45872L1.39902 12.5934ZM3.49564 12.3837L3.43594 11.7867H3.43594L3.49564 12.3837ZM4.34271 11.9613L3.90183 11.5544H3.90183L4.34271 11.9613ZM11.0287 4.7182L11.4696 5.12517V5.12517L11.0287 4.7182ZM10.8819 2.77267L11.2567 2.30415L10.8819 2.77267ZM9.61721 1.76094L9.24239 2.22946V2.22946L9.61721 1.76094ZM7.82243 1.87872L7.3896 1.4632V1.4632L7.82243 1.87872ZM1.0375 8.94636L0.604668 8.53084H0.604667L1.0375 8.94636ZM7.39445 2.88177C7.14507 2.66356 6.76601 2.68883 6.5478 2.93822C6.32959 3.1876 6.35486 3.56666 6.60425 3.78487L7.39445 2.88177ZM9.27091 6.1182C9.5203 6.33641 9.89935 6.31114 10.1176 6.06176C10.3358 5.81237 10.3105 5.43332 10.0611 5.21511L9.27091 6.1182ZM6.99935 12.0667C6.66798 12.0667 6.39935 12.3353 6.39935 12.6667C6.39935 12.998 6.66798 13.2667 6.99935 13.2667V12.0667ZM10.9993 13.2667C11.3307 13.2667 11.5993 12.998 11.5993 12.6667C11.5993 12.3353 11.3307 12.0667 10.9993 12.0667V13.2667ZM0.0660156 9.86973V11.93H1.26602V9.86973H0.0660156ZM1.45872 13.1904L3.55534 12.9807L3.43594 11.7867L1.33932 11.9963L1.45872 13.1904ZM4.78359 12.3683L11.4696 5.12517L10.5878 4.31124L3.90183 11.5544L4.78359 12.3683ZM11.2567 2.30415L9.99202 1.29242L9.24239 2.22946L10.5071 3.24119L11.2567 2.30415ZM7.3896 1.4632L0.604668 8.53084L1.47033 9.36188L8.25526 2.29424L7.3896 1.4632ZM9.99202 1.29242C9.21098 0.66758 8.08229 0.74165 7.3896 1.4632L8.25526 2.29424C8.51801 2.02055 8.94613 1.99245 9.24239 2.22946L9.99202 1.29242ZM11.4696 5.12517C12.2303 4.30108 12.1324 3.00475 11.2567 2.30415L10.5071 3.24119C10.8392 3.50694 10.8763 3.99865 10.5878 4.31124L11.4696 5.12517ZM3.55534 12.9807C4.02587 12.9337 4.46285 12.7158 4.78359 12.3683L3.90183 11.5544C3.78016 11.6862 3.61442 11.7688 3.43594 11.7867L3.55534 12.9807ZM0.0660156 11.93C0.0660156 12.6794 0.713052 13.2649 1.45872 13.1904L1.33932 11.9963C1.30007 12.0003 1.26602 11.9694 1.26602 11.93H0.0660156ZM1.26602 9.86973C1.26602 9.68042 1.33923 9.49844 1.47033 9.36188L0.604667 8.53084C0.259029 8.89088 0.0660156 9.37064 0.0660156 9.86973H1.26602ZM6.60425 3.78487L9.27091 6.1182L10.0611 5.21511L7.39445 2.88177L6.60425 3.78487ZM6.99935 13.2667H10.9993V12.0667H6.99935V13.2667Z"
                             fill="#022E64" />
                     </svg>
-                    <p [routerLink]="['/dashboard/onboarding/edit-form']" class="mx-3 font-bold">Edit</p>
+                    <p [routerLink]="['/scm/edit-form']" class="mx-3 font-bold">Edit</p>
                 </div>
                 <div class="centeredRowFlex bg-fbn-gray-bg p-2">
                     <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,38 +108,38 @@
 
             <div class="flex-colstart text-left w-[80%]">
                 <div class="my-5">
-                    <h2 class="text-fbn-blue font-semibold">Basic Information</h2>
+                    <h1 class="text-fbn-blue font-semibold">Basic Information</h1>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>{{role}}'s name</p>
                         <p>Blessing Olol</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Name</p>
                         <p>Blessing Ojediran Ltd</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Industry</p>
                         <p>Textile</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>{{role}}'s code</p>
                         <p>029383</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Tax ID Number (TIN)</p>
                         <p>029383</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>RC Number</p>
                         <p>029383</p>
                     </div>
                 </div>
 
                 <div class=" border-t-2 border-t-fbn-gray-bg contact py-3">
-                    <h2 class="text-fbn-blue font-semibold">Contact Information</h2>
+                    <h1 class="text-fbn-blue font-semibold">Contact Information</h1>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
 
                         <p>Country</p>
 
@@ -146,7 +147,7 @@
 
                     </div>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Email</p>
                         <div class="flex items-center text-sm">
                             <p class="mx-3">blessing@gmail.com</p>
@@ -164,20 +165,20 @@
                         </div>
                     </div>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Phone No</p>
                         <p>+234 810 244 3981</p>
                     </div>
                 </div>
 
                 <div class=" border-t-2 border-t-fbn-gray-bg contact py-3">
-                    <h2 class="text-fbn-blue font-semibold">Account Information</h2>
+                    <h1 class="text-fbn-blue font-semibold">Account Information</h1>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Date Created</p>
                         <p>Aug 1, 2022</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Last Transactions</p>
                         <div class="flex items-center">
                             <p>Aug 1, 2022</p>
@@ -185,19 +186,19 @@
                                 Payment</button>
                         </div>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Currency</p>
                         <p>NGN</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Tier</p>
                         <p>4</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Bank</p>
                         <p>XYZ</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-5">
+                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Limit</p>
                         <p>NGN 292,987</p>
                     </div>
@@ -208,9 +209,11 @@
 </app-details-modal-wrapper>
 
 <app-centered-modal-wrapper *ngIf="deleteModalOpen">
-    <div class="modal w-[50%]">
+    <div
+    style="width: 50% ;" 
+    class="modalDel">
 
-        <div class="flex-startend my-2 z-50">
+        <div class="flex-startend my-2">
             <svg (click)="toggleDeleteModal()" width="26" height="26" viewBox="0 0 26 26" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path

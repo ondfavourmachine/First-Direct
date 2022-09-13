@@ -60,11 +60,11 @@
     margin: 0 4px;
 }
 
-.hidden {
-    display: hidden;
+.hide {
+    display: none;
 }
 
-.block {
+.show {
     display: block;
 }
 
@@ -72,8 +72,20 @@
     @include centered-modal-with-overlay
 }
 
-.modal {
-    @include centeredModal
+.modalAdd {
+    // @include centeredModal
+    // .modalDel{
+        top:0;
+        bottom: 0;
+        margin: auto;
+        position: fixed;
+        left: 0;
+        right: 0;
+       background-color: white;
+        padding: 10px;
+        // width: fit-content;
+        height: fit-content;
+    // }
 }
 .right-modal{
     @include rightModal

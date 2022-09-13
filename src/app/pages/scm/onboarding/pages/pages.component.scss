@@ -1,5 +1,66 @@
 @import '../../../../../customStyles/colors';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../../../../../customStyles/layouting.scss';
+
+
+.centeredRowFlex {
+    @include centered-flex-row;
+
+}
+
+.flex {
+    @include row-Flex;
+
+}
+
+.flex-startrow {
+    @include flex-start-row;
+
+}
+
+.flex-startend {
+    @include flex-end-row
+}
+
+.flex-between {
+    @include between-flex-row
+}
+.flex-even {
+    @include between-flex-row
+}
+
+.flex-col {
+    @include flex-column
+}
+
+.flex-colstart {
+    @include flex-column-start
+}
+
+.flex-colend {
+    @include flex-column-end
+}
+
+.flex-colcenter {
+    @include flex-column-center
+}
+
+.fbn-mx {
+    margin: 0 4px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
 .text {
     font-style: normal;
     font-weight: 400;
@@ -10,15 +71,20 @@
     color: $fbn-text ;
 }
 
+
+
 .input {
     box-shadow: $fbn-light-shadow;
-    margin: 5px;
+   
+    // border: 1px solid $fbn-gray-bg !important;
+    border: none;
     // padding: 8px;
 
 }
 
 .filter {
     background-color: white;
+     margin: 0 8px;
     width: 44px;
     height: 44px;
     box-shadow: $fbn-light-shadow;

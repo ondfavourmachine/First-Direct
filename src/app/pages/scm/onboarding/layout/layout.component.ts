@@ -67,7 +67,7 @@ getHeaderTitle(){
     this.crudServices.getRole().subscribe({
       next: (data:any) =>{
         this.role = data;
-        this.router.navigateByUrl(`/dashboard/onboarding/add-new/${this.role}`)
+        this.router.navigateByUrl(`/scm/add-new/${this.role}`)
       }
     })
    

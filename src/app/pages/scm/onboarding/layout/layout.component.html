@@ -14,7 +14,9 @@
     
             <app-centered-modal-wrapper *ngIf="showModal">
     
-                <div class="modal w-[70%]">
+                <div
+                style="width: 60%;" 
+                class="modalAdd">
                     <div class="flex-startend my-2 z-50">
                         <svg (click)="closeModal()" width="26" height="26" viewBox="0 0 26 26" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +29,7 @@
                         <div>
                             <h1>{{modalTitle}}</h1>
                         </div>
-                        <div class="flex-even mt-10 ">
+                        <div class="flex-even mt-5 ">
                             <div class="centeredRowFlex mx-5  fbn-fill-blue-btn">
                                 <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -36,10 +38,10 @@
                                         fill="white" />
                                 </svg>
     
-                                <button (click)="fileUpload.click()" class="mx-3">Import Multiple {{customerType}}s From
-                                    CSV</button>
+                                <label (click)="fileUpload.click()" class="mx-3 my-0">Import Multiple {{customerType}}s From
+                                    CSV</label>
                                 <input #fileUpload type="file" accept=".xlsx,.xls,.csv" (click)="fileUpload.value = null"
-                                    (change)="changeListener($event.target.files)" class="hidden">
+                                    (change)="changeListener($event.target.files)" class="hide">
                             </div>
                             <div class="centeredRowFlex  fbn-yellow-btn">
                                 <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
@@ -49,7 +51,7 @@
                                         fill="#DDAD31" />
                                 </svg>
     
-                                <button (click)="navigate()" class="mx-3">Add {{customerType}}s Manually</button>
+                                <label (click)="navigate()" class="mx-3 my-0">Add {{customerType}}s Manually</label>
                             </div>
                         </div>
                     </div>

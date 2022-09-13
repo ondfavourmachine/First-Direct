@@ -81,7 +81,7 @@
     }
 }
 @mixin rightModal {
-    top: 90vh;
+    top: 120%;
     bottom: 0;
     margin: auto;
     position: absolute;
@@ -89,13 +89,12 @@
     right: 0;
   
     padding: 10px;
-    width: 50%;
+    width: 40%;
     height: fit-content;
 
     & h1 {
         font-style: normal;
         font-weight: 500;
-        font-size: 36px;
         line-height: 42px;
         margin: 15px 0;
         text-align: left;

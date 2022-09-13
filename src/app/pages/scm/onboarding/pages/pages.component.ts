@@ -24,7 +24,7 @@ export class PagesComponent implements OnInit {
   toggleTabs(tabNumber: Number) {
     this.tabNumber = tabNumber;
     if(tabNumber === 1){
-      this.router.navigateByUrl('/dashboard/onboarding')
+      this.router.navigateByUrl('scm/overview')
       this.crudServices.updateHeaderTitle("Onboarding")
     } else if (tabNumber === 2){
       this.crudServices.updateHeaderTitle("Buyers")

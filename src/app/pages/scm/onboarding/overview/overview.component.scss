@@ -1,5 +1,13 @@
 @import '../../../../../customStyles/colors';
 
+.detailsModal{
+   & h1{
+        font-size: 1.7rem;
+    }
+    & h2{
+        font-size: 1rem !important;
+    }
+}
 .headerTitle {
     font-style: normal;
     font-weight: 400;
@@ -138,9 +146,20 @@ input:focus{
 .modal-overlay {
     @include centered-modal-with-overlay
 }
-
+.modalDel{
+    top:0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+   background-color: white;
+    padding: 10px;
+    // width: fit-content;
+    height: fit-content;
+}
 .modal {
-    @include centeredModal
+    // @include centeredModal
 }
 .right-modal{
     @include rightModal
