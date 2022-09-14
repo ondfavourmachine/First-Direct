@@ -24,6 +24,7 @@ export class OverviewComponent implements OnInit {
   };
 
   allCustomers = [];
+  allCustomersEmptyState: boolean = false;
 
   constructor(
     private router: Router,
@@ -69,7 +70,7 @@ export class OverviewComponent implements OnInit {
       }, error: (err) => {
         // console.log("err:", err)
         // show toast
-        this.gVar.toastr.error("Error fetching stats", "Error");
+        this.gVar.toastr.error("Error fetching data", "Error");
       }
 
     })
@@ -80,8 +81,14 @@ export class OverviewComponent implements OnInit {
       next: (data) => {
         console.log("customers:", data)
         this.allCustomers = data.data;
-        if(this.allCustomers.length > 0 && Object.keys(this.stats).length > 0){
+        if (data.message === "Successful") {
           this.gVar.spinner.hide();
+        }
+
+        if (this.allCustomers.length === 0) {
+          this.allCustomersEmptyState = true;
+        } else {
+          this.allCustomersEmptyState = false;
         }
       }
     })
@@ -108,49 +115,7 @@ export class OverviewComponent implements OnInit {
       name: "Actions"
     },
   ]
-  tableContents = [
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
 
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'supplier',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'supplier',
-      comapnyEmail: 'chc@gmail'
-
-    },
-
-  ]
 
   navigate() {
     this.router.navigateByUrl('scm/overview');
@@ -171,7 +136,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.getStats();
     this.getCustomers();
-    // this.gVar.spinner.show();
+    this.gVar.spinner.show();
   }
 
 }

@@ -73,18 +73,19 @@
 
 
 
-.input {
+.inputBox {
     box-shadow: $fbn-light-shadow;
-   
+
     // border: 1px solid $fbn-gray-bg !important;
     border: none;
     // padding: 8px;
 
 }
 
+
 .filter {
     background-color: white;
-     margin: 0 8px;
+    margin: 0 8px;
     width: 44px;
     height: 44px;
     box-shadow: $fbn-light-shadow;
@@ -100,8 +101,10 @@ input {
     width: 384px;
     height: 44px;
     padding: 5px;
+    border: none;
 }
-input:focus{
+
+input:focus {
     outline: none;
 }
 button{
@@ -134,9 +137,10 @@ table {
     border-bottom: 3px solid $fbn-gray-bg;
     background-color: white;
 
-    & th {
+    & th,
+    td {
         padding: 10px;
-        
+
     }
 }
 
@@ -150,29 +154,48 @@ table {
 }
 
 .bodyRow {
-    th {
+    td{
         font-style: normal;
-        font-weight: 400;
+        font-weight: 300 !important;
         font-size: 14px;
         line-height: 16px;
-
+        padding: 12px !important;
+        color: $fbn-text;
         // margin: 1rem 0 !important;
     }
+    .actionIcn{
+        font-weight: 200 !important;
+        color: $fbn-text;
+    }
 }
-.buyer{
+.buyer {
     background: $fbn-light-green;
     color: $fbn-text-green;
     text-align: center;
-    padding: 5px 10px;
-    border-radius: 11px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
     width: 100% !important;
 }
-.seller{
+
+.seller {
     background-color: $fbn-light-yellow;
     color: $fbn-text-yellow;
     text-align: center !important;
-    padding: 5px 10px;
-    border-radius: 11px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.deleteInput {
+    background-color: $fbn-gray-bg;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 51, 102, 0.2);
+    font-size: 16px;
 }
 fa-icon{
     color: $fbn-text;

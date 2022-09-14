@@ -20,6 +20,46 @@ export class CustomersService {
   ) { }
 
   getAllCustomers(): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer`, httpOptions)
-  }
+    return this.http.get(`${environment.scmApiUrl}/api/Customer`, httpOptions);
+  };
+
+  getCustomerById(id: number): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/Customer/${id}`, httpOptions);
+  };
+
+  addBuyer(buyer: any): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/buyer`, httpOptions);
+  };
+
+  addSupplier(supplier: any): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/supplier`, httpOptions);
+  };
+
+  updateBuyer(buyer: any): Observable<any> {
+    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-buyer`, httpOptions);
+  };
+
+  updateSupplier(supplier: any): Observable<any> {
+    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-supplier`, httpOptions);
+  };
+
+  getBuyers(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/Customer/buyer`, httpOptions);
+  };
+
+  getSuppliers(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/Customer/supplier`, httpOptions);
+  };
+
+  getCustomerCategories(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/CustomerLookup/customer-categories`, httpOptions);
+  };
+
+  getCustomerIndustries(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/CustomerLookup/customer-industries`, httpOptions);
+  };
+
+  getCustomerTiers(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/CustomerLookup/customer-tiers`, httpOptions);
+  };
 }

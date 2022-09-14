@@ -23,9 +23,11 @@ table {
 .headRow {
     th {
         font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
+        font-weight: 600;
+        font-size: 15px;
         line-height: 19px;
+        color: $fbn-text !important;
+        padding: 17px !important;
     }
 }
 
@@ -35,7 +37,7 @@ table {
         font-weight: 400;
         font-size: 14px;
         line-height: 16px;
-
+     
         // margin: 1rem 0 !important;
     }
 }

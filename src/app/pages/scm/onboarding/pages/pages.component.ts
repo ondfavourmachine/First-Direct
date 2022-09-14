@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 // import { IconProp } from '@fortawesome/fontawesome-svg-core';
 // import { faSearch, faFilter, faFileEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
+import { GlobalsService } from 'src/app/core/globals/globals.service';
+import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 
 @Component({
   selector: 'app-pages',
@@ -11,15 +13,39 @@ import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service
 })
 export class PagesComponent implements OnInit {
 
-  // searchIcon = faSearch as IconProp;
-  // filterIcon = faFilter as IconProp;
-  // edit = faFileEdit as IconProp;
-  // del = faTrashCan as IconProp;
   tabNumber: Number = 1;
+  allCustomers = [];
+  buyers = [];
+  suppliers = [];
+  detailsModal: Boolean = false;
+  role: string = "";
+  deleteModalOpen: boolean = false;
+
+  // empty state check
+  buyersEmptyState : Boolean = false;
+  suppliersEmptyState : Boolean = false;
+  allCustomersEmptyState : Boolean = false;
+
   constructor(
     private router : Router,
-    private crudServices : CrudService
+    private crudServices : CrudService,
+    private onboardService: CustomersService,
+    private gVar: GlobalsService
   ) { }
+
+  toggleModal(role: string) {
+    this.detailsModal = !this.detailsModal;
+    this.role = role;
+  }
+
+  closeDetailsModal() {
+    this.detailsModal = false;
+  }
+
+  toggleDeleteModal() {
+    this.deleteModalOpen = !this.deleteModalOpen;
+  };
+
 
   toggleTabs(tabNumber: Number) {
     this.tabNumber = tabNumber;
@@ -32,6 +58,74 @@ export class PagesComponent implements OnInit {
       this.crudServices.updateHeaderTitle("Suppliers")
     }
   };
+
+  getCustomers() {
+    this.onboardService.getAllCustomers().subscribe({
+      next: (data) => {
+        // console.log("customers:", data)
+        this.allCustomers = data.data;
+        if(data.message ===  "Successful" ){
+          this.gVar.spinner.hide();
+        }
+
+        if(this.allCustomers.length === 0 ){
+          this.allCustomersEmptyState = true;
+        }else {
+          this.allCustomersEmptyState = false;
+        }
+
+      }, error: (err) => {
+        // console.log("err:", err)
+        // show toast
+        this.gVar.toastr.error("Error fetching data", "Error");
+      }
+    })
+  }
+
+  getBuyers() {
+    this.onboardService.getBuyers().subscribe({
+      next: (data) => {
+        // console.log("buyers:", data)
+        this.buyers = data.data;
+        if(data.message ===  "Successful" ){
+          this.gVar.spinner.hide();
+        }
+        if(this.buyers.length === 0 ){
+          this.buyersEmptyState = true;
+        }else {
+          this.buyersEmptyState = false;
+        }
+      }, error: (err) => {
+        // console.log("err:", err)
+        // show toast
+        this.gVar.toastr.error("Error fetching data", "Error");
+      }
+    })
+  }
+
+  getSuppliers() {
+    this.onboardService.getSuppliers().subscribe({
+      next: (data) => {
+        // console.log("suppliers:", data)
+        this.suppliers = data.data;
+        if(data.message ===  "Successful" ){
+          this.gVar.spinner.hide();
+        }
+
+        if(this.suppliers.length === 0 ){
+          this.suppliersEmptyState = true;
+        } else {
+          this.suppliersEmptyState = false;
+        }
+
+      }, error: (err) => {
+        // console.log("err:", err)
+        // show toast
+        this.gVar.toastr.error("Error fetching data", "Error");
+      }
+    })
+  }
+
 
   tableHeaders = [
     {
@@ -53,50 +147,7 @@ export class PagesComponent implements OnInit {
       name: "Actions"
     },
   ]
-  tableContents = [
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'seller',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'buyer',
-      comapnyEmail: 'chc@gmail'
-
-    },
-    {
-      dateAdded: "22/06/21",
-      tin: 'FBN1201',
-      company: 'chc kimited',
-      role: 'chief',
-      comapnyEmail: 'chc@gmail'
-
-    },
-
-  ]
-
+ 
   syncTab(){
     this.crudServices.gettabNumber().subscribe({
       next: (data: any) => {
@@ -104,9 +155,14 @@ export class PagesComponent implements OnInit {
       }
     })
   }
-  ngOnInit(): void {
-    this.syncTab()
 
+
+  ngOnInit(): void {
+    this.gVar.spinner.show();
+    this.syncTab()
+    this.getCustomers()
+    this.getBuyers()
+    this.getSuppliers()
   }
 
 }
