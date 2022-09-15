@@ -6,6 +6,7 @@ table {
     text-align: left;
     color: $fbn-text;
     margin: 10px 0;
+    overflow: scroll !important;
 }
 
 .bodyRow,
@@ -30,6 +31,7 @@ table {
         padding: 17px !important;
     }
 }
+
 
 .bodyRow {
     td {

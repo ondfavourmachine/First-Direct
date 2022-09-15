@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { addCustomer } from 'src/app/core/models/scm/onboarding.model';
+import { addCustomer, uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +9,16 @@ private headerTitle = new BehaviorSubject("Onboarding");
 private tabNumber = new BehaviorSubject(1);
 private role = new BehaviorSubject("");
 private customerDetails = new BehaviorSubject<addCustomer>(null);
+private customerFileDetails = new BehaviorSubject<any>(null);
+
+
+updateCustomerFileDetails(details: uploadCustomerFileModel){
+  this.customerFileDetails.next(details)
+}
+
+getCustomerFileDetails(): BehaviorSubject<any>{
+  return this.customerFileDetails
+}
 
 
 updateCustomerDetails(details: addCustomer){

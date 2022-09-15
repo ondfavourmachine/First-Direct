@@ -17,3 +17,8 @@ export class addCustomer {
     minimumAnnualSpend: number;
     maximumAnnualSpend: number;
     }
+
+    export class uploadCustomerFileModel {
+        documentName: string;
+        documentBaser64String: string;
+    }

@@ -20,12 +20,14 @@ export class OverviewComponent implements OnInit {
   stats = {
     buyers: 0,
     inactive: 0,
-    total: 0
+    total: 0,
+    suppliers: 0
   };
 
   allCustomers = [];
   allCustomersEmptyState: boolean = false;
-
+  singleCustomer: any = [];
+  
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -35,9 +37,19 @@ export class OverviewComponent implements OnInit {
 
   ) { }
 
-  toggleModal(role: string) {
+  toggleModal(role: string, id: number) {
+    this.gVar.spinner.show();
     this.detailsModal = !this.detailsModal;
-    this.role = role;
+    // captialize first letter for role
+    this.role = role.charAt(0).toUpperCase() + role.slice(1);
+    // this.role = role;
+    this.onboardService.getCustomerById(id).subscribe({
+      next: (data) => {
+        console.log("single customer:", data)
+        this.gVar.spinner.hide();
+        this.singleCustomer = data.data;
+      }
+    })
   }
 
   closeDetailsModal() {
@@ -61,7 +73,10 @@ export class OverviewComponent implements OnInit {
             this.stats.inactive = stat.value;
           } else if (stat.key === "ALL") {
             this.stats.total = stat.value;
-          } else {
+          }else if (stat.key === "SUPPLIER") {
+            this.stats.suppliers = stat.value;
+          }
+          else {
             // show toast
             // this.gVar.toastr.info("No stats found", "Info");
           }
@@ -92,6 +107,10 @@ export class OverviewComponent implements OnInit {
         }
       }
     })
+  }
+
+  getSingleCustomer(id: number) {
+
   }
 
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -62,4 +63,13 @@ export class CustomersService {
   getCustomerTiers(): Observable<any> {
     return this.http.get(`${environment.scmApiUrl}/api/CustomerLookup/customer-tiers`, httpOptions);
   };
+
+  uploadCustomerFile(payload: uploadCustomerFileModel, customerType: string): Observable<any>{
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/${customerType}/bulk-upload`, payload, httpOptions);
+  }
+
+//     getCustomerById(id: number): Observable<any> {
+//     return this.http.get(`${environment.scmApiUrl}/api/Customer/${id}`, httpOptions);
+//   }
+// }
 }

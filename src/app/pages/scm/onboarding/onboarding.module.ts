@@ -10,6 +10,7 @@ import { ConfirmDetailsComponent } from './confirm-details/confirm-details.compo
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomerFileUploaderComponent } from './customer-file-uploader/customer-file-uploader.component';
 @NgModule({
     declarations: [
         LayoutComponent,
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormPageComponent,
         EditFormPageComponent,
         ConfirmDetailsComponent,
+        CustomerFileUploaderComponent
     ],
     imports: [
         CommonModule,

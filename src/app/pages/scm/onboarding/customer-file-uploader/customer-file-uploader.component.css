@@ -1,0 +1,23 @@
+.conf-d {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.bodyRow,
+.headRow {
+    border-bottom: 3px solid #C4C4C4;
+    background-color: white;
+}
+th{
+    width: 20rem !important;
+}
+.error{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

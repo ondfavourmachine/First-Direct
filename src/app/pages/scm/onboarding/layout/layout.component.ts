@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';;
 import { Router } from '@angular/router';
+import { GlobalsService } from 'src/app/core/globals/globals.service';
+import { Observable, ReplaySubject } from 'rxjs';
+import { uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -13,9 +16,11 @@ export class LayoutComponent implements OnInit {
   showModal: Boolean = false;
   customerType: string = "";
   role: string = "";
+    base64: any= [] ;
   constructor(
     private crudServices: CrudService,
     private router: Router,
+    private gVar: GlobalsService
   ) { }
 
 
@@ -45,23 +50,46 @@ export class LayoutComponent implements OnInit {
     this.showModal = false
   }
 
-  public changeListener(files: FileList) {
-    // console.log(files);
-    if (files && files.length > 0) {
-      let file: File = files.item(0);
-      //  console.log(file.name);
-      //  console.log(file.size);
-      //  console.log(file.type);
-      let reader: FileReader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = (e) => {
-        let csv: string = reader.result as string;
-        // console.log(csv);
-      }
-    }
+  convertFile(file : File) : Observable<string> {
+    const result = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (event) => result.next(btoa(event.target.result.toString()));
+    return result;
   }
 
-  navigate() {
+  public changeListener(files: File) {
+    if (this.customerType === "Buyer") {
+      this.crudServices.updateRole('buyer');
+    } else {
+      this.crudServices.updateRole('supplier');
+    }
+    console.log(files);
+  
+    if (files ) {
+      this.gVar.toastr.info("Uploading  Please Wait , please wait");
+      this.convertFile(files).subscribe({
+        next: (data) => {
+          // console.log(data);
+          this.base64 ={
+            "documentBaser64String": data,
+            "documentName": files.name,
+            "countryId": "01"
+          }
+         this.crudServices.updateCustomerFileDetails(this.base64);
+        }
+      })     
+    }
+    this.crudServices.getRole().subscribe({
+      next: (data: any) => {
+        this.role = data;
+        this.router.navigateByUrl(`/scm/upload-customer/${this.role}`)
+      }
+    })
+    
+  }
+
+  navigate(path: string) {
 
     if (this.customerType === "Buyer") {
       this.crudServices.updateRole('buyer');
@@ -72,7 +100,7 @@ export class LayoutComponent implements OnInit {
     this.crudServices.getRole().subscribe({
       next: (data: any) => {
         this.role = data;
-        this.router.navigateByUrl(`/scm/add-new/${this.role}`)
+        this.router.navigateByUrl(`/${path}/${this.role}`)
       }
     })
 

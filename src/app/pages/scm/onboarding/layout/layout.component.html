@@ -41,7 +41,7 @@
                                 <label (click)="fileUpload.click()" class="mx-1 my-0">Import Multiple {{customerType}}s From
                                     CSV</label>
                                 <input #fileUpload type="file" accept=".xlsx,.xls,.csv" (click)="fileUpload.value = null"
-                                    (change)="changeListener($event.target.files)" class="hide">
+                                    (change)="changeListener($event.target.files[0])" class="hide">
                             </div>
                             <div class="centeredRowFlex  fbn-yellow-btn">
                                 <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
@@ -51,7 +51,7 @@
                                         fill="#DDAD31" />
                                 </svg>
     
-                                <label (click)="navigate()" class="mx-3 my-0">Add {{customerType}}s Manually</label>
+                                <label (click)="navigate('scm/add-new')" class="mx-3 my-0">Add {{customerType}}s Manually</label>
                             </div>
                         </div>
                     </div>

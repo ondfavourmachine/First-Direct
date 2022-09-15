@@ -15,6 +15,11 @@ export class ConfirmDetailsComponent implements OnInit {
   isSuccessModalOpen: Boolean = false;
 
   toggleSuccessModal() {
+    this.router.navigateByUrl(`/scm`)
+  }
+
+  addCustomer() {
+
     let payload: any = {
       "customerName": this.customerDetails?.customerName,
       "companyName": this.customerDetails?.companyName,
@@ -30,6 +35,7 @@ export class ConfirmDetailsComponent implements OnInit {
       "tierId": this.customerDetails?.tierId,
       "limits": this.customerDetails?.limits,
     }
+    this.gVars.spinner.show();
 
     if (this.customerDetails?.role === "supplier") {
       // spreed items to payload
@@ -41,27 +47,27 @@ export class ConfirmDetailsComponent implements OnInit {
         "accountNumber": this.customerDetails?.accountNumber,
         "accountName": this.customerDetails?.customerName,
       }
-
+      
       this.customersService.addSupplier(payload).subscribe({
         next: (data: any) => {
           this.isSuccessModalOpen = !this.isSuccessModalOpen;
           console.log(data)
-          if(data.message === "Successful"){
-            this.router.navigateByUrl(`/scm`)
-          }
+          // if(data.message === "Successful"){
+            this.gVars.spinner.hide();
+          // }
         }, error: (err: any) => {
           console.log(err)
           this.gVars.toastr.error("Error adding supplier", "Error")
         }
       })
-    }else {
+    } else {
       this.customersService.addBuyer(payload).subscribe({
         next: (data: any) => {
           console.log(data);
           this.isSuccessModalOpen = !this.isSuccessModalOpen;
-          if(data.message === "Successful"){
-            this.router.navigateByUrl(`/scm`)
-          }
+          // if(data.message === "Successful"){
+          this.gVars.spinner.hide();
+          // }
         }, error: (err: any) => {
           console.log(err);
           this.gVars.toastr.error("Error adding buyer", "Error");
@@ -70,7 +76,7 @@ export class ConfirmDetailsComponent implements OnInit {
 
     }
 
-    console.log("payload:", payload)
+    // console.log("payload:", payload)
   }
 
   constructor(

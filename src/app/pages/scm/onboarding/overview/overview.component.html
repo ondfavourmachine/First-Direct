@@ -1,7 +1,7 @@
 <div class="flex-between my-4">
     <app-card cardTitle="All Customers" (clicker)="navigate()" figure={{stats?.total}}></app-card>
     <app-card cardTitle="All Buyers" (clicker)="navigateToBuyer()" figure={{stats?.buyers}}></app-card>
-    <app-card cardTitle="All Suppliers" (clicker)="navigateToSupplier()" figure="0"></app-card>
+    <app-card cardTitle="All Suppliers" (clicker)="navigateToSupplier()" figure={{stats?.suppliers}}></app-card>
     <app-card cardTitle="Inactive Customers" figure={{stats?.inactive}}></app-card>
 </div>
 
@@ -35,7 +35,7 @@
 
 <app-table [tableHeaders]='tableHeaders' (clciker)="closeDetailsModal()">
     <tbody>
-        <tr (click)="toggleModal(contents?.customerType)" class="bodyRow cursor-pointer" *ngFor="let contents of allCustomers">
+        <tr (click)="toggleModal(contents?.customerType, contents?.id)" class="bodyRow cursor-pointer" *ngFor="let contents of allCustomers">
             <td>
                 <!-- date pipe -->
                 {{contents?.dateAdded | date: 'dd/MM/yyyy'}}
@@ -52,7 +52,7 @@
                 </p>
             </td>
             <td>
-                {{contents?.address1}}
+                {{contents?.email}}
             </td>
             <td class="flex">
                 <svg class=" actionIcn" width="17" height="17"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +80,7 @@
 <app-details-modal-wrapper *ngIf="detailsModal">
     <div class="detailsModal">
         <div class="flex-between  my-3 py-2 ">
-            <h1 class=" capitalize">{{role}} Details</h1>
+            <h1 class=" capitalize">{{role  | titlecase}} Details</h1>
             <svg (click)="closeDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -99,7 +99,8 @@
                             d="M1.39902 12.5934L1.45872 13.1904H1.45872L1.39902 12.5934ZM3.49564 12.3837L3.43594 11.7867H3.43594L3.49564 12.3837ZM4.34271 11.9613L3.90183 11.5544H3.90183L4.34271 11.9613ZM11.0287 4.7182L11.4696 5.12517V5.12517L11.0287 4.7182ZM10.8819 2.77267L11.2567 2.30415L10.8819 2.77267ZM9.61721 1.76094L9.24239 2.22946V2.22946L9.61721 1.76094ZM7.82243 1.87872L7.3896 1.4632V1.4632L7.82243 1.87872ZM1.0375 8.94636L0.604668 8.53084H0.604667L1.0375 8.94636ZM7.39445 2.88177C7.14507 2.66356 6.76601 2.68883 6.5478 2.93822C6.32959 3.1876 6.35486 3.56666 6.60425 3.78487L7.39445 2.88177ZM9.27091 6.1182C9.5203 6.33641 9.89935 6.31114 10.1176 6.06176C10.3358 5.81237 10.3105 5.43332 10.0611 5.21511L9.27091 6.1182ZM6.99935 12.0667C6.66798 12.0667 6.39935 12.3353 6.39935 12.6667C6.39935 12.998 6.66798 13.2667 6.99935 13.2667V12.0667ZM10.9993 13.2667C11.3307 13.2667 11.5993 12.998 11.5993 12.6667C11.5993 12.3353 11.3307 12.0667 10.9993 12.0667V13.2667ZM0.0660156 9.86973V11.93H1.26602V9.86973H0.0660156ZM1.45872 13.1904L3.55534 12.9807L3.43594 11.7867L1.33932 11.9963L1.45872 13.1904ZM4.78359 12.3683L11.4696 5.12517L10.5878 4.31124L3.90183 11.5544L4.78359 12.3683ZM11.2567 2.30415L9.99202 1.29242L9.24239 2.22946L10.5071 3.24119L11.2567 2.30415ZM7.3896 1.4632L0.604668 8.53084L1.47033 9.36188L8.25526 2.29424L7.3896 1.4632ZM9.99202 1.29242C9.21098 0.66758 8.08229 0.74165 7.3896 1.4632L8.25526 2.29424C8.51801 2.02055 8.94613 1.99245 9.24239 2.22946L9.99202 1.29242ZM11.4696 5.12517C12.2303 4.30108 12.1324 3.00475 11.2567 2.30415L10.5071 3.24119C10.8392 3.50694 10.8763 3.99865 10.5878 4.31124L11.4696 5.12517ZM3.55534 12.9807C4.02587 12.9337 4.46285 12.7158 4.78359 12.3683L3.90183 11.5544C3.78016 11.6862 3.61442 11.7688 3.43594 11.7867L3.55534 12.9807ZM0.0660156 11.93C0.0660156 12.6794 0.713052 13.2649 1.45872 13.1904L1.33932 11.9963C1.30007 12.0003 1.26602 11.9694 1.26602 11.93H0.0660156ZM1.26602 9.86973C1.26602 9.68042 1.33923 9.49844 1.47033 9.36188L0.604667 8.53084C0.259029 8.89088 0.0660156 9.37064 0.0660156 9.86973H1.26602ZM6.60425 3.78487L9.27091 6.1182L10.0611 5.21511L7.39445 2.88177L6.60425 3.78487ZM6.99935 13.2667H10.9993V12.0667H6.99935V13.2667Z"
                             fill="#022E64" />
                     </svg>
-                    <p [routerLink]="['/scm/edit-form']" class="mx-3 font-bold">Edit</p>
+                    <p  class="mx-3 font-bold">Edit</p>
+                    <!-- [routerLink]="['/scm/edit-form']" -->
                 </div>
                 <div class="centeredRowFlex bg-fbn-gray-bg p-2">
                     <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +108,8 @@
                             d="M0.666016 2.4C0.334645 2.4 0.0660156 2.66863 0.0660156 3C0.0660156 3.33137 0.334645 3.6 0.666016 3.6V2.4ZM11.3327 3.6C11.6641 3.6 11.9327 3.33137 11.9327 3C11.9327 2.66863 11.6641 2.4 11.3327 2.4V3.6ZM2.33258 5C2.33258 4.66863 2.06396 4.4 1.73258 4.4C1.40121 4.4 1.13258 4.66863 1.13258 5H2.33258ZM10.8661 5C10.8661 4.66863 10.5975 4.4 10.2661 4.4C9.93471 4.4 9.66608 4.66863 9.66608 5H10.8661ZM7.39935 3C7.39935 3.33137 7.66798 3.6 7.99935 3.6C8.33072 3.6 8.59935 3.33137 8.59935 3H7.39935ZM3.06602 3C3.06602 3.33137 3.33464 3.6 3.66602 3.6C3.99739 3.6 4.26602 3.33137 4.26602 3H3.06602ZM0.666016 3.6H11.3327V2.4H0.666016V3.6ZM1.13258 5V10.3333H2.33258V5H1.13258ZM4.39925 13.6H7.59941V12.4H4.39925V13.6ZM10.8661 10.3333V5H9.66608V10.3333H10.8661ZM7.59941 13.6C9.40354 13.6 10.8661 12.1375 10.8661 10.3333H9.66608C9.66608 11.4747 8.7408 12.4 7.59941 12.4V13.6ZM1.13258 10.3333C1.13258 12.1375 2.59512 13.6 4.39925 13.6V12.4C3.25786 12.4 2.33258 11.4747 2.33258 10.3333H1.13258ZM5.66602 1.6H5.99935V0.4H5.66602V1.6ZM5.99935 1.6C6.77255 1.6 7.39935 2.2268 7.39935 3H8.59935C8.59935 1.56406 7.43529 0.4 5.99935 0.4V1.6ZM4.26602 3C4.26602 2.2268 4.89282 1.6 5.66602 1.6V0.4C4.23008 0.4 3.06602 1.56406 3.06602 3H4.26602Z"
                             fill="#D60200" />
                     </svg>
-                    <p (click)="toggleDeleteModal()" class="mx-3 cursor-pointer text-red  font-bold">Delete</p>
+                    <p  class="mx-3 cursor-pointer text-red  font-bold">Delete</p>
+                    <!-- (click)="toggleDeleteModal()" -->
                 </div>
             </div>
 
@@ -116,28 +118,31 @@
                     <h1 class="text-fbn-blue font-semibold">Basic Information</h1>
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p>{{role}}'s name</p>
-                        <p>Blessing Olol</p>
+                        <!-- nake first letter uppercase  and rest lowercase -->
+                        <p>
+                            {{role | titlecase}}'s Name
+                        </p>
+                        <p>{{singleCustomer?.customerName}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Name</p>
-                        <p>Blessing Ojediran Ltd</p>
+                        <p>{{singleCustomer?.companyName}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Industry</p>
-                        <p>Textile</p>
+                        <p>{{singleCustomer?.industry}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>{{role}}'s code</p>
-                        <p>029383</p>
+                        <p>{{singleCustomer?.customerCode}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Tax ID Number (TIN)</p>
-                        <p>029383</p>
+                        <p>{{singleCustomer?.tin}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>RC Number</p>
-                        <p>029383</p>
+                        <p>{{singleCustomer?.rcNumber}}</p>
                     </div>
                 </div>
 
@@ -148,14 +153,14 @@
 
                         <p>Country</p>
 
-                        <p>Nigeria</p>
+                        <p>{{singleCustomer?.country}}</p>
 
                     </div>
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Email</p>
                         <div class="flex items-center text-sm">
-                            <p class="mx-3">blessing@gmail.com</p>
+                            <p class="mx-3">{{singleCustomer?.email}}</p>
                             <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <mask id="path-1-inside-1_885_1707" fill="white">
@@ -172,7 +177,7 @@
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Company Phone No</p>
-                        <p>+234 810 244 3981</p>
+                        <p>{{singleCustomer?.mobileNumber}}</p>
                     </div>
                 </div>
 
@@ -181,31 +186,31 @@
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Date Created</p>
-                        <p>Aug 1, 2022</p>
+                        <p>{{singleCustomer?.dateAdded | date: 'dd/MM/yyyy'}}</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                    <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Last Transactions</p>
                         <div class="flex items-center">
-                            <p>Aug 1, 2022</p>
+                            <p>{{singleCustomer?.}}</p>
                             <button class="font-semibold border text-fbn-blue border-fbn-blue p-1 ml-1">Request
                                 Payment</button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Currency</p>
-                        <p>NGN</p>
+                        <p>{{singleCustomer?.currency}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Tier</p>
-                        <p>4</p>
+                        <p>{{singleCustomer?.tierId}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Bank</p>
-                        <p>XYZ</p>
+                        <p>{{singleCustomer?.bankName}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p>Limit</p>
-                        <p>NGN 292,987</p>
+                        <p>NGN {{singleCustomer?.limits}}</p>
                     </div>
                 </div>
             </div>

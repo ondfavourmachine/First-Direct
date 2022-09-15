@@ -1,0 +1,24 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT-->
+    <main class="main-content">
+        <div class="main-content-padding p-3">
+            <p (click)="goBack()" class="my-4">Back</p>
+            <div class="conf-d bg-white p-3">
+                <app-table style="width: 100%;" [tableHeaders]='tableHeaders' >
+                    <tbody class="bodyRow cursor-pointer">
+                        
+                    </tbody>
+                   
+                </app-table>
+                <div class="error">
+                    <p class="text-center  text-xs">
+                        No data found
+                    </p>
+                </div>
+            </div> 
+        </div>
+    </main>
+</div>

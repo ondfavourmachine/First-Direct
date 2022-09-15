@@ -104,6 +104,9 @@ input:focus {
     @include centered-flex-row;
 
 }
+.centeredRowFlex p {
+    margin: 0 3px !important;
+}
 
 .flex {
     @include row-Flex;
@@ -287,4 +290,8 @@ table {
         font-weight: 200 !important;
         color: $fbn-text;
     }
+}
+
+.capitalize {
+    text-transform: capitalize !important;
 }
