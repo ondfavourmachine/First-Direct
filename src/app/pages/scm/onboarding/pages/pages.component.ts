@@ -147,6 +147,23 @@ export class PagesComponent implements OnInit {
       name: "Actions"
     },
   ]
+  filterTableHeaders = [
+    {
+      name: "Date Added"
+    },
+    {
+      name: "TIN"
+    },
+    {
+      name: "Company"
+    },
+    {
+      name: "Company Email"
+    },
+    {
+      name: "Actions"
+    },
+  ]
  
   syncTab(){
     this.crudServices.gettabNumber().subscribe({

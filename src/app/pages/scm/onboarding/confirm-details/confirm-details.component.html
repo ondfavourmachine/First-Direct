@@ -10,14 +10,14 @@
                     <h1 [routerLink]="['/scm']" class="text-fbn-blue font-semibold">Back</h1>
                 </div>
 
-                <div class="my-3 form ">
+                <div class="my-3 ">
                     <div class="my-3">
                         <h1 class="text-fbn-blue headers text-lg font-semibold">Preview Buyer's Information</h1>
-                        <p class="text-xs">Kindly go through the information before clicking the button below</p>
+                        <p class="text-xs disclaimer">Kindly go through the information before clicking the button below</p>
                     </div>
 
-                    <div class="flex flex-col text-fbn-blue p-3 w-[50%] justify-start border-2 border-fbn-gray-bg">
-                        <div class="my-3 p-3">
+                    <div class="flex flex-col form  text-fbn-blue pt-3  px-3 w-[50%] justify-start border-2 border-fbn-gray-bg">
+                        <div style="width: 80%;" class="mt-3 pb-0 p-3">
                             <h1 class="text-fbn-blue headers text-lg font-semibold">Basic Information</h1>
                             <div class="fields  my-5">
                                 <h1>{{customerDetails?.role}}'s name</h1>
@@ -25,7 +25,7 @@
                             </div>
                             <div class="fields  my-5">
                                 <h1>Company name</h1>
-                                <p>{{customerDetails?.customerName}}</p>
+                                <p>{{customerDetails?.companyName}}</p>
                             </div>
                             <div class="fields  my-5">
                                 <h1>Industry</h1>
@@ -45,7 +45,7 @@
                             </div> -->
                         </div>
 
-                        <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
+                        <div style="width: 80%;" class="my-3 p-3 contact border-t-2 border-fbn-gray-bg">
                             <h1 class="text-fbn-blue headers text-lg font-semibold">Contact Information</h1>
                             <div class="fields  my-5">
                                 <h1>Company Email</h1>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
+                        <div style="width: 80%;" class="my-3 contact p-3 border-t-2 border-fbn-gray-bg">
                             <h1 class="text-fbn-blue headers  text-lg font-semibold">Account Information</h1>
                             <div class="fields  my-5">
                                 <h1>Currency</h1>
@@ -77,19 +77,40 @@
                             </div>
                             <div class="fields  my-5">
                                 <h1>Limit</h1>
-                                <p>{{customerDetails?.limits}}</p>
+                                <p>NGN {{customerDetails?.limits}}</p>
                             </div>
+                            <div *ngIf="customerDetails?.role === 'supplier'" class="fields  my-5">
+                                <h1>Minimum Spend</h1>
+                                <p>NGN {{customerDetails?.minimumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="customerDetails?.role === 'supplier'" class="fields  my-5">
+                                <h1>Maximum Spend</h1>
+                                <p>NGN {{customerDetails?.maximumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="customerDetails?.role === 'supplier'" class="bankField  my-5">
+                                <h1>Bank Information</h1>
+                                <div class="flex-colstart">
+                                    <p>{{customerDetails?.bankName}}</p>
+                                    <p>{{customerDetails?.accountNumber}}</p>
+                                    <p>{{customerDetails?.customerName}}</p>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="my-3 p-3 border-t-2 border-fbn-gray-bg">
-                            <p class="text-sm">Date Created: {{today | date: 'dd/MM/yyyy'}} </p>
+                        <div class="contact mt-3 pt-3  px-3 border-t-2 border-fbn-gray-bg">
+                            <p class="text-sm m-0">Date Created: {{today | date: 'dd/MM/yyyy'}} </p>
                         </div>
 
                     </div>
 
-                    <div class="flex-startend">
-                        <button class="fbn-blue-btn mx-3">Cancel</button>
-                        <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Confirm</button>
-                    </div>
+                    
+                </div>
+                <div 
+                class="flex-startend"
+                style="width: 55%;"
+                >
+                    <button (click)="goBackToForm()" class="fbn-blue-btn mx-3">Cancel</button>
+                    <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Confirm</button>
                 </div>
             </div>
         </div>

@@ -34,7 +34,7 @@ form {
 }
 
 input, select {
-    background-color: $fbn-gray-bg;
+    background-color: #F8FBFD;
     padding: 8px 14px;
     border: 1px solid rgba(0, 51, 102, 0.2);
     font-size: 14px !important;
@@ -62,8 +62,7 @@ label {
     font-size: 16px;
     line-height: 19px;
     /* identical to box height */
-
-
+    text-transform: capitalize;
     color: #657889;
 
 }

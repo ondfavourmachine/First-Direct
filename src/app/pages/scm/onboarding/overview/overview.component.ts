@@ -63,7 +63,7 @@ export class OverviewComponent implements OnInit {
             this.stats.total = stat.value;
           } else {
             // show toast
-            this.gVar.toastr.info("No stats found", "Info");
+            // this.gVar.toastr.info("No stats found", "Info");
           }
         })
         // console.log("stats:", this.stats) 

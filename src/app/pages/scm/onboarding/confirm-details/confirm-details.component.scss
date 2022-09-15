@@ -20,13 +20,26 @@
     justify-content: space-between;
     align-items: center;
 }
+.bankField{
+    display: flex;
+    justify-content: space-between;
+
+}
 
 .flex-startend{
     display: flex;
     justify-content: flex-end;
 }
+.flex-colstart{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 
-
+.contact {
+    border-top: 1px solid rgba(0, 51, 102, 0.2);
+}
 
 .fbn-fill-blue-btn {
     border-radius: 100px;
@@ -56,6 +69,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
+    background-color: transparent;
 }
 
 .fbn-px-blue-btn {
@@ -66,6 +80,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
+    background-color: transparent;
 }
 
 .form {
@@ -73,10 +88,18 @@
     padding: 1.5rem;
     width: 55%;
     margin-top: 1.5rem;
-    color: $fbn-text;
+    color: #002855 !important;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
+}
+.disclaimer{
+    color: black !important;
+    font-weight: 600 !important;
+}
+
+.fields p, .bankField p{
+    font-weight: 600 !important;
 }
 
 .modalTitle {

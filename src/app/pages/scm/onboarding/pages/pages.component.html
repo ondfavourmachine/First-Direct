@@ -78,7 +78,7 @@
 
 </div>
 <div [ngClass]="tabNumber === 2 ? 'show' : 'hide'">
-    <app-table [tableHeaders]='tableHeaders' (clciker)="closeDetailsModal()">
+    <app-table [tableHeaders]='filterTableHeaders' (clciker)="closeDetailsModal()">
         <tbody>
             <tr (click)="toggleModal(contents?.customerType)" class="bodyRow cursor-pointer"
                 *ngFor="let contents of buyers">
@@ -92,11 +92,11 @@
                 <td>
                     {{contents?.customerName}}
                 </td>
-                <td>
+                <!-- <td>
                     <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                         {{contents?.customerType}}
                     </p>
-                </td>
+                </td> -->
                 <td>
                     {{contents?.address1}}
                 </td>
@@ -126,7 +126,7 @@
     </div>
 </div>
 <div [ngClass]="tabNumber === 3 ? 'show' : 'hide'">
-    <app-table [tableHeaders]='tableHeaders' (clciker)="closeDetailsModal()">
+    <app-table [tableHeaders]='filterTableHeaders' (clciker)="closeDetailsModal()">
         <tbody>
             <tr (click)="toggleModal(contents?.customerType)" class="bodyRow cursor-pointer"
                 *ngFor="let contents of suppliers">
@@ -140,11 +140,11 @@
                 <td>
                     {{contents?.customerName}}
                 </td>
-                <td>
+                <!-- <td>
                     <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                         {{contents?.customerType}}
                     </p>
-                </td>
+                </td> -->
                 <td>
                     {{contents?.address1}}
                 </td>

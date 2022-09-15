@@ -28,19 +28,19 @@ export class CustomersService {
   };
 
   addBuyer(buyer: any): Observable<any> {
-    return this.http.post(`${environment.scmApiUrl}/api/Customer/buyer`, httpOptions);
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/buyer`, buyer, httpOptions);
   };
 
   addSupplier(supplier: any): Observable<any> {
-    return this.http.post(`${environment.scmApiUrl}/api/Customer/supplier`, httpOptions);
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/supplier`, supplier, httpOptions);
   };
 
   updateBuyer(buyer: any): Observable<any> {
-    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-buyer`, httpOptions);
+    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-buyer`, buyer, httpOptions);
   };
 
   updateSupplier(supplier: any): Observable<any> {
-    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-supplier`, httpOptions);
+    return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-supplier`, supplier, httpOptions);
   };
 
   getBuyers(): Observable<any> {
