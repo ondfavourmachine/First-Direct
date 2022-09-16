@@ -52,6 +52,7 @@ export class OverviewComponent implements OnInit {
         this.singleCustomer = data.data;
       }
     })
+    console.log("role:", this.role)
   }
 
   closeDetailsModal() {
@@ -173,6 +174,7 @@ export class OverviewComponent implements OnInit {
     this.getStats();
     this.getCustomers();
     this.gVar.spinner.show();
+   
   }
 
 }
