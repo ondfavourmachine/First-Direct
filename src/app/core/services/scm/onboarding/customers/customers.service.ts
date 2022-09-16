@@ -67,6 +67,11 @@ export class CustomersService {
   uploadCustomerFile(payload: uploadCustomerFileModel, customerType: string): Observable<any>{
     return this.http.post(`${environment.scmApiUrl}/api/Customer/${customerType}/bulk-upload`, payload, httpOptions);
   }
+  
+  deletteCustomer(id: number): Observable<any> {
+    return this.http.delete(`${environment.scmApiUrl}/api/Customer/customer/${id}`, httpOptions);
+  };
+
 
 //     getCustomerById(id: number): Observable<any> {
 //     return this.http.get(`${environment.scmApiUrl}/api/Customer/${id}`, httpOptions);

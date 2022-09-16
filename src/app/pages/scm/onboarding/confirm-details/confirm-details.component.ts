@@ -14,9 +14,81 @@ export class ConfirmDetailsComponent implements OnInit {
   today = new Date();
   isSuccessModalOpen: Boolean = false;
 
+
   toggleSuccessModal() {
+    this.crudServices.updateCustomerDetails(null);
     this.router.navigateByUrl(`/scm`)
   }
+
+  supplierReqMethod(payload: any) {
+    if(this.customerDetails?.isEdited === true){
+      this.customersService.updateSupplier(payload).subscribe({
+        next: (data: any) => {
+          this.isSuccessModalOpen = !this.isSuccessModalOpen;
+          console.log(data)
+          // if(data.message === "Successful"){
+          this.gVars.spinner.hide();
+          // }
+        }, error: (err: any) => {
+          console.log(err)
+          this.gVars.toastr.error("Error adding supplier", "Error")
+          this.crudServices.updateCustomerDetails(null);
+          this.router.navigateByUrl(`/scm`)
+        }
+      })
+    }else {
+      this.customersService.addSupplier(payload).subscribe({
+        next: (data: any) => {
+          this.isSuccessModalOpen = !this.isSuccessModalOpen;
+          console.log(data)
+          // if(data.message === "Successful"){
+          this.gVars.spinner.hide();
+          // }
+        }, error: (err: any) => {
+          console.log(err)
+          this.gVars.toastr.error("Error adding supplier", "Error")
+          this.crudServices.updateCustomerDetails(null);
+          this.router.navigateByUrl(`/scm`)
+        }
+      })
+    }
+  }
+
+  buyerReqMethod(payload: any) {
+    if(this.customerDetails?.isEdited === true){
+      this.customersService.updateBuyer(payload).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.isSuccessModalOpen = !this.isSuccessModalOpen;
+          // if(data.message === "Successful"){
+          this.gVars.spinner.hide();
+          // }
+        }, error: (err: any) => {
+          console.log(err);
+          this.gVars.toastr.error("Error adding buyer", "Error");
+          this.crudServices.updateCustomerDetails(null);
+          this.router.navigateByUrl(`/scm`)
+        }
+      })
+    }else {
+      this.customersService.addBuyer(payload).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.isSuccessModalOpen = !this.isSuccessModalOpen;
+          // if(data.message === "Successful"){
+          this.gVars.spinner.hide();
+          // }
+        }, error: (err: any) => {
+          console.log(err);
+
+          this.gVars.toastr.error("Error adding buyer", "Error");
+          this.crudServices.updateCustomerDetails(null);
+          this.router.navigateByUrl(`/scm`)
+        }
+      })
+    }
+  }
+  
 
   addCustomer() {
 
@@ -47,37 +119,17 @@ export class ConfirmDetailsComponent implements OnInit {
         "accountNumber": this.customerDetails?.accountNumber,
         "accountName": this.customerDetails?.customerName,
       }
-      
-      this.customersService.addSupplier(payload).subscribe({
-        next: (data: any) => {
-          this.isSuccessModalOpen = !this.isSuccessModalOpen;
-          console.log(data)
-          // if(data.message === "Successful"){
-            this.gVars.spinner.hide();
-          // }
-        }, error: (err: any) => {
-          console.log(err)
-          this.gVars.toastr.error("Error adding supplier", "Error")
-        }
-      })
-    } else {
-      this.customersService.addBuyer(payload).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.isSuccessModalOpen = !this.isSuccessModalOpen;
-          // if(data.message === "Successful"){
-          this.gVars.spinner.hide();
-          // }
-        }, error: (err: any) => {
-          console.log(err);
-          this.gVars.toastr.error("Error adding buyer", "Error");
-        }
-      })
 
+      this.supplierReqMethod(payload);  
+    } else {
+      this.buyerReqMethod(payload);
     }
 
-    // console.log("payload:", payload)
+    console.log("payload:", this.customerDetails?.role)
   }
+
+
+
 
   constructor(
     private crudServices: CrudService,
@@ -85,7 +137,9 @@ export class ConfirmDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private customersService: CustomersService,
     private gVars: GlobalsService
-  ) { }
+  ) { 
+    
+  }
 
   public getCustomerDetails() {
     this.crudServices.getCustomerDetails().subscribe({
@@ -100,11 +154,13 @@ export class ConfirmDetailsComponent implements OnInit {
     this.router.navigateByUrl(`/scm/add-new/${this.customerDetails?.role}`)
     this.crudServices.updateCustomerDetails(this.customerDetails);
   }
+
   ngOnInit(): void {
     this.getCustomerDetails();
     if (this.customerDetails == null) {
       this.router.navigateByUrl(`/scm`)
     }
+    
   }
 
 }

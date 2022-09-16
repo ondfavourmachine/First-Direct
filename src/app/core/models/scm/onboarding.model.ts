@@ -16,6 +16,7 @@ export class addCustomer {
     accountNumber: string;
     minimumAnnualSpend: number;
     maximumAnnualSpend: number;
+    isEdited: boolean;
     }
 
     export class uploadCustomerFileModel {

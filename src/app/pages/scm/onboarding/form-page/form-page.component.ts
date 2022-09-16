@@ -105,6 +105,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       accountNumber: this.addCustomerForm.value.accountNumber,
       minimumAnnualSpend: this.addCustomerForm.value.minimumAnnualSpend,
       maximumAnnualSpend: this.addCustomerForm.value.maximumAnnualSpend,
+      isEdited: false
       // industryName: this.industries.filter(industry => industry.id === this.addCustomerForm.value.industryId)[0]?.name,
 
     }

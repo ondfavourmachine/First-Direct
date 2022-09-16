@@ -16,6 +16,7 @@ export class OverviewComponent implements OnInit {
   detailsModal: Boolean = false;
   role: string = "";
   deleteModalOpen: boolean = false;
+  customerId: number = 0;
 
   stats = {
     buyers: 0,
@@ -27,7 +28,7 @@ export class OverviewComponent implements OnInit {
   allCustomers = [];
   allCustomersEmptyState: boolean = false;
   singleCustomer: any = [];
-  
+
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -39,6 +40,7 @@ export class OverviewComponent implements OnInit {
 
   toggleModal(role: string, id: number) {
     this.gVar.spinner.show();
+    this.customerId = id;
     this.detailsModal = !this.detailsModal;
     // captialize first letter for role
     this.role = role.charAt(0).toUpperCase() + role.slice(1);
@@ -60,6 +62,20 @@ export class OverviewComponent implements OnInit {
     this.deleteModalOpen = !this.deleteModalOpen;
   };
 
+  deleteCustomer() {
+    this.gVar.spinner.show();
+    this.onboardService.deletteCustomer(this.customerId).subscribe({
+      next: (data) => {
+        this.gVar.spinner.hide();
+        console.log("delete customer:", data)
+        this.gVar.toastr.success("Customer deleted successfully", "Success");
+        this.toggleDeleteModal();
+        this.closeDetailsModal();
+        this.getCustomers();
+        this.getStats();
+      }
+    })
+  }
   getStats() {
     this.statsService.getOnboardStats().subscribe({
       next: (data) => {
@@ -73,7 +89,7 @@ export class OverviewComponent implements OnInit {
             this.stats.inactive = stat.value;
           } else if (stat.key === "ALL") {
             this.stats.total = stat.value;
-          }else if (stat.key === "SUPPLIER") {
+          } else if (stat.key === "SUPPLIER") {
             this.stats.suppliers = stat.value;
           }
           else {
@@ -109,9 +125,10 @@ export class OverviewComponent implements OnInit {
     })
   }
 
-  getSingleCustomer(id: number) {
-
+  edit(role: string, id: number) {
+    this.router.navigateByUrl('scm/edit-form/' + role + '/' + id);
   }
+
 
 
   tableHeaders = [

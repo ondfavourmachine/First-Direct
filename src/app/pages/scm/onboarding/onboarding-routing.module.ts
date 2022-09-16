@@ -17,7 +17,7 @@ const routes: Routes = [
         ],
     },
     {path:'add-new/:role', component: FormPageComponent},
-    {path: 'edit-form', component: EditFormPageComponent},
+    {path: 'edit-form/:role/:id', component: EditFormPageComponent},
     {path: 'confirm-details', component: ConfirmDetailsComponent},
     {path: 'upload-customer/:role', component: CustomerFileUploaderComponent}
 
