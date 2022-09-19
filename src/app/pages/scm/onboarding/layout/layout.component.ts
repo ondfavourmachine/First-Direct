@@ -3,6 +3,7 @@ import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service
 import { Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { Observable, ReplaySubject } from 'rxjs';
+import * as XLSX from 'xlsx';
 import { uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-layout',
@@ -54,7 +55,29 @@ export class LayoutComponent implements OnInit {
     const result = new ReplaySubject<string>(1);
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-    reader.onload = (event) => result.next(btoa(event.target.result.toString()));
+    reader.onload = (event) => {
+      result.next(btoa(event.target.result.toString()));
+     let binary = event.target.result;
+      // let wb = XLSX.read(binary, {type: 'binary'});
+      // let wsname = wb.SheetNames[0];
+      // let ws = wb.Sheets[wsname];
+      // let data = XLSX.utils.sheet_to_json(ws, {header: 1});
+      // console.log(data);
+      
+
+      let wb = XLSX.read(binary, { type: 'binary' });
+      // let wsname = wb.SheetNames[0];
+      // let ws = wb.Sheets[wsname];
+      // let data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      // console.log(data);
+      // this.crudServices.updateCustomerFileDetails(data);
+      wb.SheetNames.forEach((sheetName) => {
+        let data = XLSX.utils.sheet_to_json(wb.Sheets[sheetName])
+        this.crudServices.updateCustomerFileDetails(data);
+        // console.log(data)
+      })
+    };
+    
     return result;
   }
 
@@ -64,7 +87,7 @@ export class LayoutComponent implements OnInit {
     } else {
       this.crudServices.updateRole('supplier');
     }
-    console.log(files);
+    // console.log(files);
   
     if (files ) {
       this.gVar.toastr.info("Uploading  Please Wait , please wait");
@@ -72,11 +95,11 @@ export class LayoutComponent implements OnInit {
         next: (data) => {
           // console.log(data);
           this.base64 ={
-            "documentBaser64String": data,
+            "documentBaser64String": "data:@file/octet-stream;base64," + data,
             "documentName": files.name,
             "countryId": "01"
           }
-         this.crudServices.updateCustomerFileDetails(this.base64);
+        //  this.crudServices.updateCustomerFileDetails(this.base64);
         }
       })     
     }

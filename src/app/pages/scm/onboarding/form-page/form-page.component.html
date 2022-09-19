@@ -32,13 +32,21 @@
                                 <h2 class="headers">Basic Information</h2>
 
                                 <div class="fields my-5">
+                                    <label for="">Company Name</label>
+                                    <input formControlName="companyName" type="text" list="companyName" placeholder="Enter Company Name">
+                                    <!-- datalist -->
+                                    <datalist id="companyName">
+                                        <option value="">Select Exisitng Principals</option>
+                                        <option *ngFor="let principals of existingCustomers" [ngValue]='principals?.companyName'>
+                                            {{principals?.companyName}}</option>
+                                    </datalist>
+                                </div>
+
+                                <div class="fields my-5">
                                     <label for="">{{role}}'s name</label>
                                     <input formControlName="customerName" type="text" placeholder="Enter Name">
                                 </div>
-                                <div class="fields my-5">
-                                    <label for="">Company Name</label>
-                                    <input formControlName="companyName" type="text" placeholder="Enter Company Name">
-                                </div>
+
                                 <div class="fields my-5">
                                     <label for="">Industry</label>
                                     <!-- select -->
@@ -111,10 +119,14 @@
                                 </div>
                                 <div *ngIf="role === 'supplier'" class="fields my-5">
                                     <label for="">Bank Name</label>
-                                    <input formControlName="bankName" type="text" placeholder="">
+                                    <select formControlName="bankName" name="">
+                                        <option value="">Select Bank</option>
+                                        <option *ngFor="let bank of banks" [ngValue]='bank?.bankName'>
+                                            {{bank?.bankName}}</option>
+                                    </select>
                                 </div>
                                 <div *ngIf="role === 'supplier'" class="fields my-5">
-                                    <label for="">Bank Account Number</label>
+                                    <label for="">Account Number</label>
                                     <input formControlName="accountNumber" type="text" placeholder="">
                                 </div>
                             </div>
@@ -122,7 +134,7 @@
                             <div class="flex-startend">
                                 <div class="">
                                     <button (click)="resetForm()" class="fbn-blue-btn ">Cancel</button>
-                                    <button class="fbn-fill-blue-btn mx-3">Continue</button>
+                                    <button class="fbn-fill-blue-btn mx-3">{{btnText}}</button>
                                 </div>
                             </div>
                         </form>

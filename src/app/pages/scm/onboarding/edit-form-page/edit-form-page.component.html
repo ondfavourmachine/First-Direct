@@ -12,8 +12,8 @@
             
                 <div class="my-3 bg-white p-5 ">
                     <h1 class="text-fbn-blue headers text-lg my-3 font-semibold">Editing {{role | titlecase}}'s Profile</h1>
-                    <form [formGroup]="editCustomerForm" (ngSubmit)="onSubmit()">
-                        <div *ngIf="isLoaded" class="rowFlex">
+                    <form *ngIf="isLoaded" [formGroup]="editCustomerForm" (ngSubmit)="onSubmit()">
+                        <div  class="rowFlex">
                             <div
                             style="width: 50%;"
                              class="  p-4">
@@ -31,21 +31,21 @@
                                     <select  formControlName="countryId"  name="">
                                         <option value="Select Industry">Select Country
                                         </option>
-                                        <option [ngValue]="Nigeria">Nigeria
+                                        <option *ngFor="let country of countries" [ngValue]='country?.id' >{{country?.name}}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="flex-between my-5">
                                     <label for="">Currency</label>
-                                    <input type="text" placeholder="Select Currency">
+                                    <input formControlName="currency" type="text" placeholder="Select Currency">
                                 </div>
                                 <div class="flex-between my-5">
                                     <label for="">Company Email</label>
-                                    <input type="text" placeholder="Select Company Email">
+                                    <input formControlName="companyEmail" type="text" placeholder="Select Company Email">
                                 </div>
                                 <div class="flex-between my-5">
                                     <label for="">Company Phone No</label>
-                                    <input formControlName="mobileNumber" type="text" placeholder="Enter Company Phone No">
+                                    <input formControlName="phoneNumber" type="text" placeholder="Enter Company Phone No">
                                 </div>
                                 <div *ngIf="role === 'SUPPLIER'" class="fields my-5">
                                     <label for="">Minimum Annual Spend</label>
@@ -94,7 +94,7 @@
                                     <input formControlName="bankName" type="text" placeholder="">
                                 </div>
                                 <div *ngIf="role === 'SUPPLIER'" class="fields my-5">
-                                    <label for="">Bank Account Number</label>
+                                    <label for="">Account Number</label>
                                     <input formControlName="accountNumber" type="text" placeholder="">
                                 </div>
                                 <div class="flex-between my-5">

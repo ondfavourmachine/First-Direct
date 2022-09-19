@@ -227,6 +227,22 @@ input:focus {
     font-size: 16px;
 }
 
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    & button {
+        background: #DDAD31;
+        border-radius: 5px;
+        padding: 6px 11px;
+        color: #F9F9F9 !important;
+        border: none;
+        margin: 10px;
+    }
+}
+
 
 
 

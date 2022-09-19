@@ -1,5 +1,5 @@
 @import '../../../../../../customStyles/colors';
-
+@import '../../../../../../customStyles/layouting';
 .cards {
     background-color: white;
     width: 15rem;
@@ -17,16 +17,7 @@
     margin: 10px 0;
 }
 
-.cardTitle {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    /* identical to box height */
-    margin-bottom: 0;
-    text-transform: uppercase;
-    color: #535353;
-}
+
 
 .figure {
     font-style: normal;
@@ -47,11 +38,8 @@
     padding: 2px 4px;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-@import '../../../../../../customStyles/layouting';
+
 
 
 .centeredRowFlex {
@@ -185,42 +173,24 @@
     line-height: 19px;
 }
 
-// table {
-//     width: 100%;
-//     background-color: $fbn-gray-bg;
-//     text-align: left;
-//     color: $fbn-text;
-//     margin: 10px 0;
-// }
 
-// .bodyRow,
-// .headRow {
-//     border-bottom: 3px solid $fbn-gray-bg;
-//     background-color: white;
+.cardTitle {
+    font-size: 10px;
+}
 
-//     & th,
-//     td {
-//         padding: 10px;
+// responsive classes
 
-//     }
-// }
 
-// .headRow {
-//     th {
-//         font-style: normal;
-//         font-weight: 500;
-//         font-size: 16px;
-//         line-height: 19px;
-//     }
-// }
 
-// .bodyRow {
-//     td {
-//         font-style: normal;
-//         font-weight: 400;
-//         font-size: 14px;
-//         line-height: 16px;
-
-//         // margin: 1rem 0 !important;
-//     }
-// }
+@media screen and (min-width: 1024px) {
+    .cardTitle {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        /* identical to box height */
+        margin-bottom: 0;
+        text-transform: uppercase;
+        color: #535353;
+    }
+}

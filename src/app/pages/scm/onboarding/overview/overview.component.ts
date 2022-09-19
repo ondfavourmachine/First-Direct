@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 import { SummaryService } from 'src/app/core/services/scm/onboarding/summary/summary.service';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -17,6 +17,11 @@ export class OverviewComponent implements OnInit {
   role: string = "";
   deleteModalOpen: boolean = false;
   customerId: number = 0;
+  PageNumber: number = 1;
+  PageSize: number = 10;
+  SearchQuery: string = "";
+  filterModal: Boolean = false;
+  SortColumn: string = "";
 
   stats = {
     buyers: 0,
@@ -28,15 +33,39 @@ export class OverviewComponent implements OnInit {
   allCustomers = [];
   allCustomersEmptyState: boolean = false;
   singleCustomer: any = [];
-
+  searchForm: FormGroup;
   constructor(
     private router: Router,
     private crudServices: CrudService,
     private statsService: SummaryService,
     private gVar: GlobalsService,
-    private onboardService: CustomersService
+    private onboardService: CustomersService,
+    private formBuilder: FormBuilder
 
-  ) { }
+  ) {
+    this.searchForm = this.formBuilder.group({
+      search: ['', Validators.required],
+    });
+
+    if (this.SearchQuery === "") {
+      this.getCustomers();
+    }
+  }
+
+  searchCustomer() {
+    this.SearchQuery = this.searchForm.value.search;
+    this.getCustomers();
+  }
+
+
+  toggleFilterModal() {
+    this.filterModal = !this.filterModal;
+  }
+  closeFilterModal() {
+    this.filterModal = false;
+    this.resetTable();
+  }
+
 
   toggleModal(role: string, id: number) {
     this.gVar.spinner.show();
@@ -47,12 +76,12 @@ export class OverviewComponent implements OnInit {
     // this.role = role;
     this.onboardService.getCustomerById(id).subscribe({
       next: (data) => {
-        console.log("single customer:", data)
+        // console.log("single customer:", data)
         this.gVar.spinner.hide();
         this.singleCustomer = data.data;
       }
     })
-    console.log("role:", this.role)
+    // console.log("role:", this.role)
   }
 
   closeDetailsModal() {
@@ -63,12 +92,22 @@ export class OverviewComponent implements OnInit {
     this.deleteModalOpen = !this.deleteModalOpen;
   };
 
+  nextPage() {
+    this.PageNumber++;
+    this.getCustomers();
+  }
+
+  previousPage() {
+    this.PageNumber = this.PageNumber - 1;
+    this.getCustomers();
+  }
+
   deleteCustomer() {
     this.gVar.spinner.show();
     this.onboardService.deletteCustomer(this.customerId).subscribe({
       next: (data) => {
         this.gVar.spinner.hide();
-        console.log("delete customer:", data)
+        // console.log("delete customer:", data)
         this.gVar.toastr.success("Customer deleted successfully", "Success");
         this.toggleDeleteModal();
         this.closeDetailsModal();
@@ -109,9 +148,9 @@ export class OverviewComponent implements OnInit {
   }
 
   getCustomers() {
-    this.onboardService.getAllCustomers().subscribe({
+    this.onboardService.getAllCustomers(this.SearchQuery, this.SortColumn , this.PageNumber, this.PageSize).subscribe({
       next: (data) => {
-        console.log("customers:", data)
+        // console.log("customers:", data)
         this.allCustomers = data.data;
         if (data.message === "Successful") {
           this.gVar.spinner.hide();
@@ -125,6 +164,8 @@ export class OverviewComponent implements OnInit {
       }
     })
   }
+
+
 
   edit(role: string, id: number) {
     this.router.navigateByUrl('scm/edit-form/' + role + '/' + id);
@@ -153,7 +194,22 @@ export class OverviewComponent implements OnInit {
     },
   ]
 
+  resetTable() {
+    this.SearchQuery = "";
+    this.SortColumn = "";
+    this.getCustomers();
+  }
 
+  resetData(val: string) {
+    // console.log("val:", val)
+    // timeout val to allow for the value to be set
+    this.SearchQuery = val;
+    this.getCustomers();
+
+    // if(this.SearchQuery === ""){
+    //   this.getCustomers();
+    // }
+  }
   navigate() {
     this.router.navigateByUrl('scm/overview');
     this.crudServices.updateHeaderTitle("All Customers");
@@ -170,11 +226,36 @@ export class OverviewComponent implements OnInit {
     this.crudServices.updatetabNumber(3)
   }
 
+  sortBuyers() {
+    this.SortColumn = "BUYER";
+    this.getCustomers();
+    this.toggleFilterModal();
+  }
+
+  sortSuppliers() {
+    this.SortColumn = "SUPPLIER";
+    this.getCustomers();
+    this.toggleFilterModal();
+  }
+
+  sortApproved() {
+    this.SortColumn = "APPROVED";
+    this.getCustomers();
+    this.toggleFilterModal();
+  }
+
+  sortNotApproved() {
+    this.SortColumn = "NOTAPPROVED";
+    this.getCustomers();
+    this.toggleFilterModal();
+  }
+
   ngOnInit(): void {
     this.getStats();
     this.getCustomers();
     this.gVar.spinner.show();
-   
+
+
   }
 
 }

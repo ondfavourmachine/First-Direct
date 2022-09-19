@@ -1,17 +1,7 @@
 @import '../../../../../../customStyles/colors';
 
-.headerTitle {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    color: $fbn-text;
-}
-.buttons{
-    color: $fbn-blue !important;
-    font-weight: 500 !important;
-    font-size: 16px !important;
-}
+
+
 .headerBtn{
     background-color: $fbn-gold !important;
     border-radius: 8px !important;
@@ -194,5 +184,31 @@ table {
         line-height: 16px;
 
         // margin: 1rem 0 !important;
+    }
+}
+
+.headerTitle {
+    font-size: 12px;
+}
+.buttons{
+    font-size: 12px;
+}
+
+// responsive classes
+
+
+
+@media screen and (min-width: 1024px) {
+    .headerTitle {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 28px;
+        color: $fbn-text;
+    }
+    .buttons{
+        color: $fbn-blue !important;
+        font-weight: 500 !important;
+        font-size: 16px !important;
     }
 }

@@ -1,9 +1,5 @@
 @import '../../../../../customStyles/colors';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import '../../../../../customStyles/layouting.scss';
 
 
@@ -200,4 +196,247 @@ table {
 fa-icon{
     color: $fbn-text;
     font-weight: 100 !important;
+}
+.detailsModal {
+    padding: 1rem !important;
+    padding-top: 0 !important;
+    font-weight: 400;
+
+    & h1 {
+        font-size: 24px !important;
+        color: #657889 !important;
+        font-weight: 600 !important;
+    }
+
+    & h2 {
+        font-size: 16px;
+        color: #002855 !important;
+        font-weight: 600 !important;
+        margin: 1rem 0;
+    }
+}
+
+.modal-overlay {
+    @include centered-modal-with-overlay
+}
+
+
+.fields {
+    width: 50%;
+    gap: 1rem;
+    color: #657889;
+    margin: 4px 8px;
+}
+
+.RQ {
+    font-size: 13px;
+    color: #657889;
+    border: 1px solid #657889;
+    font-weight: 600;
+}
+
+.modalDel {
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 10px;
+    // width: fit-content;
+    height: fit-content;
+}
+
+.email {
+    align-items: center;
+
+    & span {
+        font-weight: 600;
+        text-decoration: underline;
+    }
+}
+
+.fbn-border-t {
+    border-top: 1px solid #E5E5E5 !important;
+    padding: 10px 0;
+}
+
+.modalAdd {
+    // @include centeredModal
+    // .modalDel{
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 2rem 15px;
+    // width: fit-content;
+    height: fit-content;
+    // }
+}
+
+.modalTitle {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: #002855 !important;
+}
+
+.modalContents {
+    border: 1px solid #E5E5E5;
+    padding: 12px 1.4rem;
+}
+
+.modalHeader {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+
+}
+
+.modalContentsActions {
+    background: #F9F9F9;
+    border-radius: 4PX;
+    gap: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.subHeads {
+    font-weight: 600;
+    line-height: 42px;
+    margin: 2px 0;
+    color: #002855 !important;
+}
+
+.delModalAction {
+    color: red;
+}
+
+.confirmDel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 3rem 0;
+
+    & label {
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        color: #002855 !important;
+        margin: 6px 0;
+    }
+
+
+}
+
+.headerTitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: $fbn-text;
+}
+
+.text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: $fbn-text ;
+}
+
+.flex-betweenS {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-px-fill-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-fill-green-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    background-color: $fbn-text-green ;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-yellow-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 1px solid $fbn-text-yellow;
+    color: $fbn-text-yellow;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    border: 3px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    background-color: transparent !important;
+}
+
+.fbn-px-blue-btn {
+    border-radius: 100px;
+    padding: 8px 3rem;
+    border: 1px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    & button {
+        background: #DDAD31;
+        border-radius: 5px;
+        padding: 6px 11px;
+        color: #F9F9F9 !important;
+        border: none;
+        margin: 10px;
+    }
 }

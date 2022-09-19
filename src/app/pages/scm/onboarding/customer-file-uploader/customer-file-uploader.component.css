@@ -21,3 +21,29 @@ th{
     align-items: center;
     justify-content: center;
 }
+.flex-startend{
+    display: flex;
+    justify-content: flex-end;
+}
+.fbn-red-btn {
+    border-radius: 100px;
+    padding: 8px 26px;
+    background-color: transparent ;
+    border: 1px solid red;
+    color: red;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    width: fit-content;
+    margin: 0;
+}
+.fbn-fill-green-btn {
+    border-radius: 100px;
+    padding: 8px 30px;
+    background-color: #00BFA6;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    line-height: 19px;
+}

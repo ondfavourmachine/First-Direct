@@ -12,7 +12,7 @@
 
                 <div class="my-3 ">
                     <div class="my-3">
-                        <h1 class="text-fbn-blue headers text-lg font-semibold">Preview Buyer's Information</h1>
+                        <h1 class="text-fbn-blue headers text-lg font-semibold">Preview {{customerDetails?.role}}'s Information</h1>
                         <p class="text-xs disclaimer">Kindly go through the information before clicking the button below</p>
                     </div>
 
@@ -71,10 +71,10 @@
                                 <h1>Tier</h1>
                                 <p>{{customerDetails?.tierId}}</p>
                             </div>
-                            <div class="fields  my-5">
+                            <!-- <div class="fields  my-5">
                                 <h1>Rank</h1>
                                 <p>XYZ</p>
-                            </div>
+                            </div> -->
                             <div class="fields  my-5">
                                 <h1>Limit</h1>
                                 <p>NGN {{customerDetails?.limits}}</p>
@@ -92,7 +92,7 @@
                                 <div class="flex-colstart">
                                     <p>{{customerDetails?.bankName}}</p>
                                     <p>{{customerDetails?.accountNumber}}</p>
-                                    <p>{{customerDetails?.customerName}}</p>
+                                    <p>{{customerDetails?.accountName}}</p>
                                 </div>
                             </div>
 
@@ -128,7 +128,7 @@
             </div>
             <div class="my-2">
                 <p class=" text-fbn-text">
-                    New {{customerDetails?.role}}'s created successfully
+                    New Customer created successfully
                 </p>
             </div>
             <div class="my-2">

@@ -12,7 +12,7 @@ private customerDetails = new BehaviorSubject<addCustomer>(null);
 private customerFileDetails = new BehaviorSubject<any>(null);
 
 
-updateCustomerFileDetails(details: uploadCustomerFileModel){
+updateCustomerFileDetails(details: any){
   this.customerFileDetails.next(details)
 }
 

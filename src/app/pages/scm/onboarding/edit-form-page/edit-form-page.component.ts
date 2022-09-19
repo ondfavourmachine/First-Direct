@@ -4,7 +4,7 @@ import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { addCustomer } from 'src/app/core/models/scm/onboarding.model';
+import { addCustomer, editCustomer } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-edit-form-page',
   templateUrl: './edit-form-page.component.html',
@@ -16,7 +16,9 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
   id: number;
   editCustomerDeatails: any = [];
   industries = [];
-  country = [];
+  countries = [
+    {id: "01", name: 'Nigeria'},
+  ];
   categories = [];
   tiers = [];
   Nigeria: string = "Nigeria";
@@ -30,6 +32,16 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     //   }
     // })
   }
+
+  loader(){
+    if(this.editCustomerDeatails?.customerName === undefined && this.editCustomerDeatails?.customerName === null && this.editCustomerDeatails?.customerName === ''){
+      this.isLoaded = false;
+      this.gVars.spinner.show();
+    } else {
+      this.isLoaded = true;
+      this.gVars.spinner.hide();
+    }
+  }
   constructor(
     private router : Router,
     private crudServices: CrudService,
@@ -39,6 +51,7 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder
   ) {
     this._route.params.subscribe(params =>this.getRole(params['role'], params['id']) );
+    
   }
 
   public editCustomerForm: FormGroup;
@@ -50,29 +63,37 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log(this.editCustomerForm.value);
-    console.log(this.editCustomerForm.value)
-    const customerDetails: addCustomer = {
-      customerName: this.editCustomerForm.value.customerName,
-      industryId: this.editCustomerForm.value.industryId,
-      customerCode: this.editCustomerForm.value.customerCode,
-      tin: this.editCustomerForm.value.tin,
-      rcNumber: this.editCustomerForm.value.rcNumber,
-      countryId: this.editCustomerForm.value.countryId,
-      email: this.editCustomerForm.value.email,
-      mobileNumber: this.editCustomerForm.value.mobileNumber,
-      tierId: this.editCustomerForm.value.tierId,
-      limits: this.editCustomerForm.value.limits,
-      role: this.role,
-      companyName: this.editCustomerForm.value.companyName,
-      bankName: this.editCustomerForm.value.bankName,
-      accountNumber: this.editCustomerForm.value.accountNumber,
-      minimumAnnualSpend: this.editCustomerForm.value.minimumAnnualSpend,
-      maximumAnnualSpend: this.editCustomerForm.value.maximumAnnualSpend,
-      isEdited: true
-      // industryName: this.industries.filter(industry => industry.id === this.editCustomerForm.value.industryId)[0]?.name,
+    // console.log(this.editCustomerForm.value);
+    // console.log(this.editCustomerForm.value)
 
-    }
+      // if editCustomerForm is touched spread the values to the editCustomerdetails object
+      if(this.editCustomerForm.touched){
+        this.editCustomerDeatails = {...this.editCustomerDeatails, ...this.editCustomerForm.value}
+      }
+      // console.log("new",this.editCustomerDeatails)
+    // const customerDetails: any = {
+    //   customerName: this.editCustomerForm.value.customerName,
+    //   industryId: this.editCustomerForm.value.industryId,
+    //   customerCode: this.editCustomerForm.value.customerCode,
+    //   tin: this.editCustomerForm.value.tin,
+    //   rcNumber: this.editCustomerForm.value.rcNumber,
+    //   countryId: this.editCustomerForm.value.countryId,
+    //   email: this.editCustomerForm.value.email,
+    //   phoneNumber: this.editCustomerForm.value.phoneNumber,
+    //   tierId: this.editCustomerForm.value.tierId,
+    //   limits: this.editCustomerForm.value.limits,
+    //   role: this.role.toLocaleLowerCase(),
+    //   companyName: this.editCustomerForm.value.companyName,
+    //   bankName: this.editCustomerForm.value.bankName,
+    //   accountNumber: this.editCustomerForm.value.accountNumber,
+    //   minimumAnnualSpend: this.editCustomerForm.value.minimumAnnualSpend,
+    //   maximumAnnualSpend: this.editCustomerForm.value.maximumAnnualSpend,
+    //   isEdited: true,
+    //   id: Number(this.id),
+    //   dateAdded: this.editCustomerDeatails.dateAdded,
+    //   // industryName: this.industries.filter(industry => industry.id === this.editCustomerForm.value.industryId)[0]?.name,
+
+    // }
     //  validate form
     // if(this.editCustomerForm.hasError('required')){
     //   this.crudServices.updateCustomerDetails(customerDetails);
@@ -83,7 +104,7 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
 
     // check if form is all filled
     if (this.editCustomerForm.valid) {
-      this.crudServices.updateCustomerDetails(customerDetails);
+      this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
       this.router.navigate(['/scm/confirm-details'])
     } else {
       this.gVars.toastr.error("Please fill all required fields")
@@ -101,27 +122,31 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
             rcNumber: [this.editCustomerDeatails.rcNumber],
             industryId: [this.editCustomerDeatails.industryId],
             countryId: [this.editCustomerDeatails.countryId],
-            currency: ["NGN"],
+            currency: [this.editCustomerDeatails.currencyCode],
             rank: ["XYZ"],
             tierId: [this.editCustomerDeatails.tierId],
-            companyEmail: [this.editCustomerDeatails.companyEmail],
-            mobileNumber: [this.editCustomerDeatails.mobileNumber],
+            companyEmail: [this.editCustomerDeatails.email],
+            phoneNumber: [this.editCustomerDeatails.phoneNumber],
             companyName: [this.editCustomerDeatails.companyName],
             customerCode: [this.editCustomerDeatails.customerCode],
             tin: [this.editCustomerDeatails.tin],
             limits: [this.editCustomerDeatails.limits],
+            bankName: [this.editCustomerDeatails.bankName],
+            accountNumber: [this.editCustomerDeatails.accountNumber],
+            minimumAnnualSpend: [this.editCustomerDeatails.minimumAnnualSpend],
+            maximumAnnualSpend: [this.editCustomerDeatails.maximumAnnualSpend],
       
           })
       
-          if(this.role === 'SUPPLIER'){
-            this.editCustomerForm.addControl('bankName', this.fb.control(this.editCustomerDeatails.bankName));
-            this.editCustomerForm.addControl('accountNumber', this.fb.control(this.editCustomerDeatails.accountNumber));
-            this.editCustomerForm.addControl('minimumAnnualSpend', this.fb.control(this.editCustomerDeatails.minimumAnnualSpend));
-            this.editCustomerForm.addControl('maximumAnnualSpend', this.fb.control(this.editCustomerDeatails.maximumAnnualSpend));
-          }
+          // if(this.role === 'SUPPLIER'){
+          //   this.editCustomerForm.addControl('bankName', this.fb.control(this.editCustomerDeatails.bankName));
+          //   this.editCustomerForm.addControl('accountNumber', this.fb.control(this.editCustomerDeatails.accountNumber));
+          //   this.editCustomerForm.addControl('minimumAnnualSpend', this.fb.control(this.editCustomerDeatails.minimumAnnualSpend));
+          //   this.editCustomerForm.addControl('maximumAnnualSpend', this.fb.control(this.editCustomerDeatails.maximumAnnualSpend));
+          // }
         }
-        this.gVars.spinner.hide();
-        console.log("editCustomerDeatails:",this.editCustomerDeatails)
+        this.loader();
+        // console.log("editCustomerDeatails:",this.editCustomerDeatails)
         
       }
     })
@@ -161,19 +186,14 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     })
   }
 
+
   ngAfterViewInit(): void {
 
-    if(this.editCustomerDeatails?.customerName !== ""){
-      this.isLoaded = true;
-      this.gVars.spinner.hide();
-    } else {
-      this.isLoaded = false;
-      this.gVars.spinner.show();
-    }
   }
   ngOnInit(): void {
     this.getSingleCustomerDetails();
 
+    
 
 
     if (this.role === "") {

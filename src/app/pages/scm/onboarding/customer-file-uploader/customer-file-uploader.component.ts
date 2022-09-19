@@ -14,7 +14,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   role: string = "";
   bulkUploadResData: any = [];
   bulkUploadPayload: any = [];
-
+  pasrsedData$: any = [];
 
   constructor(
     private router: Router,
@@ -34,10 +34,25 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
       }
     })
   }
+
+  getParsedData() {
+    this.crudServices.getCustomerFileDetails().subscribe({
+      next: (data: any) => {
+        // store 2nd row of data
+        this.pasrsedData$ = data;
+        // if(this.pasrsedData$ === null){
+        //   this.gVars.toastr.error("No Data Found");
+        //   this.router.navigate([`/scm`])
+        // }
+        // this.pasrsedData$ = data;
+         this.payLoad = [...this.pasrsedData$];
+            // console.log("pay:", this.payLoad)
+        // console.log("parsed data", this.pasrsedData$)
+      }
+    })
+
+  }
   tableHeaders = [
-    {
-      name: 'S/N',
-    },
     {
       name: `${this.role} Name`,
     },
@@ -65,15 +80,14 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
       name: 'RC Number',
     },
     {
-      name: 'Rank',
-    },
-    {
       name: 'Tier',
     },
     {
       name: 'Limit',
     }
   ]
+
+  payLoad = [];
 
   public updateHeaders() {
     if (this.role === "supplier") {
@@ -99,6 +113,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   // go back to last route
   public goBack() {
     this.router.navigate([`/scm`])
+    this.crudServices.updateCustomerFileDetails(null);
   }
 
   getCustomerFile() {
@@ -107,17 +122,21 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         // console.log(data)
         this.bulkUploadPayload = data;
-        console.log(this.bulkUploadPayload)
+        // console.log(this.bulkUploadPayload)
 
         this.customersService.uploadCustomerFile(this.bulkUploadPayload, this.role).subscribe({
           next: (data: any) => {
             this.gVars.spinner.hide();
             this.gVars.toastr.info("File Uploaded Successfully");
             this.bulkUploadResData = data.data;
-            console.log(data)
+
+            // spread results into payload
+           
           }, error: (err: any) => {
             this.gVars.spinner.hide();
+           setTimeout(() => {
             this.gVars.toastr.error("Error Occured");
+            }, 3000);
           }
         })
         // this.bulkUploadResData = data;
@@ -126,12 +145,51 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     // this.getCustomerFile(this.role);
+    setTimeout(() => {
+      this.getParsedData();
+    }, 3000);
   }
+
+  upLoadFile() {
+    if(this.role === "supplier"){
+      this.customersService.uploadSupplierFile(this.payLoad).subscribe({
+        next: (data: any) => {
+          this.gVars.spinner.hide();
+          this.gVars.toastr.info("File Uploaded Successfully");
+          this.router.navigate([`/scm`])
+          // this.bulkUploadResData = data.data;
+          // console.log("data", data)
+        } , error: (err: any) => {
+          this.gVars.spinner.hide();
+          this.gVars.toastr.error("Error Occured");
+          this.router.navigate([`/scm`])
+          this.crudServices.updateCustomerFileDetails(null)
+        }
+      })
+    } else {
+      this.customersService.uploadBuyerFile(this.payLoad).subscribe({
+        next: (data: any) => {
+          this.gVars.spinner.hide();
+          this.gVars.toastr.info("File Uploaded Successfully");
+          this.router.navigate([`/scm`])
+          // this.bulkUploadResData = data.data;
+          // console.log("data", data)
+        } , error: (err: any) => {
+          this.gVars.spinner.hide();
+          this.gVars.toastr.error("Error Occured");
+          this.router.navigate([`/scm`])
+          this.crudServices.updateCustomerFileDetails(null)
+        }
+      })
+    }
+  }
+
   ngOnInit(): void {
     this.updateHeaders();
     this.getRole();
-
-    this.getCustomerFile();
+  
+   
+    // this.getCustomerFile();
   }
 
 }

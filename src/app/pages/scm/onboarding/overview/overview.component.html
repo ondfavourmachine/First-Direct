@@ -11,7 +11,7 @@
     </div>
 
     <div class="inputs flex-between">
-        <div class=" filter centeredRowFlex ">
+        <div (click)="toggleFilterModal()" class=" filter centeredRowFlex ">
             <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M2.49913 1H15.4991C15.6431 1.05051 15.7737 1.13331 15.8808 1.24206C15.9878 1.35082 16.0686 1.48264 16.1169 1.62742C16.1651 1.77221 16.1796 1.92612 16.1592 2.07737C16.1388 2.22861 16.084 2.37318 15.9991 2.5L10.9991 8V15L6.99913 12V8L1.99913 2.5C1.91422 2.37318 1.85947 2.22861 1.83906 2.07737C1.81865 1.92612 1.83313 1.77221 1.88139 1.62742C1.92966 1.48264 2.01042 1.35082 2.11749 1.24206C2.22457 1.13331 2.35511 1.05051 2.49913 1Z"
@@ -20,8 +20,14 @@
 
         </div>
         <div class="centeredRowFlex inputBox">
-            <input type="text" class="input" placeholder="search">
-            <div class="search centeredRowFlex">
+            <form [formGroup]="searchForm">
+                <input 
+                [ngModel]="searchForm.value.search"
+                (ngModelChange)="resetData($event)"
+                type="text" formControlName="search" 
+                class="input" placeholder="search">
+            </form>
+            <div (click)="searchCustomer()" class="search centeredRowFlex">
                 <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -37,7 +43,6 @@
     <tbody>
         <tr (click)="toggleModal(contents?.customerType, contents?.id)" class="bodyRow cursor-pointer" *ngFor="let contents of allCustomers">
             <td>
-                <!-- date pipe -->
                 {{contents?.dateAdded | date: 'dd/MM/yyyy'}}
             </td>
             <td>
@@ -70,12 +75,28 @@
 
         </tr>
     </tbody>
-    <div *ngIf="allCustomersEmptyState" class="bg-white p-5">
+    <div style="width: 100%;" *ngIf="allCustomersEmptyState" class="bg-white p-5">
         <p class="text-center text-xs">
             No data found
         </p>
     </div>
 </app-table>
+
+<div class="pagination">
+    <div class="flex">
+        <button (click)="previousPage()" class="">
+            <svg class=" "  width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
+              </svg>              
+        </button>
+        <button (click)="nextPage()">
+            <svg class=""  width="20" height="15"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+              
+        </button>
+    </div>
+</div>
 
 <app-details-modal-wrapper *ngIf="detailsModal">
     <div class="detailsModal">
@@ -178,7 +199,7 @@
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Company Phone No</p>
-                        <p class="fields">{{singleCustomer?.mobileNumber}}</p>
+                        <p class="fields">{{singleCustomer?.phoneNumber}}</p>
                     </div>
                 </div>
 
@@ -199,16 +220,16 @@
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Currency</p>
-                        <p class="fields">{{singleCustomer?.currency}}</p>
+                        <p class="fields">{{singleCustomer?.currencyCode}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Tier</p>
                         <p class="fields">{{singleCustomer?.tierId}}</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                    <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Bank</p>
                         <p class="fields">{{singleCustomer?.bankName}}</p>
-                    </div>
+                    </div> -->
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Limit</p>
                         <p class="fields">NGN {{singleCustomer?.limits}}</p>
@@ -217,22 +238,22 @@
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Maximum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.limits}}</p>
+                        <p class="fields">NGN {{singleCustomer?.maximumAnnualSpend}}</p>
                     </div>
                     <div
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Minimum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.limits}}</p>
+                        <p class="fields">NGN {{singleCustomer?.minimumAnnualSpend}}</p>
                     </div>
                     <div
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Bank Information</p>
                        <div class="fields">
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
+                        <p class="">{{singleCustomer?.bankName}}</p>
+                        <p class="">{{singleCustomer?.accountName}}</p>
+                        <p class="">{{singleCustomer?.accountNumber}}</p>
                        </div>
                     </div>
                 </div>
@@ -288,3 +309,15 @@
         </div>
     </div>
 </app-centered-modal-wrapper>
+
+<div *ngIf="filterModal" class="modalFilter blowUp">
+    <button (click)="closeFilterModal()">X</button>
+    <ul
+    style="cursor: pointer;"
+    >
+        <li (click)="sortBuyers()" class="my-2">Buyer</li>
+        <li (click)="sortSuppliers()" class="my-2">Supplier</li>
+        <li (click)="sortApproved()" class="my-2">Approved</li>
+        <li (click)="sortNotApproved()" class="my-2">Not Approved</li>
+    </ul>
+</div>
