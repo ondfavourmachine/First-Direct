@@ -13,10 +13,20 @@ export class ConfirmDetailsComponent implements OnInit {
   customerDetails: any;
   today = new Date();
   isSuccessModalOpen: Boolean = false;
-
+  role: string;
+  isEdited: string = "";
+  getRole(role: string){
+    // this.crudServices.getRole().subscribe({
+    //   next: (data:any) =>{
+        this.role = role;
+    //     // console.log(data)
+    //   }
+    // })
+  }
 
   toggleSuccessModal() {
     this.crudServices.updateCustomerDetails(null);
+    this.crudServices.updateEditor(null);
     this.router.navigateByUrl(`/scm`)
   }
 
@@ -30,7 +40,7 @@ export class ConfirmDetailsComponent implements OnInit {
       "rcNumber": this.customerDetails?.rcNumber,
       "tin": this.customerDetails?.tin,
       "email": this.customerDetails?.email,
-      "mobileNumber": this.customerDetails?.mobileNumber,
+      "mobileNumber": this.customerDetails?.phoneNumber,
       "countryId": "01",
       "country": this.customerDetails?.countryId,
       "currencyCode": "NGN",
@@ -46,7 +56,7 @@ export class ConfirmDetailsComponent implements OnInit {
     this.gVars.spinner.show();
 
 
-    if (this.customerDetails?.isEdited === true) {
+    if (this.isEdited === "edited" ) {
 
       let editPayload: editCustomer = {
         id: Number(this.customerDetails?.id),
@@ -93,6 +103,7 @@ export class ConfirmDetailsComponent implements OnInit {
           // if(data.message === "Successful"){
           this.router.navigateByUrl(`/scm`)
           this.crudServices.updateCustomerDetails(null);
+          this.crudServices.updateEditor(null);
           this.gVars.spinner.hide();
           // }
         }, error: (err: any) => {
@@ -100,6 +111,7 @@ export class ConfirmDetailsComponent implements OnInit {
           this.gVars.spinner.hide();
           this.gVars.toastr.error("Error editing customer", "Error");
           this.crudServices.updateCustomerDetails(null);
+          this.crudServices.updateEditor(null);
           this.router.navigateByUrl(`/scm`)
         }
       })
@@ -112,7 +124,7 @@ export class ConfirmDetailsComponent implements OnInit {
           "minimumAnnualSpend": this.customerDetails?.minimumAnnualSpend,
           "bankName": this.customerDetails?.bankName,
           "accountNumber": this.customerDetails?.accountNumber,
-          "accountName": this.customerDetails?.customerName,
+          // "accountName": this.customerDetails?.customerName,
         }
 
         console.log("payload:", payload)
@@ -124,6 +136,7 @@ export class ConfirmDetailsComponent implements OnInit {
             // if(data.message === "Successful"){
             this.gVars.spinner.hide();
             this.crudServices.updateCustomerDetails(null);
+            this.crudServices.updateEditor(null);
             // this.router.navigateByUrl(`/scm`)
             // }
           }, error: (err: any) => {
@@ -131,6 +144,7 @@ export class ConfirmDetailsComponent implements OnInit {
             // console.log(err)
             this.gVars.toastr.error("Error adding supplier", "Error")
             this.crudServices.updateCustomerDetails(null);
+            this.crudServices.updateEditor(null);
             this.router.navigateByUrl(`/scm`)
           }
         })
@@ -143,12 +157,14 @@ export class ConfirmDetailsComponent implements OnInit {
             this.gVars.spinner.hide();
             // this.router.navigateByUrl(`/scm`)
             this.crudServices.updateCustomerDetails(null);
+            this.crudServices.updateEditor(null);
             // }
           }, error: (err: any) => {
             // console.log(err);
             this.gVars.spinner.hide();
             this.gVars.toastr.error("Error adding buyer", "Error");
             this.crudServices.updateCustomerDetails(null);
+            this.crudServices.updateEditor(null);
             this.router.navigateByUrl(`/scm`)
           }
         })
@@ -160,7 +176,9 @@ export class ConfirmDetailsComponent implements OnInit {
   }
 
 
-
+  onCompanyNameChange($event){
+    console.log($event)
+  }
 
   constructor(
     private crudServices: CrudService,
@@ -169,7 +187,7 @@ export class ConfirmDetailsComponent implements OnInit {
     private customersService: CustomersService,
     private gVars: GlobalsService
   ) {
-
+    this._route.params.subscribe(params =>this.getRole(params['role']) );
   }
 
   public getCustomerDetails() {
@@ -186,8 +204,19 @@ export class ConfirmDetailsComponent implements OnInit {
     this.crudServices.updateCustomerDetails(this.customerDetails);
   }
 
+  getEditor(){
+    this.crudServices.getEditor().subscribe({
+      next: (data: any) => {
+        this.isEdited = data;
+        // console.log("editorContent:", this.isEdited)
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.getCustomerDetails();
+    this.getEditor();
+    console.log("customerDetails:", this.customerDetails)
     if (this.customerDetails == null) {
       this.router.navigateByUrl(`/scm`)
     }

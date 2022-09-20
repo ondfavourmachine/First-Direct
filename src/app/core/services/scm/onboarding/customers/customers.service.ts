@@ -108,6 +108,10 @@ export class CustomersService {
     return this.http.post(`${environment.scmApiUrl}/api/Customer/bulk-supplier`, payLoad, httpOptions);
   }
 
+  getPrincipalBuyers(): Observable<any> {
+    return this.http.get(`${environment.scmApiUrl}/api/Customer/bank/principal`, httpOptions);
+  };
+
 
 
 

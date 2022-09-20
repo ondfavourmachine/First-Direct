@@ -10,7 +10,16 @@ private tabNumber = new BehaviorSubject(1);
 private role = new BehaviorSubject("");
 private customerDetails = new BehaviorSubject<addCustomer>(null);
 private customerFileDetails = new BehaviorSubject<any>(null);
+private editor = new BehaviorSubject<any>("");
 
+
+updateEditor(editor: any){
+  this.editor.next(editor)
+}
+
+getEditor(): BehaviorSubject<any>{
+  return this.editor
+}
 
 updateCustomerFileDetails(details: any){
   this.customerFileDetails.next(details)

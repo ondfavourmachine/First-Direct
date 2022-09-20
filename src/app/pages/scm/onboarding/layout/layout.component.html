@@ -11,12 +11,10 @@
                 <app-buttons (clicker)="addSeller()" btnText="New Supplier" iconType="add-blue" class=" headerBtn">
                 </app-buttons>
             </app-header-scm>
-    
+
             <app-centered-modal-wrapper *ngIf="showModal">
-    
-                <div
-                style="width: fit-content;" 
-                class="modalAdd blowUp p-4">
+
+                <div style="width: fit-content;" class="modalAdd blowUp p-4">
                     <div class="flex-startend my-2 z-50">
                         <svg (click)="closeModal()" width="26" height="26" viewBox="0 0 26 26" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -37,11 +35,13 @@
                                         d="M14.69 0H6.31C2.67 0 0.5 2.17 0.5 5.81V14.18C0.5 17.83 2.67 20 6.31 20H14.68C18.32 20 20.49 17.83 20.49 14.19V5.81C20.5 2.17 18.33 0 14.69 0ZM6.97 8.98C7.26 8.69 7.74 8.69 8.03 8.98L9.75 10.7V4.51C9.75 4.1 10.09 3.76 10.5 3.76C10.91 3.76 11.25 4.1 11.25 4.51V10.7L12.97 8.98C13.26 8.69 13.74 8.69 14.03 8.98C14.32 9.27 14.32 9.75 14.03 10.04L11.03 13.04C10.96 13.11 10.88 13.16 10.79 13.2C10.7 13.24 10.6 13.26 10.5 13.26C10.4 13.26 10.31 13.24 10.21 13.2C10.12 13.16 10.04 13.11 9.97 13.04L6.97 10.04C6.68 9.75 6.68 9.28 6.97 8.98ZM16.74 15.22C14.73 15.89 12.62 16.23 10.5 16.23C8.38 16.23 6.27 15.89 4.26 15.22C3.87 15.09 3.66 14.66 3.79 14.27C3.92 13.88 4.34 13.66 4.74 13.8C8.46 15.04 12.55 15.04 16.27 13.8C16.66 13.67 17.09 13.88 17.22 14.27C17.34 14.67 17.13 15.09 16.74 15.22Z"
                                         fill="white" />
                                 </svg>
-    
-                                <label (click)="fileUpload.click()" class="mx-1 my-0">Import Multiple {{customerType}}s From
+
+                                <label (click)="fileUpload.click()" class="mx-1 my-0">Import Multiple {{customerType}}s
+                                    From
                                     CSV</label>
-                                <input #fileUpload type="file" accept=".xlsx,.xls,.csv" (click)="fileUpload.value = null"
-                                    (change)="changeListener($event.target.files[0])" class="hide">
+                                <input #fileUpload type="file" accept=".xlsx,.xls,.csv"
+                                    (click)="fileUpload.value = null" (change)="changeListener($event.target.files[0])"
+                                    class="hide">
                             </div>
                             <div class="centeredRowFlex  fbn-yellow-btn">
                                 <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
@@ -50,14 +50,31 @@
                                         d="M14.69 0H6.31C2.67 0 0.5 2.17 0.5 5.81V14.18C0.5 17.83 2.67 20 6.31 20H14.68C18.32 20 20.49 17.83 20.49 14.19V5.81C20.5 2.17 18.33 0 14.69 0ZM16.5 10.75H11.25V16C11.25 16.41 10.91 16.75 10.5 16.75C10.09 16.75 9.75 16.41 9.75 16V10.75H4.5C4.09 10.75 3.75 10.41 3.75 10C3.75 9.59 4.09 9.25 4.5 9.25H9.75V4C9.75 3.59 10.09 3.25 10.5 3.25C10.91 3.25 11.25 3.59 11.25 4V9.25H16.5C16.91 9.25 17.25 9.59 17.25 10C17.25 10.41 16.91 10.75 16.5 10.75Z"
                                         fill="#DDAD31" />
                                 </svg>
-    
-                                <label (click)="navigate('scm/add-new')" class="mx-3 my-0">Add {{customerType}}s Manually</label>
+
+                                <label (click)="navigate('scm/add-new')" class="mx-3 my-0">Add {{customerType}}s
+                                    Manually</label>
                             </div>
                         </div>
+                        <a 
+                        *ngIf="customerType === 'Buyer'"
+                         href="../../../../../assets/Download Template (Buyer).xlsx" class="btn text-xs my-2 italic text-left"
+                         target="_blank" 
+                         download="Download Template (Buyer).xlsx">
+                        Download Sample Template</a>
+
+                        <a
+                        *ngIf="customerType === 'Supplier'"
+                         href="../../../../../assets/Download Template (Supplier).xlsx" class="btn text-xs my-2 italic text-left"
+                         target="_blank" 
+                         download="Download Template (Supplier).xlsx">
+                        Download Sample Template</a>
+
+
+
                     </div>
                 </div>
             </app-centered-modal-wrapper>
-    
+
             <div class="fadeIn">
                 <router-outlet></router-outlet>
             </div>

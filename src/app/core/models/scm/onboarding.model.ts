@@ -8,7 +8,7 @@ export class addCustomer {
     rcNumber: string;
     countryId: string;
     email: string;
-    mobileNumber: string;
+    phoneNumber: string;
     tierId: number;
     limits: number;
     role: string;

@@ -31,6 +31,7 @@ export class PagesComponent implements OnInit {
   SearchQuery: string = "";
   searchForm: FormGroup;
   SortColumn: string = "";
+  filterModal: boolean = false;
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -52,12 +53,12 @@ export class PagesComponent implements OnInit {
     // this.role = role;
     this.onboardService.getCustomerById(id).subscribe({
       next: (data) => {
-        console.log("single customer:", data)
+        // console.log("single customer:", data)
         this.gVar.spinner.hide();
         this.singleCustomer = data.data;
       }
     })
-    console.log("role:", this.role)
+    // console.log("role:", this.role)
   }
 
   closeDetailsModal() {
@@ -247,6 +248,82 @@ export class PagesComponent implements OnInit {
         this.tabNumber = data;
       }
     })
+  }
+
+  resetTable() {
+    this.SearchQuery = "";
+    this.SortColumn = "";
+    this.getCustomers();
+  }
+
+  resetData(val: string) {
+    // console.log("val:", val)
+    // timeout val to allow for the value to be set
+    this.SearchQuery = val;
+    if(this.tabNumber === 1){
+      this.getCustomers();
+    } else if(this.tabNumber === 2){
+      this.getBuyers();
+    } else {
+      this.getSuppliers();
+    }
+
+    // if(this.SearchQuery === ""){
+    //   this.getCustomers();
+    // }
+  }
+
+  toggleFilterModal() {
+    this.filterModal = !this.filterModal;
+  }
+
+  sortBuyers() {
+    this.SortColumn = "BUYER";
+    this.getBuyers();
+    this.toggleFilterModal();
+  }
+
+  sortSuppliers() {
+    this.SortColumn = "SUPPLIER";
+    this.getSuppliers();
+    this.toggleFilterModal();
+  }
+
+  sortApproved() {
+    this.SortColumn = "APPROVED";
+    if(this.tabNumber === 1){
+      this.getCustomers();
+    } else if(this.tabNumber === 2){
+      this.getBuyers();
+    } else {
+      this.getSuppliers();
+    }
+    this.toggleFilterModal();
+  }
+
+
+  sortNotApproved() {
+    this.SortColumn = "NOTAPPROVED";
+    if(this.tabNumber === 1){
+      this.getCustomers();
+    } else if(this.tabNumber === 2){
+      this.getBuyers();
+    } else {
+      this.getSuppliers();
+    }
+    this.toggleFilterModal();
+  }
+
+  closeFilterModal() {
+    this.filterModal = false;
+    if(this.tabNumber === 1){
+      this.getCustomers();
+    } else if(this.tabNumber === 2){
+      this.getBuyers();
+    }
+    else {
+      this.getSuppliers();
+    }
   }
 
 

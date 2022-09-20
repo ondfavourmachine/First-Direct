@@ -2,12 +2,12 @@
     <app-card cardTitle="All Customers" (clicker)="navigate()" figure={{stats?.total}}></app-card>
     <app-card cardTitle="All Buyers" (clicker)="navigateToBuyer()" figure={{stats?.buyers}}></app-card>
     <app-card cardTitle="All Suppliers" (clicker)="navigateToSupplier()" figure={{stats?.suppliers}}></app-card>
-    <app-card cardTitle="Inactive Customers" figure={{stats?.inactive}}></app-card>
+    <app-card cardTitle="Inactive Customers" figure="0"></app-card>
 </div>
 
 <div class="flex-between">
     <div class="text">
-        <h1 class="headerTitle">Recents Customers</h1>
+        <h1 class="headerTitle">Customers</h1>
     </div>
 
     <div class="inputs flex-between">
@@ -75,12 +75,19 @@
 
         </tr>
     </tbody>
+   
+
+</app-table>
+
+<div
+style="display: flex; justify-content: center; align-items: center; "
+> 
     <div style="width: 100%;" *ngIf="allCustomersEmptyState" class="bg-white p-5">
         <p class="text-center text-xs">
             No data found
         </p>
     </div>
-</app-table>
+</div>
 
 <div class="pagination">
     <div class="flex">
@@ -152,7 +159,7 @@
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Industry</p>
-                        <p class="fields">{{singleCustomer?.industry}}</p>
+                        <p class="fields">{{singleCustomer?.industryName}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">{{role | titlecase }}'s code</p>

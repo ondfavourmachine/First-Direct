@@ -37,9 +37,10 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   bankCode: any;
   accountName: string = "";
   validatedBankDetails: any = [];
-  existingCustomers: [] = [];
+  existingCustomers: any = [];
   keyWord: string = 'Approved';
   btnText = 'Continue';
+  companyCode: any  = [];
   constructor(
     private crudServices: CrudService,
     private router: Router,
@@ -48,7 +49,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
     private customersService: CustomersService,
     private gVars: GlobalsService
   ) {
-    this._route.params.subscribe(params => this.role = params['role']);
+    this._route.params.subscribe(params => this.role = params['role'].toLocaleLowerCase());
     this.getRole();
     this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
   }
@@ -61,6 +62,19 @@ export class FormPageComponent implements OnInit, AfterViewInit {
 
     // }
   }
+
+filterCompanyCode(companyName: string){
+    // filter out company code that is equal to the company name rom existing customers
+    this.companyCode = this.existingCustomers.filter(customer => customer.companyName === companyName);
+    // update the company code in the form
+    this.addCustomerForm.patchValue({
+      customerCode: this.companyCode[0]?.customerCode
+    });
+    // console.log("companyCode:", this.companyCode[0]?.customerCode)
+    // console.log("companyCode:", this.addCustomerForm?.value?.customerCode)
+    // console.log("companyCode:", this.companyCode)
+}
+
 
   validateBankDeyails(code: any) {
     const payload: validateBankDetailsModel = {
@@ -129,10 +143,11 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   }
 
   getExisitingCustomers() {
-    this.customersService.getAllDefCustomers().subscribe({
+    this.customersService.getPrincipalBuyers().subscribe({
       next: (data: any) => {
-        //  filter all approved status customers
-        this.existingCustomers = data?.data?.filter((customer: any) => customer.status === this.keyWord);
+        this.existingCustomers = data?.data;
+
+        // console.log("existingCustomers:",this.existingCustomers.customerCode)
       }
     })
   }
@@ -145,9 +160,11 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   }
 
   saveCustomerDetails(checker: any) {
-    if (this.addCustomerForm.valid && this.validatedBankDetails?.valid === true && this.bankCode.bankName && checker.accountName !== "") {
+    // console.log("checker:", checker)
+    if (checker.accountName !== "") {
       this.crudServices.updateCustomerDetails(checker);
-      this.router.navigate(['/scm/confirm-details'])
+      // console.log("checker:", checker)
+      this.router.navigateByUrl(`/scm/confirm-details/supplier`);
     }
   }
   onSubmit() {
@@ -160,7 +177,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       rcNumber: this.addCustomerForm.value.rcNumber,
       countryId: this.addCustomerForm.value.countryId,
       email: this.addCustomerForm.value.email,
-      mobileNumber: this.addCustomerForm.value.mobileNumber,
+      phoneNumber: this.addCustomerForm.value.phoneNumber,
       tierId: this.addCustomerForm.value.tierId,
       limits: this.addCustomerForm.value.limits,
       role: this.role,
@@ -178,25 +195,23 @@ export class FormPageComponent implements OnInit, AfterViewInit {
     if (this.role !== "buyer") {
       this.bankVerification();
     }
-    if (this.bankCode.bankName && this.validatedBankDetails?.accountName !== undefined && this.validatedBankDetails?.accountName !== null) {
-    }
     if (this.role === "buyer") {
       if (this.addCustomerForm.valid) {
         this.crudServices.updateCustomerDetails(customerDetails);
-        this.router.navigate(['/scm/confirm-details'])
+        this.router.navigate([`/scm/confirm-details/${this.role}`])
 
       } else {
         this.gVars.toastr.error("Please fill all required fields")
 
       }
     } else {
-      if (this.accountName === "") {
+      if (this.accountName === "" && this.addCustomerForm.valid) {
         this.btnText = "Validating Bank Details..."
-      }else {
+      } else {
         this.btnText = "Processing..."
       }
       setTimeout(() => {
-        if (this.validatedBankDetails?.valid === true && this.bankCode.bankName) {
+        if (this.validatedBankDetails?.valid === true && this.bankCode?.bankName) {
           // console.log("customerDetails:", customerDetails)
           this.btnText = "Continue"
           this.saveCustomerDetails(customerDetails);
@@ -205,6 +220,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
 
         } else {
           this.gVars.toastr.error("Please fill all required fields")
+          this.btnText = "Continue"
 
         }
       }, 3000)
@@ -236,7 +252,10 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       }
     })
   }
-
+  onSortChange(e) {
+    // console.log("e:", e.target.value)
+    this.filterCompanyCode(e.target.value)
+ }
   ngOnInit(): void {
 
     this.getCustomerDetails$()
@@ -250,7 +269,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       rcNumber: [this.customerDetails$?.rcNumber, Validators.required],
       countryId: [this.customerDetails$?.countryId, Validators.required],
       email: [this.customerDetails$?.email, Validators.required],
-      mobileNumber: [this.customerDetails$?.mobileNumber, Validators.required],
+      phoneNumber: [this.customerDetails$?.phoneNumber, Validators.required],
       tierId: [this.customerDetails$?.tierId, Validators.required],
       limits: [this.customerDetails$?.limits, Validators.required],
       companyName: [this.customerDetails$?.companyName, Validators.required],

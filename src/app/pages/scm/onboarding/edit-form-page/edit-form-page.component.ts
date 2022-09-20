@@ -102,10 +102,12 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     //   this.gVars.toastr.error("Please fill all required fields")
     // }
 
+    // let role = this.role.toLocaleLowerCase();
     // check if form is all filled
     if (this.editCustomerForm.valid) {
       this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
-      this.router.navigate(['/scm/confirm-details'])
+      this.crudServices.updateEditor("edited");
+      this.router.navigate([`/scm/confirm-details/${this.role}`])
     } else {
       this.gVars.toastr.error("Please fill all required fields")
     }

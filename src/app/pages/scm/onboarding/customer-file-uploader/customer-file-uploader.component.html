@@ -11,10 +11,10 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer" *ngFor="let content of pasrsedData$">
                             <td *ngIf="role === 'buyer'">
-                                {{content["Buyer’s Name"]}}
+                                {{content["Buyer Name"]}}
                             </td>
                             <td *ngIf="role === 'supplier'">
-                                {{content["Supplier’s Name Name"]}}
+                                {{content["Supplier Name"]}}
                             </td>
                             <td>
                                 {{content["Company Name"]}}
@@ -29,16 +29,16 @@
                                 {{content?.Currency}}
                             </td>
                             <td>
-                                {{content["Company email"]}}
+                                {{content["Company Email"]}}
                             </td>
                             <td>
-                                {{content["Phone Number"]}}
+                                {{content["Company Phone Number"]}}
                             </td>
                             <td>
-                                {{content?.TIN}}
+                                {{content["Company Tin"]}}
                             </td>
                             <td>
-                                {{content["RC Number"]}}
+                                {{content["Company Rc Number"]}}
                             </td>
                             <td>
                                 {{content?.Tier}}
@@ -47,10 +47,10 @@
                                 {{content?.Limit}}
                             </td>
                             <td *ngIf="role === 'supplier'">
-                                {{content["Minimum Annual Spend"]}}
+                                {{content["Min Annual Spend"]}}
                             </td>
                             <td *ngIf="role === 'supplier'">
-                                {{content["Maximum Annual Spend"]}}
+                                {{content["Max Annual Spend"]}}
                             </td>
                             <td *ngIf="role === 'supplier'">
                                 {{content["Bank Name"]}}

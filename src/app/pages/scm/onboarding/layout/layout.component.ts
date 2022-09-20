@@ -39,12 +39,16 @@ export class LayoutComponent implements OnInit {
     this.modalTitle = "Onboard New Buyer";
     this.showModal = !this.showModal;
     this.customerType = "Buyer";
+    this.crudServices.updateCustomerDetails(null);
+    this.crudServices.updateEditor(null);
   }
 
   addSeller(): void {
     this.modalTitle = "Onboard New Supplier";
     this.customerType = "Supplier";
     this.showModal = !this.showModal;
+    this.crudServices.updateCustomerDetails(null);
+    this.crudServices.updateEditor(null);
   }
 
   closeModal() {

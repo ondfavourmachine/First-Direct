@@ -35,6 +35,9 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
     })
   }
 
+  supplierPayload: any = [];
+  buyerPayload: any = [];
+
   getParsedData() {
     this.crudServices.getCustomerFileDetails().subscribe({
       next: (data: any) => {
@@ -45,8 +48,52 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
         //   this.router.navigate([`/scm`])
         // }
         // this.pasrsedData$ = data;
-         this.payLoad = [...this.pasrsedData$];
-            // console.log("pay:", this.payLoad)
+        // this.payLoad = [...this.pasrsedData$];
+        // console.log("pay2:", this.pasrsedData$)
+        // create new array into supplier payload
+        if (this.role === "supplier") {
+          this.pasrsedData$.forEach((element: any) => {
+            this.supplierPayload.push({
+              "supplierName": element?.["Supplier Name"],
+              "companyName": element?.["Company Name"],
+              "industry": element?.["Industry"],
+              "country": element?.["Country"],
+              "currency": element?.["Currency"],
+              "companyEmail": element?.["Company Email"],
+              "telephone": element?.["Company Phone Number"].toString(),
+              "companyTin": element?.["Company Tin"].toString(),
+              "companyRcNumber": element?.["Company Rc Number"].toString(),
+              "tier": element?.["Tier"].toString(),
+              "limit": element?.["Limit"].toString(),
+              "bankName": element?.["Bank Name"].toString(),
+              "accountNumber": element?.["Account Number"].toString(),
+              "maxAnnualSpend": element?.["Max Annual Spend"].toString(),
+              "minAnnualSpend": element?.["Min Annual Spend"].toString()
+            })
+          });
+          // console.log("sup:", this.supplierPayload)
+          this.payLoad = [...this.supplierPayload];
+        } else {
+          this.pasrsedData$.forEach((element: any) => {
+            this.buyerPayload.push({
+              "buyerName": element?.["Buyer Name"],
+              "companyName": element?.["Company Name"],
+              "industry": element?.["Industry"],
+              "country": element?.["Country"],
+              "currency": element?.["Currency"],
+              "companyEmail": element?.["Company Email"],
+              "telephone": element?.["Company Phone Number"],
+              // stringify company tin
+              "companyTin": element?.["Company Tin"].toString(),
+              "companyRcNumber": element?.["Company Rc Number"].toString(),
+              "tier": element?.["Tier"].toString(),
+              "limit": element?.["Limit"].toString(),
+            })
+          });
+          // console.log("buy:", this.buyerPayload)
+          this.payLoad = [...this.buyerPayload];
+        }
+        // console.log("pay:", this.payLoad)
         // console.log("parsed data", this.pasrsedData$)
       }
     })
@@ -131,11 +178,11 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
             this.bulkUploadResData = data.data;
 
             // spread results into payload
-           
+
           }, error: (err: any) => {
             this.gVars.spinner.hide();
-           setTimeout(() => {
-            this.gVars.toastr.error("Error Occured");
+            setTimeout(() => {
+              this.gVars.toastr.error("Error Occured");
             }, 3000);
           }
         })
@@ -151,7 +198,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   }
 
   upLoadFile() {
-    if(this.role === "supplier"){
+    if (this.role === "supplier") {
       this.customersService.uploadSupplierFile(this.payLoad).subscribe({
         next: (data: any) => {
           this.gVars.spinner.hide();
@@ -159,7 +206,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
           this.router.navigate([`/scm`])
           // this.bulkUploadResData = data.data;
           // console.log("data", data)
-        } , error: (err: any) => {
+        }, error: (err: any) => {
           this.gVars.spinner.hide();
           this.gVars.toastr.error("Error Occured");
           this.router.navigate([`/scm`])
@@ -174,7 +221,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
           this.router.navigate([`/scm`])
           // this.bulkUploadResData = data.data;
           // console.log("data", data)
-        } , error: (err: any) => {
+        }, error: (err: any) => {
           this.gVars.spinner.hide();
           this.gVars.toastr.error("Error Occured");
           this.router.navigate([`/scm`])
@@ -187,8 +234,8 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.updateHeaders();
     this.getRole();
-  
-   
+
+
     // this.getCustomerFile();
   }
 

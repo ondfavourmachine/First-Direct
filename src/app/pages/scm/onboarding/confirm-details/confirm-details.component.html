@@ -12,7 +12,7 @@
 
                 <div class="my-3 ">
                     <div class="my-3">
-                        <h1 class="text-fbn-blue headers text-lg font-semibold">Preview {{customerDetails?.role}}'s Information</h1>
+                        <h1 class="text-fbn-blue headers text-lg font-semibold">Preview {{role | titlecase }}'s Information</h1>
                         <p class="text-xs disclaimer">Kindly go through the information before clicking the button below</p>
                     </div>
 
@@ -20,19 +20,23 @@
                         <div style="width: 80%;" class="mt-3 pb-0 p-3">
                             <h1 class="text-fbn-blue headers text-lg font-semibold">Basic Information</h1>
                             <div class="fields  my-5">
-                                <h1>{{customerDetails?.role}}'s name</h1>
+                                <h1>{{role | titlecase }}'s name</h1>
                                 <p>{{customerDetails?.customerName}}</p>
                             </div>
                             <div class="fields  my-5">
                                 <h1>Company name</h1>
                                 <p>{{customerDetails?.companyName}}</p>
                             </div>
-                            <div class="fields  my-5">
+                            <div *ngIf="isEdited === 'edited'" class="fields  my-5">
+                                <h1>Industry</h1>
+                                <p>{{customerDetails?.industryId}}</p>
+                            </div>
+                            <div *ngIf="isEdited === ''" class="fields  my-5">
                                 <h1>Industry</h1>
                                 <p>{{customerDetails?.industryId}}</p>
                             </div>
                             <div class="fields  my-5">
-                                <h1>{{customerDetails?.role}}'s Code</h1>
+                                <h1>{{role | titlecase }}'s Code</h1>
                                 <p>{{customerDetails?.customerCode}}</p>
                             </div>
                             <div class="fields  my-5">
@@ -53,7 +57,7 @@
                             </div>
                             <div class="fields  my-5">
                                 <h1>Company Phone No</h1>
-                                <p>{{customerDetails?.mobileNumber}}</p>
+                                <p>{{customerDetails?.phoneNumber}}</p>
                             </div>
                             <div class="fields  my-5">
                                 <h1>Country</h1>
@@ -89,7 +93,7 @@
                             </div>
                             <div *ngIf="customerDetails?.role === 'supplier'" class="bankField  my-5">
                                 <h1>Bank Information</h1>
-                                <div class="flex-colstart">
+                                <div style="width: 40%;" class="flex-colstart">
                                     <p>{{customerDetails?.bankName}}</p>
                                     <p>{{customerDetails?.accountNumber}}</p>
                                     <p>{{customerDetails?.accountName}}</p>
