@@ -6,6 +6,7 @@ import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { requestBodyModel } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
@@ -32,6 +33,7 @@ export class PagesComponent implements OnInit {
   searchForm: FormGroup;
   SortColumn: string = "";
   filterModal: boolean = false;
+  userLoad: { username: any; subsidiaryId: any; session: any; };
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -42,6 +44,7 @@ export class PagesComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       search: ['', Validators.required]
     });
+    this.userLoad = this.gVar.checkRoute(this.gVar.router.url);
   }
 
   toggleModal(role: string, id: number) {
@@ -106,7 +109,7 @@ export class PagesComponent implements OnInit {
   toggleTabs(tabNumber: Number) {
     this.tabNumber = tabNumber;
     if (tabNumber === 1) {
-      this.router.navigateByUrl('scm/overview')
+      this.router.navigateByUrl('scm/onboarding/overview')
       this.crudServices.updateHeaderTitle("Onboarding")
     } else if (tabNumber === 2) {
       this.crudServices.updateHeaderTitle("Buyers")
@@ -135,7 +138,17 @@ export class PagesComponent implements OnInit {
     })
   }
   getCustomers() {
-    this.onboardService.getAllCustomers(this.SearchQuery, this.SortColumn , this.PageNumber, this.PageSize).subscribe({
+    const  requestBody: requestBodyModel = {
+      "searchQuery": this.SearchQuery,
+      "sortColumn": this.SortColumn,
+      "pageNumber": this.PageNumber,
+      "pageSize": this.PageSize,
+      "session": this.userLoad.session,
+      "username": this.userLoad.username,
+      "subsidiaryId": this.userLoad.subsidiaryId,
+      "countryId": "01"
+    }
+    this.onboardService.getAllCustomers(requestBody).subscribe({
       next: (data) => {
         // console.log("customers:", data)
         this.allCustomers = data.data;
@@ -158,7 +171,17 @@ export class PagesComponent implements OnInit {
   }
 
   getBuyers() {
-    this.onboardService.getBuyers(this.SearchQuery, this.PageNumber, this.PageSize).subscribe({
+    const  requestBody: requestBodyModel = {
+      "searchQuery": this.SearchQuery,
+      "sortColumn": this.SortColumn,
+      "pageNumber": this.PageNumber,
+      "pageSize": this.PageSize,
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+      "countryId": "01"
+    }
+    this.onboardService.getBuyers(requestBody).subscribe({
       next: (data) => {
         // console.log("buyers:", data)
         this.buyers = data.data;
@@ -179,7 +202,17 @@ export class PagesComponent implements OnInit {
   }
 
   getSuppliers() {
-    this.onboardService.getSuppliers(this.SearchQuery, this.PageNumber, this.PageSize).subscribe({
+    const  requestBody: requestBodyModel = {
+      "searchQuery": this.SearchQuery,
+      "sortColumn": this.SortColumn,
+      "pageNumber": this.PageNumber,
+      "pageSize": this.PageSize,
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+      "countryId": "01"
+    }
+    this.onboardService.getSuppliers(requestBody).subscribe({
       next: (data) => {
         // console.log("suppliers:", data)
         this.suppliers = data.data;
@@ -202,7 +235,7 @@ export class PagesComponent implements OnInit {
   }
 
   edit(role: string, id: number) {
-    this.router.navigateByUrl('scm/edit-form/' + role + '/' + id);
+    this.router.navigateByUrl('scm/onboarding/edit-form/' + role + '/' + id);
   }
   tableHeaders = [
     {

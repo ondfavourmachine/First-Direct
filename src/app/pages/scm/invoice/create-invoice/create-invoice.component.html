@@ -1,0 +1,300 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT-->
+    <main class="main-content">
+        <div class="main-content-padding p-3">
+            <div class="form py-3 px-3">
+                <p>Back</p>
+
+                <div class="my-5 p-4 form-body">
+                    <div class="form-info">
+                        <h1>Create New Invoice</h1>
+                        <p>Please fill the form below to cretae a new invoice</p>
+                    </div>
+
+                    <div class="tab-controls">
+                        <p>Step 1: Add Invoice Details</p>
+                        <div class="tabs-btns">
+                            <button
+                            [ngClass]="{'button-active': tabNumber === 1}"
+                            (click)="toggleTabs(1)"
+                            >1</button>
+                            <button
+                            (click)="toggleTabs(2)"
+                            [ngClass]="{'button-active': tabNumber === 2}"
+                             >2</button>
+                            <button
+                            [ngClass]="{'button-active': tabNumber === 3}"
+                             (click)="toggleTabs(3)">3</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="tabNumber === 1" class="tab1">
+                        <form>
+                            <div class="left">
+                                <div class="my-5 fields">
+                                    <label>Invoice Number</label>
+                                    <input type="text" id="invoiceNumber" formControlName="invoiceNumber"
+                                        placeholder="Enter Invoice Number">
+                                </div>
+
+                                <div class="my-5 fields">
+                                    <label>Invoice Date</label>
+                                    <input type="date" id="invoiceDate" formControlName="invoiceDate"
+                                        placeholder="Enter Invoice Date">
+                                </div>
+
+                                <div class="my-5 fields">
+                                    <label> Purchase Oder No (Optional)</label>
+                                    <input type="text" id="purchaseOrderNo" formControlName="purchaseOrderNo"
+                                        placeholder="Enter Purchase Order No">
+                                </div>
+
+                                <div class="my-5 fields">
+                                    <label>Choose Buyer</label>
+                                    <div class="flex-col">
+                                        <select id="buyer" formControlName="buyer" name="">
+                                            <option value="">Select Buyer</option>
+                                            <option>bIMA BIMA
+                                            </option>
+                                        </select>
+                                        <button class="new-buyer">New Buyer</button>
+                                    </div>
+                                </div>
+
+                                <!-- radio input -->
+                                <div class="my-5 fields">
+                                    <label>Invoice Accepted Offline ?</label>
+                                    <div class="radio-input">
+                                        <div class="flex-row">
+                                            <div class="radio mx-3">
+                                                <input type="radio" id="invoiceType" formControlName="invoiceType"
+                                                    value="invoiceType">
+                                                <label for="invoiceType">Yes</label>
+                                            </div>
+    
+                                            <div class="radio">
+                                                <input type="radio" id="invoiceType" formControlName="invoiceType"
+                                                    value="invoiceType">
+                                                <label for="invoiceType">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ryt">
+                                <div class="my-5 fields">
+                                    <label>Date Of supply</label>
+                                    <input type="date" id="dateOfSupply" formControlName="dateOfSupply"
+                                        placeholder="Enter Date Of Supply">
+                                </div>
+
+                                <div class="my-5 fields">
+                                    <label>Due date of Payment</label>
+                                    <input type="date" id="dueDateOfPayment" formControlName="dueDateOfPayment"
+                                        placeholder="Enter Due Date Of Payment">
+                                </div>
+
+                                <div class="my-5 fields">
+                                    <label>Order Summary</label>
+                                    <textarea name="" id="orderSummary" formControlName="orderSummary" cols="30"
+                                        rows="10"></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div 
+                    *ngIf="tabNumber === 2"
+                    class="tab2">
+                        <form>
+                            <div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" id="itemName" formControlName="itemName"
+                                                    placeholder="Enter Item Name">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="quantity" formControlName="quantity"
+                                                    placeholder="Enter Quantity">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="unitPrice" formControlName="unitPrice"
+                                                    placeholder="Enter Unit Price">
+                                            </td>
+                                            <td>
+                                                x
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" id="itemName" formControlName="itemName"
+                                                    placeholder="Enter Item Name">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="quantity" formControlName="quantity"
+                                                    placeholder="Enter Quantity">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="unitPrice" formControlName="unitPrice"
+                                                    placeholder="Enter Unit Price">
+                                            </td>
+                                            <td>
+                                                x
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" id="itemName" formControlName="itemName"
+                                                    placeholder="Enter Item Name">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="quantity" formControlName="quantity"
+                                                    placeholder="Enter Quantity">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="unitPrice" formControlName="unitPrice"
+                                                    placeholder="Enter Unit Price">
+                                            </td>
+                                            <td>
+                                                x
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <div class="add-new">
+                                        <button>Add new field</button>
+                                        <div>
+                                            <label>Tax</label>
+                                            <div>
+                                                <!-- % inout -->
+                                                <input type="text" id="tax" formControlName="taxPercentage"
+                                                    placeholder="0" type="number"><span>%</span>
+
+                                                <!-- amount input -->
+                                                <input type="text" id="tax" formControlName="taxAmount" placeholder="0"
+                                                    type="number">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="discount">
+                                        <div>
+                                            <label>Tax</label>
+                                            <div>
+                                                <!-- % inout -->
+                                                <input type="text" id="tax" formControlName="taxPercentage"
+                                                    placeholder="0" type="number"><span>%</span>
+
+                                                <!-- amount input -->
+                                                <input type="text" id="tax" formControlName="taxAmount" placeholder="0"
+                                                    type="number">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="miscellaneous">
+                                        <div>
+                                            <label>Tax</label>
+                                            <div>
+                                                <!-- % inout -->
+                                                <input type="text" id="tax" formControlName="taxPercentage"
+                                                    placeholder="0" type="number"><span>%</span>
+
+                                                <!-- amount input -->
+                                                <input type="text" id="tax" formControlName="taxAmount" placeholder="0"
+                                                    type="number">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="total">
+                                        <div>
+                                            <label>Sub Total</label>
+                                            <input type="text" id="subTotal" formControlName="subTotal" placeholder="0">
+                                        </div>
+                                    </div>
+                                </table>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div *ngIf="tabNumber === 3" class="tab3">
+                        <div class="payInv flex-row-btw">
+                            <div>
+                                <h1>How To Pay Invoice</h1>
+                            </div>
+
+                            <div class="payInv-Textarea">
+                                <textarea name="" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="payment-terms flex-row-btw">
+                            <div>
+                                <h1>Payment Terms</h1>
+                            </div>
+
+                            <div class="payment-terms-Textarea">
+                                <textarea name="" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="add-attachments flex-row-btw">
+                            <div>
+                                Add Attachments optional
+                            </div>
+                            <div>
+                                <div>
+                                    <p>Randomfile.pdf</p>
+                                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M0.666016 2.4C0.334645 2.4 0.0660156 2.66863 0.0660156 3C0.0660156 3.33137 0.334645 3.6 0.666016 3.6V2.4ZM11.3327 3.6C11.6641 3.6 11.9327 3.33137 11.9327 3C11.9327 2.66863 11.6641 2.4 11.3327 2.4V3.6ZM2.33258 5C2.33258 4.66863 2.06396 4.4 1.73258 4.4C1.40121 4.4 1.13258 4.66863 1.13258 5H2.33258ZM10.8661 5C10.8661 4.66863 10.5975 4.4 10.2661 4.4C9.93471 4.4 9.66608 4.66863 9.66608 5H10.8661ZM7.39935 3C7.39935 3.33137 7.66798 3.6 7.99935 3.6C8.33072 3.6 8.59935 3.33137 8.59935 3H7.39935ZM3.06602 3C3.06602 3.33137 3.33464 3.6 3.66602 3.6C3.99739 3.6 4.26602 3.33137 4.26602 3H3.06602ZM0.666016 3.6H11.3327V2.4H0.666016V3.6ZM1.13258 5V10.3333H2.33258V5H1.13258ZM4.39925 13.6H7.59941V12.4H4.39925V13.6ZM10.8661 10.3333V5H9.66608V10.3333H10.8661ZM7.59941 13.6C9.40354 13.6 10.8661 12.1375 10.8661 10.3333H9.66608C9.66608 11.4747 8.7408 12.4 7.59941 12.4V13.6ZM1.13258 10.3333C1.13258 12.1375 2.59512 13.6 4.39925 13.6V12.4C3.25786 12.4 2.33258 11.4747 2.33258 10.3333H1.13258ZM5.66602 1.6H5.99935V0.4H5.66602V1.6ZM5.99935 1.6C6.77255 1.6 7.39935 2.2268 7.39935 3H8.59935C8.59935 1.56406 7.43529 0.4 5.99935 0.4V1.6ZM4.26602 3C4.26602 2.2268 4.89282 1.6 5.66602 1.6V0.4C4.23008 0.4 3.06602 1.56406 3.06602 3H4.26602Z"
+                                            fill="#D60200" />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <p>Randomfile.pdf</p>
+                                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M0.666016 2.4C0.334645 2.4 0.0660156 2.66863 0.0660156 3C0.0660156 3.33137 0.334645 3.6 0.666016 3.6V2.4ZM11.3327 3.6C11.6641 3.6 11.9327 3.33137 11.9327 3C11.9327 2.66863 11.6641 2.4 11.3327 2.4V3.6ZM2.33258 5C2.33258 4.66863 2.06396 4.4 1.73258 4.4C1.40121 4.4 1.13258 4.66863 1.13258 5H2.33258ZM10.8661 5C10.8661 4.66863 10.5975 4.4 10.2661 4.4C9.93471 4.4 9.66608 4.66863 9.66608 5H10.8661ZM7.39935 3C7.39935 3.33137 7.66798 3.6 7.99935 3.6C8.33072 3.6 8.59935 3.33137 8.59935 3H7.39935ZM3.06602 3C3.06602 3.33137 3.33464 3.6 3.66602 3.6C3.99739 3.6 4.26602 3.33137 4.26602 3H3.06602ZM0.666016 3.6H11.3327V2.4H0.666016V3.6ZM1.13258 5V10.3333H2.33258V5H1.13258ZM4.39925 13.6H7.59941V12.4H4.39925V13.6ZM10.8661 10.3333V5H9.66608V10.3333H10.8661ZM7.59941 13.6C9.40354 13.6 10.8661 12.1375 10.8661 10.3333H9.66608C9.66608 11.4747 8.7408 12.4 7.59941 12.4V13.6ZM1.13258 10.3333C1.13258 12.1375 2.59512 13.6 4.39925 13.6V12.4C3.25786 12.4 2.33258 11.4747 2.33258 10.3333H1.13258ZM5.66602 1.6H5.99935V0.4H5.66602V1.6ZM5.99935 1.6C6.77255 1.6 7.39935 2.2268 7.39935 3H8.59935C8.59935 1.56406 7.43529 0.4 5.99935 0.4V1.6ZM4.26602 3C4.26602 2.2268 4.89282 1.6 5.66602 1.6V0.4C4.23008 0.4 3.06602 1.56406 3.06602 3H4.26602Z"
+                                            fill="#D60200" />
+                                    </svg>
+                                </div>
+                                <button>
+                                    Add Attachments
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-btns">
+                        <button class="fbn-fill-blue-btn">Cancel</button>
+                        <button class="fbn-blue-btn">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

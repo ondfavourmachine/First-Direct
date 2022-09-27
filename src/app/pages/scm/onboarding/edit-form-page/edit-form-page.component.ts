@@ -4,7 +4,7 @@ import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { addCustomer, editCustomer } from 'src/app/core/models/scm/onboarding.model';
+import { addCustomer, editCustomer, userRoleModel, validateBankDetailsModel } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-edit-form-page',
   templateUrl: './edit-form-page.component.html',
@@ -17,24 +17,33 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
   editCustomerDeatails: any = [];
   industries = [];
   countries = [
-    {id: "01", name: 'Nigeria'},
+    { id: "01", name: 'Nigeria' },
   ];
+  banks = [];
   categories = [];
   tiers = [];
   Nigeria: string = "Nigeria";
   isLoaded: boolean = false;
-  getRole(role: string, id: number){
+  bankCode: any;
+  userLoad: any;
+  accountName: string = "";
+  validatedBankDetails: any = [];
+  btnText: string = "Save";
+  returnedData: any = [];
+  isEdited: string = "";
+  isAccountDetailsChanged: boolean = false;
+  getRole(role: string, id: number) {
     // this.crudServices.getRole().subscribe({
     //   next: (data:any) =>{
-        this.role = role;
-        this.id = id;
+    this.role = role;
+    this.id = id;
     //     // console.log(data)
     //   }
     // })
   }
 
-  loader(){
-    if(this.editCustomerDeatails?.customerName === undefined && this.editCustomerDeatails?.customerName === null && this.editCustomerDeatails?.customerName === ''){
+  loader() {
+    if (this.editCustomerDeatails?.customerName === undefined && this.editCustomerDeatails?.customerName === null && this.editCustomerDeatails?.customerName === '') {
       this.isLoaded = false;
       this.gVars.spinner.show();
     } else {
@@ -43,82 +52,166 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     }
   }
   constructor(
-    private router : Router,
+    private router: Router,
     private crudServices: CrudService,
     private gVars: GlobalsService,
     private customersService: CustomersService,
     private _route: ActivatedRoute,
     private fb: FormBuilder
   ) {
-    this._route.params.subscribe(params =>this.getRole(params['role'], params['id']) );
-    
+    this._route.params.subscribe(params => this.getRole(params['role'], params['id']));
+    this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
   }
 
   public editCustomerForm: FormGroup;
 
 
-  continue(){
+  continue() {
     // this.router.navigateByUrl('/dashboard/onboarding/confirm-details')
     this.router.navigate(['/dashboard/onboarding']);
+  }
+
+  getBankCode() {
+    // if(!this.addCustomerForm?.value?.bankName && this.addCustomerForm?.value?.bankName !== undefined){
+    this.bankCode = this.banks.find(bank => bank.bankName === this.editCustomerForm?.value?.bankName);
+
+
+    // }
+  }
+
+  getBanks() {
+    this.customersService.getAllBanks().subscribe({
+      next: (data: any) => {
+        this.banks = data;
+
+        // console.log("banks:",this.banks)
+      }
+
+    })
+  }
+
+  getBankBranches(e) {
+    //  console.log("val", e.target.value)
+    this.isAccountDetailsChanged = true;
+  }
+
+  onAccountNumberChange(e) {
+    //  console.log("val", e.target.value)
+    this.isAccountDetailsChanged = true;
+  }
+
+  checkIfAccountDetailsChanged() {
+    if (this.isAccountDetailsChanged) {
+      this.bankVerification();
+      this.btnText = "Validating Bank Details..."
+    } else {
+      this.bankVerification();
+    }
+  }
+
+  validateBankDeyails(code: any) {
+
+    this.btnText = "Validating Bank Details..."
+    const payload: validateBankDetailsModel = {
+      destinationBankCode: code?.bankCode,
+      destinationAccount: this.editCustomerForm?.value?.accountNumber,
+      session: this.userLoad?.session,
+    }
+    // console.log("payload:", payload)
+    this.customersService.verifyBankDetails(payload).subscribe({
+      next: (data: any) => {
+        this.validatedBankDetails = data;
+        this.accountName = this.validatedBankDetails?.accountName
+        // console.log("data:", data)
+        // this.btnText = 'Continue';
+        if (this.validatedBankDetails?.valid === false) {
+          this.gVars.toastr.error("Incorrect Account Details")
+          this.btnText = 'Save';
+        } else {
+          this.gVars.toastr.success("Bank details validated successfully");
+          this.btnText = 'Preview';
+        }
+      }, error: (error: any) => {
+        // this.btnText = 'Continue';
+        this.gVars.toastr.error(error?.error?.message);
+      }
+    })
+
+  }
+
+  bankVerification() {
+    this.isAccountDetailsChanged = false;
+    if (this.editCustomerForm?.value?.bankName && this.editCustomerForm?.value?.accountNumber) {
+      this.getBankCode();
+      this.validateBankDeyails(this.bankCode);
+    }
   }
 
   onSubmit() {
     // console.log(this.editCustomerForm.value);
     // console.log(this.editCustomerForm.value)
 
-      // if editCustomerForm is touched spread the values to the editCustomerdetails object
-      if(this.editCustomerForm.touched){
-        this.editCustomerDeatails = {...this.editCustomerDeatails, ...this.editCustomerForm.value}
+    const userRole: userRoleModel = {
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+    }
+    const acctPayLoad: any = {
+      accountName: this.accountName
+    }
+
+    // if editCustomerForm is touched spread the values to the editCustomerdetails object
+    if (this.editCustomerForm.touched) {
+      this.editCustomerDeatails = {
+        ...this.editCustomerDeatails,
+        ...this.editCustomerForm.value,
+        ...acctPayLoad,
+        ...userRole
       }
-      // console.log("new",this.editCustomerDeatails)
-    // const customerDetails: any = {
-    //   customerName: this.editCustomerForm.value.customerName,
-    //   industryId: this.editCustomerForm.value.industryId,
-    //   customerCode: this.editCustomerForm.value.customerCode,
-    //   tin: this.editCustomerForm.value.tin,
-    //   rcNumber: this.editCustomerForm.value.rcNumber,
-    //   countryId: this.editCustomerForm.value.countryId,
-    //   email: this.editCustomerForm.value.email,
-    //   phoneNumber: this.editCustomerForm.value.phoneNumber,
-    //   tierId: this.editCustomerForm.value.tierId,
-    //   limits: this.editCustomerForm.value.limits,
-    //   role: this.role.toLocaleLowerCase(),
-    //   companyName: this.editCustomerForm.value.companyName,
-    //   bankName: this.editCustomerForm.value.bankName,
-    //   accountNumber: this.editCustomerForm.value.accountNumber,
-    //   minimumAnnualSpend: this.editCustomerForm.value.minimumAnnualSpend,
-    //   maximumAnnualSpend: this.editCustomerForm.value.maximumAnnualSpend,
-    //   isEdited: true,
-    //   id: Number(this.id),
-    //   dateAdded: this.editCustomerDeatails.dateAdded,
-    //   // industryName: this.industries.filter(industry => industry.id === this.editCustomerForm.value.industryId)[0]?.name,
-
-    // }
-    //  validate form
-    // if(this.editCustomerForm.hasError('required')){
-    //   this.crudServices.updateCustomerDetails(customerDetails);
-    //   this.router.navigate(['/scm/confirm-details'])
-    // } else {
-    //   this.gVars.toastr.error("Please fill all required fields")
-    // }
-
-    // let role = this.role.toLocaleLowerCase();
+    }
+    // console.log("new",this.editCustomerDeatails)
     // check if form is all filled
-    if (this.editCustomerForm.valid) {
-      this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
-      this.crudServices.updateEditor("edited");
-      this.router.navigate([`/scm/confirm-details/${this.role}`])
+    if (this.role !== 'SUPPLIER') {
+      if (this.editCustomerForm.valid) {
+        this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
+        this.crudServices.updateEditor("edited");
+        this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
+      } else {
+        this.gVars.toastr.error("Please fill all required fields")
+      }
     } else {
-      this.gVars.toastr.error("Please fill all required fields")
+      this.bankVerification();
+      if (this.editCustomerForm.valid && this.accountName !== "" && this.validatedBankDetails?.valid === true && this.isAccountDetailsChanged === false) {
+        this.btnText = "Continue"
+        this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
+        this.crudServices.updateEditor("edited");
+        this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
+      } else {
+        // this.gVars.toastr.error("Please fill all required fields")
+        // this.btnText = "Continue"
+      }
     }
   }
 
-  getSingleCustomerDetails(){
+  getEditor() {
+    this.crudServices.getEditor().subscribe({
+      next: (data: any) => {
+        this.isEdited = data;
+        // console.log("editorContent:", this.isEdited)
+      }
+    })
+  }
+
+  getSingleCustomerDetails() {
     this.gVars.spinner.show();
     this.customersService.getCustomerById(this.id).subscribe({
-      next: (data:any) =>{
-        this.editCustomerDeatails = data.data;
-        if(Object.keys(this.editCustomerDeatails).length > 0){
+      next: (data: any) => {
+        if (this.isEdited === "returnedEdited") {
+          this.editCustomerDeatails = this.returnedData;
+        } else {
+          this.editCustomerDeatails = data.data;
+        }
+        if (Object.keys(this.editCustomerDeatails).length > 0) {
           this.editCustomerForm = this.fb.group({
             customerName: [this.editCustomerDeatails.customerName],
             rcNumber: [this.editCustomerDeatails.rcNumber],
@@ -127,7 +220,7 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
             currency: [this.editCustomerDeatails.currencyCode],
             rank: ["XYZ"],
             tierId: [this.editCustomerDeatails.tierId],
-            companyEmail: [this.editCustomerDeatails.email],
+            email: [this.editCustomerDeatails.email],
             phoneNumber: [this.editCustomerDeatails.phoneNumber],
             companyName: [this.editCustomerDeatails.companyName],
             customerCode: [this.editCustomerDeatails.customerCode],
@@ -137,19 +230,20 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
             accountNumber: [this.editCustomerDeatails.accountNumber],
             minimumAnnualSpend: [this.editCustomerDeatails.minimumAnnualSpend],
             maximumAnnualSpend: [this.editCustomerDeatails.maximumAnnualSpend],
-      
           })
-      
-          // if(this.role === 'SUPPLIER'){
-          //   this.editCustomerForm.addControl('bankName', this.fb.control(this.editCustomerDeatails.bankName));
-          //   this.editCustomerForm.addControl('accountNumber', this.fb.control(this.editCustomerDeatails.accountNumber));
-          //   this.editCustomerForm.addControl('minimumAnnualSpend', this.fb.control(this.editCustomerDeatails.minimumAnnualSpend));
-          //   this.editCustomerForm.addControl('maximumAnnualSpend', this.fb.control(this.editCustomerDeatails.maximumAnnualSpend));
-          // }
         }
         this.loader();
         // console.log("editCustomerDeatails:",this.editCustomerDeatails)
-        
+
+      }
+    })
+  }
+
+  getReturnCustomerDetails() {
+    this.crudServices.getCustomerDetails().subscribe({
+      next: (data: any) => {
+        this.returnedData = data;
+        // console.log("returnedData:",this.returnedData)
       }
     })
   }
@@ -189,14 +283,11 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
   }
 
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void { }
 
-  }
+
   ngOnInit(): void {
     this.getSingleCustomerDetails();
-
-    
-
 
     if (this.role === "") {
       this.router.navigate(['/scm'])
@@ -205,9 +296,12 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
     this.getCategories();
     this.getTiers();
     this.getIndustries();
+    this.getBanks();
+    this.getEditor();
+    this.getReturnCustomerDetails();
 
   }
 
 
-  }
+}
 

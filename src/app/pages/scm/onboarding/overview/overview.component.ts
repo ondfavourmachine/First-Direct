@@ -5,6 +5,7 @@ import { SummaryService } from 'src/app/core/services/scm/onboarding/summary/sum
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { requestBodyModel, userRoleModel } from 'src/app/core/models/scm/onboarding.model';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -34,6 +35,7 @@ export class OverviewComponent implements OnInit {
   allCustomersEmptyState: boolean = false;
   singleCustomer: any = [];
   searchForm: FormGroup;
+  userLoad: any;
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -50,7 +52,10 @@ export class OverviewComponent implements OnInit {
     if (this.SearchQuery === "") {
       this.getCustomers();
     }
+    this.userLoad = this.gVar.checkRoute(this.gVar.router.url);
   }
+
+
 
   searchCustomer() {
     this.SearchQuery = this.searchForm.value.search;
@@ -117,7 +122,12 @@ export class OverviewComponent implements OnInit {
     })
   }
   getStats() {
-    this.statsService.getOnboardStats().subscribe({
+    const reqBody: userRoleModel = {
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId,
+    }
+    this.statsService.getOnboardStats(reqBody).subscribe({
       next: (data) => {
         // console.log("stats:",data)
         // loop through stats
@@ -148,7 +158,17 @@ export class OverviewComponent implements OnInit {
   }
 
   getCustomers() {
-    this.onboardService.getAllCustomers(this.SearchQuery, this.SortColumn , this.PageNumber, this.PageSize).subscribe({
+  const  requestBody: requestBodyModel = {
+      "searchQuery": this.SearchQuery,
+      "sortColumn": this.SortColumn,
+      "pageNumber": this.PageNumber,
+      "pageSize": this.PageSize,
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+      "countryId": "01"
+    }
+    this.onboardService.getAllCustomers(requestBody).subscribe({
       next: (data) => {
         // console.log("customers:", data)
         this.allCustomers = data.data;
@@ -168,7 +188,7 @@ export class OverviewComponent implements OnInit {
 
 
   edit(role: string, id: number) {
-    this.router.navigateByUrl('scm/edit-form/' + role + '/' + id);
+    this.router.navigateByUrl('scm/onboarding/edit-form/' + role + '/' + id);
   }
 
 
@@ -211,17 +231,17 @@ export class OverviewComponent implements OnInit {
     // }
   }
   navigate() {
-    this.router.navigateByUrl('scm/overview');
+    this.router.navigateByUrl('scm/onboarding/overview');
     this.crudServices.updateHeaderTitle("All Customers");
   }
 
   navigateToBuyer() {
-    this.router.navigateByUrl('scm/pages');
+    this.router.navigateByUrl('scm/onboarding/pages');
     this.crudServices.updateHeaderTitle("Buyers")
     this.crudServices.updatetabNumber(2)
   }
   navigateToSupplier() {
-    this.router.navigateByUrl('scm/pages');
+    this.router.navigateByUrl('scm/onboarding/pages');
     this.crudServices.updateHeaderTitle("Suppliers")
     this.crudServices.updatetabNumber(3)
   }

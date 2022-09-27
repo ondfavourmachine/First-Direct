@@ -11,10 +11,10 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer" *ngFor="let content of pasrsedData$">
                             <td *ngIf="role === 'buyer'">
-                                {{content["Buyer Name"]}}
+                                {{content["Contact Person"]}}
                             </td>
                             <td *ngIf="role === 'supplier'">
-                                {{content["Supplier Name"]}}
+                                {{content["Contact Person"]}}
                             </td>
                             <td>
                                 {{content["Company Name"]}}
@@ -23,10 +23,10 @@
                                 {{content?.Industry}}
                             </td>
                             <td>
-                                {{content?.Country}}
+                                Nigeria
                             </td>
                             <td>
-                                {{content?.Currency}}
+                                NGN
                             </td>
                             <td>
                                 {{content["Company Email"]}}
@@ -71,7 +71,7 @@
                 </div> -->
             </div>
             <div class="flex-startend">
-                <p (click)="goBack()" style="cursor: pointer;" class=" fbn-red-btn mx-3">Camcel</p>
+                <p (click)="goBack()" style="cursor: pointer;" class=" fbn-red-btn mx-3">Cancel</p>
                 <button (click)=" upLoadFile()"   class="fbn-fill-green-btn">Save</button>
             </div>
         </div>

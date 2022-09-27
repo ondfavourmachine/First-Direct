@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { userRoleModel } from 'src/app/core/models/scm/onboarding.model';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -19,7 +20,7 @@ export class SummaryService {
     private http: HttpClient
   ) { }
 
-  getOnboardStats(): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer/summary`, httpOptions)
+  getOnboardStats(reqBody: userRoleModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetSummary`, reqBody, httpOptions);
   }
 }

@@ -43,16 +43,28 @@
                 <ul class="nav-items__submenu">
                     <!-- Onboarding -->
                     <li 
-                    [ngClass]="CheckActiveSub('onboarding')"
+                    [ngClass]="CheckActiveSub('onboarding/overview')"
                     [routerLink]="['/scm']">
                         <a data-toggle="collapse" href="#onboardingList">
                             &nbsp; Onboarding &nbsp;
                         </a>
                     </li>
                     <!-- Invoices -->
-                    <li [ngClass]="CheckActiveSub('invoices')">
+                    <li 
+                    [ngClass]="CheckActiveSub('invoice')"
+                    [routerLink]="['/scm/invoice']"
+                    >
                         <a data-toggle="collapse" href="#invoicesList">
                             &nbsp; Invoices &nbsp;
+                        </a>
+                    </li>
+                    <!-- Purchase Order -->
+                    <li
+                    [ngClass]="CheckActiveSub('purchase-order')"
+                    [routerLink]="['/scm/purchase-order']"
+                    >
+                        <a data-toggle="collapse" href="#purchaseOrderList">
+                            &nbsp; Purchase Order &nbsp;
                         </a>
                     </li>
                 </ul>

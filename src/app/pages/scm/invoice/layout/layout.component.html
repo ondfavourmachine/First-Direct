@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="main-content">
+        <div class="main-content-padding px-4 py-3">
+            <app-header-scm headerTitle="Invoices"  btnText1="New Buyer" btnText2="New Supplier">
+                <app-buttons (clicker)="navigateToForm()"  btnText="Create Invoice" iconType="add" class="fbn-fill-blue-btn mx-3">
+                </app-buttons>
+                <app-buttons  btnText="Accept Invoice" iconType="check" class="mx-3 fbn-blue-btn">
+                </app-buttons>
+                <app-buttons  btnText="Upload Invoice" iconType="upload" class="fbn-blue-btn">
+                </app-buttons>
+            </app-header-scm>
+
+            <div class="fadeIn">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </main>
+</div>

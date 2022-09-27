@@ -13,6 +13,7 @@ export const environment = {
     papsUrl:'https://192.168.253.129/Tesla_PaymentEncryption/api/'
   },
   scmApiUrl: 'https://bridger-tesla.herokuapp.com',
+  // https://192.168.253.129:6067
   bankDetailsVerificationApiUrl: 'https://192.168.253.129:8443/Tesla_Payment_1b/api/Payment',
   spmo:{ 
     mlm: stuff.pairs.sruff.mlmm,

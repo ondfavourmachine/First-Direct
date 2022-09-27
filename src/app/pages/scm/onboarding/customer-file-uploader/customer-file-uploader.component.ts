@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
+import { userRoleModel } from 'src/app/core/models/scm/onboarding.model';
 
 @Component({
   selector: 'app-customer-file-uploader',
@@ -15,6 +16,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   bulkUploadResData: any = [];
   bulkUploadPayload: any = [];
   pasrsedData$: any = [];
+  userLoad: { username: any; subsidiaryId: any; session: any; };
 
   constructor(
     private router: Router,
@@ -24,6 +26,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute
   ) {
     this._route.params.subscribe(params => this.role = params['role']);
+    this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
   }
 
   public getRole() {
@@ -41,24 +44,15 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   getParsedData() {
     this.crudServices.getCustomerFileDetails().subscribe({
       next: (data: any) => {
-        // store 2nd row of data
         this.pasrsedData$ = data;
-        // if(this.pasrsedData$ === null){
-        //   this.gVars.toastr.error("No Data Found");
-        //   this.router.navigate([`/scm`])
-        // }
-        // this.pasrsedData$ = data;
-        // this.payLoad = [...this.pasrsedData$];
-        // console.log("pay2:", this.pasrsedData$)
-        // create new array into supplier payload
         if (this.role === "supplier") {
           this.pasrsedData$.forEach((element: any) => {
             this.supplierPayload.push({
-              "supplierName": element?.["Supplier Name"],
+              "supplierName": element?.["Contact Person"],
               "companyName": element?.["Company Name"],
               "industry": element?.["Industry"],
-              "country": element?.["Country"],
-              "currency": element?.["Currency"],
+              "country": "Nigeria",
+              "currency": "NGN",
               "companyEmail": element?.["Company Email"],
               "telephone": element?.["Company Phone Number"].toString(),
               "companyTin": element?.["Company Tin"].toString(),
@@ -76,7 +70,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
         } else {
           this.pasrsedData$.forEach((element: any) => {
             this.buyerPayload.push({
-              "buyerName": element?.["Buyer Name"],
+              "buyerName": element?.["Contact Person"],
               "companyName": element?.["Company Name"],
               "industry": element?.["Industry"],
               "country": element?.["Country"],
@@ -107,7 +101,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
       name: 'Company Name',
     },
     {
-      name: 'Inustry',
+      name: 'Industry',
     },
     {
       name: 'Country',
@@ -147,7 +141,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
           name: 'Maximum Annual Spend',
         },
         {
-          name: 'Bnak Name',
+          name: 'Bank Name',
         },
         {
           name: 'Account Number',
@@ -198,8 +192,13 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
   }
 
   upLoadFile() {
+    const reqParams: userRoleModel = {
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+    }
     if (this.role === "supplier") {
-      this.customersService.uploadSupplierFile(this.payLoad).subscribe({
+      this.customersService.uploadSupplierFile(reqParams,this.payLoad).subscribe({
         next: (data: any) => {
           this.gVars.spinner.hide();
           this.gVars.toastr.info("File Uploaded Successfully");
@@ -214,7 +213,7 @@ export class CustomerFileUploaderComponent implements OnInit, AfterViewInit {
         }
       })
     } else {
-      this.customersService.uploadBuyerFile(this.payLoad).subscribe({
+      this.customersService.uploadBuyerFile(reqParams,this.payLoad).subscribe({
         next: (data: any) => {
           this.gVars.spinner.hide();
           this.gVars.toastr.info("File Uploaded Successfully");

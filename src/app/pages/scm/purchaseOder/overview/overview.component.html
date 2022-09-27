@@ -1,0 +1,37 @@
+<div class="flex-between my-4">
+    <app-card cardTitle="All Purchase Orders" figure="400"></app-card>
+    <app-card cardTitle="Uploaded Purchase Orders" figure="400"></app-card>
+    <app-card cardTitle="Unpaid Purchase Orders" figure="400"></app-card>
+    <app-card cardTitle="New Incoices" figure="0"></app-card>
+</div>
+
+
+<div class="flex-between">
+    <div class="text">
+        <h1 class="headerTitle">Purchase Orders</h1>
+    </div>
+
+    <div class="inputs flex-between">
+        <div class=" filter centeredRowFlex ">
+            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M2.49913 1H15.4991C15.6431 1.05051 15.7737 1.13331 15.8808 1.24206C15.9878 1.35082 16.0686 1.48264 16.1169 1.62742C16.1651 1.77221 16.1796 1.92612 16.1592 2.07737C16.1388 2.22861 16.084 2.37318 15.9991 2.5L10.9991 8V15L6.99913 12V8L1.99913 2.5C1.91422 2.37318 1.85947 2.22861 1.83906 2.07737C1.81865 1.92612 1.83313 1.77221 1.88139 1.62742C1.92966 1.48264 2.01042 1.35082 2.11749 1.24206C2.22457 1.13331 2.35511 1.05051 2.49913 1Z"
+                    stroke="#757D8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+        </div>
+        <div class="centeredRowFlex inputBox">
+            <form>
+                <input type="text" formControlName="search" class="input" placeholder="search">
+            </form>
+            <div class="search centeredRowFlex">
+                <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <circle cx="10" cy="10" r="7" />
+                    <line x1="21" y1="21" x2="15" y2="15" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>

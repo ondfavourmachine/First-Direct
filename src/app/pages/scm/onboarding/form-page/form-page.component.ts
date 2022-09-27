@@ -40,6 +40,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   existingCustomers: any = [];
   keyWord: string = 'Approved';
   btnText = 'Continue';
+  isOnSubmit: boolean = false;
   companyCode: any  = [];
   constructor(
     private crudServices: CrudService,
@@ -145,6 +146,7 @@ filterCompanyCode(companyName: string){
   getExisitingCustomers() {
     this.customersService.getPrincipalBuyers().subscribe({
       next: (data: any) => {
+        this.gVars.spinner.hide();
         this.existingCustomers = data?.data;
 
         // console.log("existingCustomers:",this.existingCustomers.customerCode)
@@ -164,7 +166,7 @@ filterCompanyCode(companyName: string){
     if (checker.accountName !== "") {
       this.crudServices.updateCustomerDetails(checker);
       // console.log("checker:", checker)
-      this.router.navigateByUrl(`/scm/confirm-details/supplier`);
+      this.router.navigateByUrl(`scm/onboarding/confirm-details/supplier`);
     }
   }
   onSubmit() {
@@ -191,6 +193,7 @@ filterCompanyCode(companyName: string){
       // industryName: this.industries.filter(industry => industry.id === this.addCustomerForm.value.industryId)[0]?.name,
 
     }
+    
 
     if (this.role !== "buyer") {
       this.bankVerification();
@@ -198,11 +201,11 @@ filterCompanyCode(companyName: string){
     if (this.role === "buyer") {
       if (this.addCustomerForm.valid) {
         this.crudServices.updateCustomerDetails(customerDetails);
-        this.router.navigate([`/scm/confirm-details/${this.role}`])
+        this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
 
       } else {
         this.gVars.toastr.error("Please fill all required fields")
-
+        this.isOnSubmit = true;
       }
     } else {
       if (this.accountName === "" && this.addCustomerForm.valid) {
@@ -255,16 +258,28 @@ filterCompanyCode(companyName: string){
   onSortChange(e) {
     // console.log("e:", e.target.value)
     this.filterCompanyCode(e.target.value)
+    if(e.target.value === ""){
+      this.addCustomerForm.patchValue({
+        customerCode: ""
+      })
+    }
  }
+
+ stateLoader(){
+  if (this.existingCustomers.length < 1){
+    this.gVars.spinner.show();
+  }
+}
   ngOnInit(): void {
 
+    this.stateLoader();
     this.getCustomerDetails$()
 
     this.addCustomerForm = this.fb.group({
       // setValue of customerName from customerDetails$ array
       customerName: [this.customerDetails$?.customerName, Validators.required],
       industryId: [this.customerDetails$?.industryId, Validators.required],
-      customerCode: [this.customerDetails$?.customerCode, Validators.required],
+      customerCode: [this.customerDetails$?.customerCode],
       tin: [this.customerDetails$?.tin, Validators.required],
       rcNumber: [this.customerDetails$?.rcNumber, Validators.required],
       countryId: [this.customerDetails$?.countryId, Validators.required],
@@ -286,7 +301,9 @@ filterCompanyCode(companyName: string){
     this.getIndustries();
     this.getCategories();
     this.getTiers();
-    this.getBanks();
+    if(this.role !== "buyer"){
+      this.getBanks();
+    }
     this.getExisitingCustomers();
     // console.log("addCustomerForm:", this.addCustomerForm)
   }

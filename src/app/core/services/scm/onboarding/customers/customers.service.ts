@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { addCustomer, editCustomer, uploadCustomerFileModel, validateBankDetailsModel, } from 'src/app/core/models/scm/onboarding.model';
+import { addCustomer, editCustomer, uploadCustomerFileModel, validateBankDetailsModel, requestBodyModel, userRoleModel} from 'src/app/core/models/scm/onboarding.model';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,8 +25,8 @@ export class CustomersService {
   //   return this.http.get(`${environment.scmApiUrl}/api/Customer?searchQuery=${SearchQuery}&pageNumber=${PageNumber}&pageSize=${PageSize}`, httpOptions);
   // };
 
-  getAllCustomers(SearchQuery: string,SortColumn: string, PageNumber: number, PageSize: number ): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer?searchQuery=${SearchQuery}&SortColumn=${SortColumn}&pageNumber=${PageNumber}&pageSize=${PageSize}`, httpOptions);
+  getAllCustomers(reqBody : requestBodyModel ): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetCustomer`, reqBody, httpOptions);
   };
 
   getAllDefCustomers(): Observable<any> {
@@ -56,12 +56,12 @@ export class CustomersService {
     return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-supplier`, supplier, httpOptions);
   };
 
-  getBuyers(SearchQuery: string, PageNumber: number, PageSize: number): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer/buyer?searchQuery=${SearchQuery}&pageNumber=${PageNumber}&pageSize=${PageSize}`, httpOptions);
+  getBuyers(reqBody: requestBodyModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetBuyer`,reqBody, httpOptions);
   };
 
-  getSuppliers(SearchQuery: string, PageNumber: number, PageSize: number): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer/supplier?searchQuery=${SearchQuery}&pageNumber=${PageNumber}&pageSize=${PageSize}`, httpOptions);
+  getSuppliers(reqBody: requestBodyModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetSupplier`,reqBody, httpOptions);
   };
 
   getCustomerCategories(): Observable<any> {
@@ -100,16 +100,16 @@ export class CustomersService {
     return userLoad.session;
   }
 
-  uploadBuyerFile(payLoad: any){
-    return this.http.post(`${environment.scmApiUrl}/api/Customer/bulk-buyer`, payLoad, httpOptions);
+  uploadBuyerFile(requestParams: userRoleModel ,payLoad: any){
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/bulk-buyer/${requestParams?.session}/${requestParams?.username}/${requestParams?.subsidiaryId}`, payLoad, httpOptions);
   }
 
-  uploadSupplierFile(payLoad: any){
-    return this.http.post(`${environment.scmApiUrl}/api/Customer/bulk-supplier`, payLoad, httpOptions);
+  uploadSupplierFile(requestParams: userRoleModel ,payLoad: any){
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/bulk-supplier/${requestParams?.session}/${requestParams?.username}/${requestParams?.subsidiaryId}`, payLoad, httpOptions);
   }
 
   getPrincipalBuyers(): Observable<any> {
-    return this.http.get(`${environment.scmApiUrl}/api/Customer/bank/principal`, httpOptions);
+    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetBankPrincipal`, httpOptions);
   };
 
 

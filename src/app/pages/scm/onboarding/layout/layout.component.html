@@ -51,20 +51,20 @@
                                         fill="#DDAD31" />
                                 </svg>
 
-                                <label (click)="navigate('scm/add-new')" class="mx-3 my-0">Add {{customerType}}s
+                                <label (click)="navigate('scm/onboarding/add-new')" class="mx-3 my-0">Add {{customerType}}s
                                     Manually</label>
                             </div>
                         </div>
                         <a 
                         *ngIf="customerType === 'Buyer'"
-                         href="../../../../../assets/Download Template (Buyer).xlsx" class="btn text-xs my-2 italic text-left"
+                         href="../../../../../assets/Buyer template.xlsx" class="btn text-xs my-2 italic text-left"
                          target="_blank" 
                          download="Download Template (Buyer).xlsx">
                         Download Sample Template</a>
 
                         <a
                         *ngIf="customerType === 'Supplier'"
-                         href="../../../../../assets/Download Template (Supplier).xlsx" class="btn text-xs my-2 italic text-left"
+                         href="../../../../../assets/Supplier template.xlsx" class="btn text-xs my-2 italic text-left"
                          target="_blank" 
                          download="Download Template (Supplier).xlsx">
                         Download Sample Template</a>

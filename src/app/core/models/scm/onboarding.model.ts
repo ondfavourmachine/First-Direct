@@ -67,3 +67,20 @@ export class editCustomer {
        destinationAccount: string;
        destinationBankCode: string;
      }
+
+     export class userRoleModel {
+        session: string;
+        username: string;
+        subsidiaryId: string;
+     }
+
+     export class requestBodyModel {
+       session:string;
+       username:string;
+       subsidiaryId:string;
+       countryId:string;
+       searchQuery:string;
+       sortColumn:string;
+       pageNumber: number;
+       pageSize: number;
+     }

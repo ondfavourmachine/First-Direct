@@ -23,7 +23,7 @@ export const AppRoutes:Routes = [
     },
     { path: 'scm',
       canActivate:[AuthGuard],
-      loadChildren:()=> import('./pages/scm/onboarding/onboarding.module').then(m=>m.OnboardingModule)
+      loadChildren:()=> import('./pages/scm/scm.module').then(m=>m.ScmModule)
     },
     {
       path:'settings',

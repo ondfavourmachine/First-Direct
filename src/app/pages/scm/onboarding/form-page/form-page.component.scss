@@ -45,6 +45,15 @@ input, select {
     border-top: 1px solid rgba(0, 51, 102, 0.2);
 }
 
+.is-invalid{
+    border: 1px solid red !important;
+    
+    // palceholder color
+    &::placeholder {
+        color: red;
+    }
+}
+
 .headers {
     font-style: normal;
     font-weight: 500;
@@ -55,6 +64,7 @@ input, select {
 
     color: #002855;
 }
+
 
 label {
     font-style: normal;

@@ -7,7 +7,7 @@
         <div class="main-content-padding p-3">
             <div class="conf-d bg-white p-3">
                 <div class="flex py-5 my-2">
-                    <h1 [routerLink]="['/scm']" class="text-fbn-blue font-semibold">Back</h1>
+                    <h1 (click)="goBackToForm()" class="text-fbn-blue font-semibold">Back</h1>
                 </div>
 
                 <div class="my-3 ">
@@ -20,24 +20,29 @@
                         <div style="width: 80%;" class="mt-3 pb-0 p-3">
                             <h1 class="text-fbn-blue headers text-lg font-semibold">Basic Information</h1>
                             <div class="fields  my-5">
-                                <h1>{{role | titlecase }}'s name</h1>
+                                <h1>Contact Person</h1>
                                 <p>{{customerDetails?.customerName}}</p>
                             </div>
                             <div class="fields  my-5">
                                 <h1>Company name</h1>
                                 <p>{{customerDetails?.companyName}}</p>
                             </div>
-                            <div *ngIf="isEdited === 'edited'" class="fields  my-5">
+                            <!-- <div *ngIf="customerDetails.isEdited === 'true'" class="fields  my-5">
                                 <h1>Industry</h1>
                                 <p>{{customerDetails?.industryId}}</p>
-                            </div>
-                            <div *ngIf="isEdited === ''" class="fields  my-5">
+                            </div> -->
+                            <div class="fields  my-5">
                                 <h1>Industry</h1>
-                                <p>{{customerDetails?.industryId}}</p>
+                                <p>{{industryName}}</p>
                             </div>
                             <div class="fields  my-5">
-                                <h1>{{role | titlecase }}'s Code</h1>
-                                <p>{{customerDetails?.customerCode}}</p>
+                                <h1>Contact Person's Code</h1>
+                                <p
+                                *ngIf="customerDetails?.customerCode === undefined || customerDetails?.customerCode === '' || customerDetails?.customerCode === null">
+                                Auto Generated</p>
+                                <p *ngIf="customerDetails?.customerCode !== undefined && customerDetails?.customerCode !== '' && customerDetails?.customerCode !== null">
+                                    {{customerDetails?.customerCode}}</p>
+
                             </div>
                             <div class="fields  my-5">
                                 <h1>RC Number</h1>
@@ -61,7 +66,10 @@
                             </div>
                             <div class="fields  my-5">
                                 <h1>Country</h1>
-                                <p>{{customerDetails?.countryId}}</p>
+                                <p
+                                *ngIf="customerDetails?.countryId === 'Nigeria'">Nigeria</p>
+                                <p
+                                *ngIf="isEdited == 'edited' ">{{customerDetails?.country}}</p>
                             </div>
                         </div>
 
@@ -73,25 +81,25 @@
                             </div>
                             <div class="fields  my-5">
                                 <h1>Tier</h1>
-                                <p>{{customerDetails?.tierId}}</p>
+                                <p>{{tierName}}</p>
                             </div>
-                            <!-- <div class="fields  my-5">
-                                <h1>Rank</h1>
-                                <p>XYZ</p>
-                            </div> -->
+                            <div class="fields  my-5">
+                                <h1>Tin</h1>
+                                <p>{{customerDetails?.tin}}</p>
+                            </div>
                             <div class="fields  my-5">
                                 <h1>Limit</h1>
                                 <p>NGN {{customerDetails?.limits}}</p>
                             </div>
-                            <div *ngIf="customerDetails?.role === 'supplier'" class="fields  my-5">
+                            <div *ngIf="role === 'SUPPLIER'" class="fields  my-5">
                                 <h1>Minimum Spend</h1>
                                 <p>NGN {{customerDetails?.minimumAnnualSpend}}</p>
                             </div>
-                            <div *ngIf="customerDetails?.role === 'supplier'" class="fields  my-5">
+                            <div *ngIf="role === 'SUPPLIER'" class="fields  my-5">
                                 <h1>Maximum Spend</h1>
                                 <p>NGN {{customerDetails?.maximumAnnualSpend}}</p>
                             </div>
-                            <div *ngIf="customerDetails?.role === 'supplier'" class="bankField  my-5">
+                            <div *ngIf="role === 'SUPPLIER'" class="bankField  my-5">
                                 <h1>Bank Information</h1>
                                 <div style="width: 40%;" class="flex-colstart">
                                     <p>{{customerDetails?.bankName}}</p>
@@ -102,7 +110,7 @@
 
                         </div>
                         <div class="contact mt-3 pt-3  px-3 border-t-2 border-fbn-gray-bg">
-                            <p class="text-sm m-0">Date Created: {{today | date: 'dd/MM/yyyy'}} </p>
+                            <p class="text-sm m-0">{{dateCreated}}: {{today | date: 'dd/MM/yyyy'}} </p>
                         </div>
 
                     </div>
@@ -132,7 +140,7 @@
             </div>
             <div class="my-2">
                 <p class=" text-fbn-text">
-                    New Customer created successfully
+                   {{modalText}}
                 </p>
             </div>
             <div class="my-2">

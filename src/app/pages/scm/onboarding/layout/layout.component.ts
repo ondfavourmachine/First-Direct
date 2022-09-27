@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';;
 import { Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
+import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
@@ -21,7 +22,8 @@ export class LayoutComponent implements OnInit {
   constructor(
     private crudServices: CrudService,
     private router: Router,
-    private gVar: GlobalsService
+    private gVar: GlobalsService,
+    private customerService: CustomersService
   ) { }
 
 
@@ -110,7 +112,7 @@ export class LayoutComponent implements OnInit {
     this.crudServices.getRole().subscribe({
       next: (data: any) => {
         this.role = data;
-        this.router.navigateByUrl(`/scm/upload-customer/${this.role}`)
+        this.router.navigateByUrl(`scm/onboarding/upload-customer/${this.role}`)
       }
     })
     
@@ -134,7 +136,12 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getHeaderTitle()
+    this.getHeaderTitle();
+    this.customerService.getSessions().subscribe({
+      next: (data: any) => {
+        console.log(data);
+      }
+    })
   }
 
 }

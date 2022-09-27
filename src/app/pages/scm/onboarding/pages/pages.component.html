@@ -1,4 +1,4 @@
-<div class="flex-between my-6">
+<div class="flex-between my-6 fadeIn">
     <div class="centeredRowFlex">
         <button (click)="toggleTabs(1)" [ngClass]="tabNumber === 1 ? 'active-btn-bg' : 'btn'">All</button>
         <button [ngClass]="tabNumber === 2 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(2)">Buyers</button>
@@ -54,7 +54,7 @@
                     </p>
                 </td>
                 <td>
-                    {{contents?.address1}}
+                     {{contents?.email}}
                 </td>
                 <td class="flex">
                     <svg class=" actionIcn" width="17" height="17" fill="none" viewBox="0 0 24 24"
@@ -119,7 +119,7 @@
                     </p>
                 </td> -->
                 <td>
-                    {{contents?.address1}}
+                     {{contents?.email}}
                 </td>
                 <td class="flex">
                     <svg class=" actionIcn" width="17" height="17" fill="none" viewBox="0 0 24 24"
@@ -182,7 +182,7 @@
                     </p>
                 </td> -->
                 <td>
-                    {{contents?.address1}}
+                    {{contents?.email}}
                 </td>
                 <td class="flex">
                     <svg class=" actionIcn" width="17" height="17" fill="none" viewBox="0 0 24 24"
@@ -285,7 +285,7 @@
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Industry</p>
-                        <p class="fields">{{singleCustomer?.industry}}</p>
+                        <p class="fields">{{singleCustomer?.industryName}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">{{role | titlecase }}'s code</p>
@@ -332,7 +332,7 @@
 
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Company Phone No</p>
-                        <p class="fields">{{singleCustomer?.mobileNumber}}</p>
+                        <p class="fields">{{singleCustomer?.phoneNumber}}</p>
                     </div>
                 </div>
 
@@ -353,16 +353,16 @@
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Currency</p>
-                        <p class="fields">{{singleCustomer?.currency}}</p>
+                        <p class="fields">{{singleCustomer?.currencyCode}}</p>
                     </div>
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Tier</p>
                         <p class="fields">{{singleCustomer?.tierId}}</p>
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                    <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Bank</p>
                         <p class="fields">{{singleCustomer?.bankName}}</p>
-                    </div>
+                    </div> -->
                     <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Limit</p>
                         <p class="fields">NGN {{singleCustomer?.limits}}</p>
@@ -371,22 +371,22 @@
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Maximum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.limits}}</p>
+                        <p class="fields">NGN {{singleCustomer?.maximumAnnualSpend}}</p>
                     </div>
                     <div
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Minimum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.limits}}</p>
+                        <p class="fields">NGN {{singleCustomer?.minimumAnnualSpend}}</p>
                     </div>
                     <div
                     *ngIf="role === 'SUPPLIER'" 
                      class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Bank Information</p>
                        <div class="fields">
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
-                        <p class="">NGN {{singleCustomer?.limits}}</p>
+                        <p class="">{{singleCustomer?.bankName}}</p>
+                        <p class="">{{singleCustomer?.accountName}}</p>
+                        <p class="">{{singleCustomer?.accountNumber}}</p>
                        </div>
                     </div>
                 </div>

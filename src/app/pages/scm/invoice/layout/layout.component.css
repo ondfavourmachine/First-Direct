@@ -1,0 +1,18 @@
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 10px 15px;
+    background-color: #022E64;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 2px solid #022E64;
+    color: #022E64;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
