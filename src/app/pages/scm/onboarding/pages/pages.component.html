@@ -15,10 +15,8 @@
         </div>
         <div class="centeredRowFlex inputBox">
             <form [formGroup]="searchForm">
-                <input 
-                [ngModel]="searchForm.value.search"
-                (ngModelChange)="resetData($event)"
-                type="text" formControlName="search" class="input" placeholder="search">
+                <input [ngModel]="searchForm.value.search" (ngModelChange)="resetData($event)" type="text"
+                    formControlName="search" class="input" placeholder="search">
             </form>
             <div (click)="searchCustomer()" class="search centeredRowFlex">
                 <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -54,7 +52,7 @@
                     </p>
                 </td>
                 <td>
-                     {{contents?.email}}
+                    {{contents?.email}}
                 </td>
                 <td class="flex">
                     <svg class=" actionIcn" width="17" height="17" fill="none" viewBox="0 0 24 24"
@@ -84,15 +82,17 @@
     <div class="pagination">
         <div class="flex">
             <button (click)="previousPage()" class="">
-                <svg class=" "  width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
-                  </svg>              
+                <svg class=" " width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
             </button>
             <button (click)="nextPage()">
-                <svg class=""  width="20" height="15"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                  </svg>
-                  
+                <svg class="" width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+
             </button>
         </div>
     </div>
@@ -119,7 +119,7 @@
                     </p>
                 </td> -->
                 <td>
-                     {{contents?.email}}
+                    {{contents?.email}}
                 </td>
                 <td class="flex">
                     <svg class=" actionIcn" width="17" height="17" fill="none" viewBox="0 0 24 24"
@@ -148,15 +148,17 @@
     <div class="pagination">
         <div class="flex">
             <button (click)="previousPage()" class="">
-                <svg class=" "  width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
-                  </svg>              
+                <svg class=" " width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
             </button>
             <button (click)="nextPage()">
-                <svg class=""  width="20" height="15"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                  </svg>
-                  
+                <svg class="" width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+
             </button>
         </div>
     </div>
@@ -164,7 +166,7 @@
 <div [ngClass]="tabNumber === 3 ? 'show' : 'hide'">
     <app-table [tableHeaders]='filterTableHeaders' (clciker)="closeDetailsModal()">
         <tbody>
-            <tr (click)="toggleModal(contents?.customerType, contents?.id)"  class="bodyRow cursor-pointer"
+            <tr (click)="toggleModal(contents?.customerType, contents?.id)" class="bodyRow cursor-pointer"
                 *ngFor="let contents of suppliers">
                 <td>
                     <!-- date pipe -->
@@ -212,15 +214,17 @@
     <div class="pagination">
         <div class="flex">
             <button (click)="previousPage()" class="">
-                <svg class=" "  width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
-                  </svg>              
+                <svg class=" " width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
             </button>
             <button (click)="nextPage()">
-                <svg class=""  width="20" height="15"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                  </svg>
-                  
+                <svg class="" width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+
             </button>
         </div>
     </div>
@@ -231,163 +235,162 @@
 <!-- *ngFor="let headers of _tableHeaders" -->
 
 
-<app-details-modal-wrapper *ngIf="detailsModal">
-    <div class="detailsModal">
-        <div class="modalHeader pt-4 mb-3 pb-3 ">
-            <!--  -->
-            <h1 class=" capitalize">{{role  | titlecase}} Details</h1>
-            <svg (click)="closeDetailsModal()" width="12" height="12" viewBox="0 0 10 10" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M8.0056 9.06627C8.2985 9.35917 8.7734 9.35917 9.0663 9.06627C9.3591 8.77337 9.3591 8.29847 9.0663 8.00557L6.0611 5.00037L9.0662 1.99519C9.3591 1.7023 9.3591 1.22743 9.0662 0.934529C8.7734 0.641639 8.2985 0.641639 8.0056 0.934529L5.0004 3.93977L1.99519 0.934519C1.70229 0.641619 1.22742 0.641619 0.934529 0.934519C0.641629 1.22741 0.641629 1.70228 0.934529 1.99518L3.9397 5.00037L0.934519 8.00557C0.641619 8.29847 0.641619 8.77337 0.934519 9.06627C1.22741 9.35917 1.70228 9.35917 1.99518 9.06627L5.0004 6.06107L8.0056 9.06627Z"
-                    fill="black" />
-            </svg>
+<app-details-modal-wrapper style="width: 43%;" *ngIf="detailsModal">
+    <div class="right-modal bg-white modal-bg pt-0 p-3">
+        <div class="detailsModal">
+            <div class="modalHeader pt-4 mb-3 pb-3 ">
+                <!--  -->
+                <h1 class=" capitalize">{{role | titlecase}} Details</h1>
+                <svg (click)="closeDetailsModal()" width="12" height="12" viewBox="0 0 10 10" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8.0056 9.06627C8.2985 9.35917 8.7734 9.35917 9.0663 9.06627C9.3591 8.77337 9.3591 8.29847 9.0663 8.00557L6.0611 5.00037L9.0662 1.99519C9.3591 1.7023 9.3591 1.22743 9.0662 0.934529C8.7734 0.641639 8.2985 0.641639 8.0056 0.934529L5.0004 3.93977L1.99519 0.934519C1.70229 0.641619 1.22742 0.641619 0.934529 0.934519C0.641629 1.22741 0.641629 1.70228 0.934529 1.99518L3.9397 5.00037L0.934519 8.00557C0.641619 8.29847 0.641619 8.77337 0.934519 9.06627C1.22741 9.35917 1.70228 9.35917 1.99518 9.06627L5.0004 6.06107L8.0056 9.06627Z"
+                        fill="black" />
+                </svg>
 
-        </div>
-
-        <div class="modalContents border-fbn-gray-bg ">
-
-            <div class="flex-startend">
-                <div class="centeredRowFlex modalContentsActions cursor-pointer bg-fbn-gray-bg p-2 mx-4">
-                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M1.39902 12.5934L1.45872 13.1904H1.45872L1.39902 12.5934ZM3.49564 12.3837L3.43594 11.7867H3.43594L3.49564 12.3837ZM4.34271 11.9613L3.90183 11.5544H3.90183L4.34271 11.9613ZM11.0287 4.7182L11.4696 5.12517V5.12517L11.0287 4.7182ZM10.8819 2.77267L11.2567 2.30415L10.8819 2.77267ZM9.61721 1.76094L9.24239 2.22946V2.22946L9.61721 1.76094ZM7.82243 1.87872L7.3896 1.4632V1.4632L7.82243 1.87872ZM1.0375 8.94636L0.604668 8.53084H0.604667L1.0375 8.94636ZM7.39445 2.88177C7.14507 2.66356 6.76601 2.68883 6.5478 2.93822C6.32959 3.1876 6.35486 3.56666 6.60425 3.78487L7.39445 2.88177ZM9.27091 6.1182C9.5203 6.33641 9.89935 6.31114 10.1176 6.06176C10.3358 5.81237 10.3105 5.43332 10.0611 5.21511L9.27091 6.1182ZM6.99935 12.0667C6.66798 12.0667 6.39935 12.3353 6.39935 12.6667C6.39935 12.998 6.66798 13.2667 6.99935 13.2667V12.0667ZM10.9993 13.2667C11.3307 13.2667 11.5993 12.998 11.5993 12.6667C11.5993 12.3353 11.3307 12.0667 10.9993 12.0667V13.2667ZM0.0660156 9.86973V11.93H1.26602V9.86973H0.0660156ZM1.45872 13.1904L3.55534 12.9807L3.43594 11.7867L1.33932 11.9963L1.45872 13.1904ZM4.78359 12.3683L11.4696 5.12517L10.5878 4.31124L3.90183 11.5544L4.78359 12.3683ZM11.2567 2.30415L9.99202 1.29242L9.24239 2.22946L10.5071 3.24119L11.2567 2.30415ZM7.3896 1.4632L0.604668 8.53084L1.47033 9.36188L8.25526 2.29424L7.3896 1.4632ZM9.99202 1.29242C9.21098 0.66758 8.08229 0.74165 7.3896 1.4632L8.25526 2.29424C8.51801 2.02055 8.94613 1.99245 9.24239 2.22946L9.99202 1.29242ZM11.4696 5.12517C12.2303 4.30108 12.1324 3.00475 11.2567 2.30415L10.5071 3.24119C10.8392 3.50694 10.8763 3.99865 10.5878 4.31124L11.4696 5.12517ZM3.55534 12.9807C4.02587 12.9337 4.46285 12.7158 4.78359 12.3683L3.90183 11.5544C3.78016 11.6862 3.61442 11.7688 3.43594 11.7867L3.55534 12.9807ZM0.0660156 11.93C0.0660156 12.6794 0.713052 13.2649 1.45872 13.1904L1.33932 11.9963C1.30007 12.0003 1.26602 11.9694 1.26602 11.93H0.0660156ZM1.26602 9.86973C1.26602 9.68042 1.33923 9.49844 1.47033 9.36188L0.604667 8.53084C0.259029 8.89088 0.0660156 9.37064 0.0660156 9.86973H1.26602ZM6.60425 3.78487L9.27091 6.1182L10.0611 5.21511L7.39445 2.88177L6.60425 3.78487ZM6.99935 13.2667H10.9993V12.0667H6.99935V13.2667Z"
-                            fill="#022E64" />
-                    </svg>
-                    <p (click)="edit(role,singleCustomer?.id)" class="mx-3 mb-0 font-bold">Edit</p>
-                    <!-- [routerLink]="['/scm/edit-form']" -->
-                </div>
-                <div class="centeredRowFlex modalContentsActions bg-fbn-gray-bg p-2">
-                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M0.666016 2.4C0.334645 2.4 0.0660156 2.66863 0.0660156 3C0.0660156 3.33137 0.334645 3.6 0.666016 3.6V2.4ZM11.3327 3.6C11.6641 3.6 11.9327 3.33137 11.9327 3C11.9327 2.66863 11.6641 2.4 11.3327 2.4V3.6ZM2.33258 5C2.33258 4.66863 2.06396 4.4 1.73258 4.4C1.40121 4.4 1.13258 4.66863 1.13258 5H2.33258ZM10.8661 5C10.8661 4.66863 10.5975 4.4 10.2661 4.4C9.93471 4.4 9.66608 4.66863 9.66608 5H10.8661ZM7.39935 3C7.39935 3.33137 7.66798 3.6 7.99935 3.6C8.33072 3.6 8.59935 3.33137 8.59935 3H7.39935ZM3.06602 3C3.06602 3.33137 3.33464 3.6 3.66602 3.6C3.99739 3.6 4.26602 3.33137 4.26602 3H3.06602ZM0.666016 3.6H11.3327V2.4H0.666016V3.6ZM1.13258 5V10.3333H2.33258V5H1.13258ZM4.39925 13.6H7.59941V12.4H4.39925V13.6ZM10.8661 10.3333V5H9.66608V10.3333H10.8661ZM7.59941 13.6C9.40354 13.6 10.8661 12.1375 10.8661 10.3333H9.66608C9.66608 11.4747 8.7408 12.4 7.59941 12.4V13.6ZM1.13258 10.3333C1.13258 12.1375 2.59512 13.6 4.39925 13.6V12.4C3.25786 12.4 2.33258 11.4747 2.33258 10.3333H1.13258ZM5.66602 1.6H5.99935V0.4H5.66602V1.6ZM5.99935 1.6C6.77255 1.6 7.39935 2.2268 7.39935 3H8.59935C8.59935 1.56406 7.43529 0.4 5.99935 0.4V1.6ZM4.26602 3C4.26602 2.2268 4.89282 1.6 5.66602 1.6V0.4C4.23008 0.4 3.06602 1.56406 3.06602 3H4.26602Z"
-                            fill="#D60200" />
-                    </svg>
-                    
-                    <p (click)="toggleDeleteModal()" class="mx-3 mb-0  delModalAction ">Delete</p>
-                </div>
             </div>
 
-            <div class="flex-colstart text-left w-[80%]">
-                <div class="my-5">
-                    <h2 class="text-fbn-blue font-semibold">Basic Information</h2>
+            <div class="modalContents border-fbn-gray-bg ">
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <!-- nake first letter uppercase  and rest lowercase -->
-                        <p class="fields">
-                            {{role | titlecase}}'s Name
-                        </p>
-                        <p class="fields">{{singleCustomer?.customerName}}</p>
+                <div class="flex-startend">
+                    <div class="centeredRowFlex modalContentsActions cursor-pointer bg-fbn-gray-bg p-2 mx-4">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.39902 12.5934L1.45872 13.1904H1.45872L1.39902 12.5934ZM3.49564 12.3837L3.43594 11.7867H3.43594L3.49564 12.3837ZM4.34271 11.9613L3.90183 11.5544H3.90183L4.34271 11.9613ZM11.0287 4.7182L11.4696 5.12517V5.12517L11.0287 4.7182ZM10.8819 2.77267L11.2567 2.30415L10.8819 2.77267ZM9.61721 1.76094L9.24239 2.22946V2.22946L9.61721 1.76094ZM7.82243 1.87872L7.3896 1.4632V1.4632L7.82243 1.87872ZM1.0375 8.94636L0.604668 8.53084H0.604667L1.0375 8.94636ZM7.39445 2.88177C7.14507 2.66356 6.76601 2.68883 6.5478 2.93822C6.32959 3.1876 6.35486 3.56666 6.60425 3.78487L7.39445 2.88177ZM9.27091 6.1182C9.5203 6.33641 9.89935 6.31114 10.1176 6.06176C10.3358 5.81237 10.3105 5.43332 10.0611 5.21511L9.27091 6.1182ZM6.99935 12.0667C6.66798 12.0667 6.39935 12.3353 6.39935 12.6667C6.39935 12.998 6.66798 13.2667 6.99935 13.2667V12.0667ZM10.9993 13.2667C11.3307 13.2667 11.5993 12.998 11.5993 12.6667C11.5993 12.3353 11.3307 12.0667 10.9993 12.0667V13.2667ZM0.0660156 9.86973V11.93H1.26602V9.86973H0.0660156ZM1.45872 13.1904L3.55534 12.9807L3.43594 11.7867L1.33932 11.9963L1.45872 13.1904ZM4.78359 12.3683L11.4696 5.12517L10.5878 4.31124L3.90183 11.5544L4.78359 12.3683ZM11.2567 2.30415L9.99202 1.29242L9.24239 2.22946L10.5071 3.24119L11.2567 2.30415ZM7.3896 1.4632L0.604668 8.53084L1.47033 9.36188L8.25526 2.29424L7.3896 1.4632ZM9.99202 1.29242C9.21098 0.66758 8.08229 0.74165 7.3896 1.4632L8.25526 2.29424C8.51801 2.02055 8.94613 1.99245 9.24239 2.22946L9.99202 1.29242ZM11.4696 5.12517C12.2303 4.30108 12.1324 3.00475 11.2567 2.30415L10.5071 3.24119C10.8392 3.50694 10.8763 3.99865 10.5878 4.31124L11.4696 5.12517ZM3.55534 12.9807C4.02587 12.9337 4.46285 12.7158 4.78359 12.3683L3.90183 11.5544C3.78016 11.6862 3.61442 11.7688 3.43594 11.7867L3.55534 12.9807ZM0.0660156 11.93C0.0660156 12.6794 0.713052 13.2649 1.45872 13.1904L1.33932 11.9963C1.30007 12.0003 1.26602 11.9694 1.26602 11.93H0.0660156ZM1.26602 9.86973C1.26602 9.68042 1.33923 9.49844 1.47033 9.36188L0.604667 8.53084C0.259029 8.89088 0.0660156 9.37064 0.0660156 9.86973H1.26602ZM6.60425 3.78487L9.27091 6.1182L10.0611 5.21511L7.39445 2.88177L6.60425 3.78487ZM6.99935 13.2667H10.9993V12.0667H6.99935V13.2667Z"
+                                fill="#022E64" />
+                        </svg>
+                        <p (click)="edit(role,singleCustomer?.id)" class="mx-3 mb-0 font-bold">Edit</p>
+                        <!-- [routerLink]="['/scm/edit-form']" -->
                     </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Company Name</p>
-                        <p class="fields">{{singleCustomer?.companyName}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Industry</p>
-                        <p class="fields">{{singleCustomer?.industryName}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">{{role | titlecase }}'s code</p>
-                        <p class="fields">{{singleCustomer?.customerCode}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Tax ID Number (TIN)</p>
-                        <p class="fields">{{singleCustomer?.tin}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">RC Number</p>
-                        <p class="fields">{{singleCustomer?.rcNumber}}</p>
+                    <div class="centeredRowFlex modalContentsActions bg-fbn-gray-bg p-2">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.666016 2.4C0.334645 2.4 0.0660156 2.66863 0.0660156 3C0.0660156 3.33137 0.334645 3.6 0.666016 3.6V2.4ZM11.3327 3.6C11.6641 3.6 11.9327 3.33137 11.9327 3C11.9327 2.66863 11.6641 2.4 11.3327 2.4V3.6ZM2.33258 5C2.33258 4.66863 2.06396 4.4 1.73258 4.4C1.40121 4.4 1.13258 4.66863 1.13258 5H2.33258ZM10.8661 5C10.8661 4.66863 10.5975 4.4 10.2661 4.4C9.93471 4.4 9.66608 4.66863 9.66608 5H10.8661ZM7.39935 3C7.39935 3.33137 7.66798 3.6 7.99935 3.6C8.33072 3.6 8.59935 3.33137 8.59935 3H7.39935ZM3.06602 3C3.06602 3.33137 3.33464 3.6 3.66602 3.6C3.99739 3.6 4.26602 3.33137 4.26602 3H3.06602ZM0.666016 3.6H11.3327V2.4H0.666016V3.6ZM1.13258 5V10.3333H2.33258V5H1.13258ZM4.39925 13.6H7.59941V12.4H4.39925V13.6ZM10.8661 10.3333V5H9.66608V10.3333H10.8661ZM7.59941 13.6C9.40354 13.6 10.8661 12.1375 10.8661 10.3333H9.66608C9.66608 11.4747 8.7408 12.4 7.59941 12.4V13.6ZM1.13258 10.3333C1.13258 12.1375 2.59512 13.6 4.39925 13.6V12.4C3.25786 12.4 2.33258 11.4747 2.33258 10.3333H1.13258ZM5.66602 1.6H5.99935V0.4H5.66602V1.6ZM5.99935 1.6C6.77255 1.6 7.39935 2.2268 7.39935 3H8.59935C8.59935 1.56406 7.43529 0.4 5.99935 0.4V1.6ZM4.26602 3C4.26602 2.2268 4.89282 1.6 5.66602 1.6V0.4C4.23008 0.4 3.06602 1.56406 3.06602 3H4.26602Z"
+                                fill="#D60200" />
+                        </svg>
+
+                        <p (click)="toggleDeleteModal()" class="mx-3 mb-0  delModalAction ">Delete</p>
                     </div>
                 </div>
 
-                <div class=" border-t-2 fbn-border-t    contact py-3">
-                    <h2 class="text-fbn-blue font-semibold">Contact Information</h2>
+                <div class="flex-colstart text-left w-[80%]">
+                    <div class="my-5">
+                        <h2 class="text-fbn-blue font-semibold">Basic Information</h2>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-
-                        <p class="fields">Country</p>
-
-                        <p class="fields">{{singleCustomer?.country}}</p>
-
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <!-- nake first letter uppercase  and rest lowercase -->
+                            <p class="fields">
+                                {{role | titlecase}}'s Name
+                            </p>
+                            <p class="fields">{{singleCustomer?.customerName}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Company Name</p>
+                            <p class="fields">{{singleCustomer?.companyName}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Industry</p>
+                            <p class="fields">{{singleCustomer?.industryName}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">{{role | titlecase }}'s code</p>
+                            <p class="fields">{{singleCustomer?.customerCode}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Tax ID Number (TIN)</p>
+                            <p class="fields">{{singleCustomer?.tin}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">RC Number</p>
+                            <p class="fields">{{singleCustomer?.rcNumber}}</p>
+                        </div>
                     </div>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Company Email</p>
-                        <div class="flex items-center email text-sm">
-                            <p class="mx-3">{{singleCustomer?.email}}</p>
-                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <mask id="path-1-inside-1_885_1707" fill="white">
+                    <div class=" border-t-2 fbn-border-t    contact py-3">
+                        <h2 class="text-fbn-blue font-semibold">Contact Information</h2>
+
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+
+                            <p class="fields">Country</p>
+
+                            <p class="fields">{{singleCustomer?.country}}</p>
+
+                        </div>
+
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Company Email</p>
+                            <div class="flex items-center email text-sm">
+                                <p class="mx-3">{{singleCustomer?.email}}</p>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="path-1-inside-1_885_1707" fill="white">
+                                        <path
+                                            d="M0.333984 3.33464C0.333984 1.86188 1.52789 0.667969 3.00065 0.667969H11.0007C12.4734 0.667969 13.6673 1.86188 13.6673 3.33464V8.66797C13.6673 10.1407 12.4734 11.3346 11.0007 11.3346H3.00065C1.52789 11.3346 0.333984 10.1407 0.333984 8.66797V3.33464Z" />
+                                    </mask>
                                     <path
-                                        d="M0.333984 3.33464C0.333984 1.86188 1.52789 0.667969 3.00065 0.667969H11.0007C12.4734 0.667969 13.6673 1.86188 13.6673 3.33464V8.66797C13.6673 10.1407 12.4734 11.3346 11.0007 11.3346H3.00065C1.52789 11.3346 0.333984 10.1407 0.333984 8.66797V3.33464Z" />
-                                </mask>
-                                <path
-                                    d="M12.9228 3.87753C13.2226 3.73643 13.3513 3.37899 13.2102 3.07916C13.0691 2.77933 12.7117 2.65065 12.4118 2.79174L12.9228 3.87753ZM7.00065 6.0013L6.74517 6.54419C6.90698 6.62034 7.09432 6.62034 7.25613 6.54419L7.00065 6.0013ZM1.58946 2.79174C1.28963 2.65065 0.93219 2.77933 0.791093 3.07916C0.649996 3.37899 0.778676 3.73643 1.07851 3.87753L1.58946 2.79174ZM12.4118 2.79174L6.74517 5.45841L7.25613 6.54419L12.9228 3.87753L12.4118 2.79174ZM7.25613 5.45841L1.58946 2.79174L1.07851 3.87753L6.74517 6.54419L7.25613 5.45841ZM3.00065 1.86797H11.0007V-0.532031H3.00065V1.86797ZM12.4673 3.33464V8.66797H14.8673V3.33464H12.4673ZM11.0007 10.1346H3.00065V12.5346H11.0007V10.1346ZM1.53398 8.66797V3.33464H-0.866016V8.66797H1.53398ZM3.00065 10.1346C2.19063 10.1346 1.53398 9.47799 1.53398 8.66797H-0.866016C-0.866016 10.8035 0.86515 12.5346 3.00065 12.5346V10.1346ZM12.4673 8.66797C12.4673 9.47799 11.8107 10.1346 11.0007 10.1346V12.5346C13.1362 12.5346 14.8673 10.8035 14.8673 8.66797H12.4673ZM11.0007 1.86797C11.8107 1.86797 12.4673 2.52462 12.4673 3.33464H14.8673C14.8673 1.19913 13.1362 -0.532031 11.0007 -0.532031V1.86797ZM3.00065 -0.532031C0.86515 -0.532031 -0.866016 1.19913 -0.866016 3.33464H1.53398C1.53398 2.52462 2.19063 1.86797 3.00065 1.86797V-0.532031Z"
-                                    fill="#022E64" mask="url(#path-1-inside-1_885_1707)" />
-                            </svg><span class=" ml-1 underline text-fbn-blue font-semibold">Send Email</span>
+                                        d="M12.9228 3.87753C13.2226 3.73643 13.3513 3.37899 13.2102 3.07916C13.0691 2.77933 12.7117 2.65065 12.4118 2.79174L12.9228 3.87753ZM7.00065 6.0013L6.74517 6.54419C6.90698 6.62034 7.09432 6.62034 7.25613 6.54419L7.00065 6.0013ZM1.58946 2.79174C1.28963 2.65065 0.93219 2.77933 0.791093 3.07916C0.649996 3.37899 0.778676 3.73643 1.07851 3.87753L1.58946 2.79174ZM12.4118 2.79174L6.74517 5.45841L7.25613 6.54419L12.9228 3.87753L12.4118 2.79174ZM7.25613 5.45841L1.58946 2.79174L1.07851 3.87753L6.74517 6.54419L7.25613 5.45841ZM3.00065 1.86797H11.0007V-0.532031H3.00065V1.86797ZM12.4673 3.33464V8.66797H14.8673V3.33464H12.4673ZM11.0007 10.1346H3.00065V12.5346H11.0007V10.1346ZM1.53398 8.66797V3.33464H-0.866016V8.66797H1.53398ZM3.00065 10.1346C2.19063 10.1346 1.53398 9.47799 1.53398 8.66797H-0.866016C-0.866016 10.8035 0.86515 12.5346 3.00065 12.5346V10.1346ZM12.4673 8.66797C12.4673 9.47799 11.8107 10.1346 11.0007 10.1346V12.5346C13.1362 12.5346 14.8673 10.8035 14.8673 8.66797H12.4673ZM11.0007 1.86797C11.8107 1.86797 12.4673 2.52462 12.4673 3.33464H14.8673C14.8673 1.19913 13.1362 -0.532031 11.0007 -0.532031V1.86797ZM3.00065 -0.532031C0.86515 -0.532031 -0.866016 1.19913 -0.866016 3.33464H1.53398C1.53398 2.52462 2.19063 1.86797 3.00065 1.86797V-0.532031Z"
+                                        fill="#022E64" mask="url(#path-1-inside-1_885_1707)" />
+                                </svg><span class=" ml-1 underline text-fbn-blue font-semibold">Send Email</span>
 
+                            </div>
+                        </div>
+
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Company Phone No</p>
+                            <p class="fields">{{singleCustomer?.phoneNumber}}</p>
                         </div>
                     </div>
 
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Company Phone No</p>
-                        <p class="fields">{{singleCustomer?.phoneNumber}}</p>
-                    </div>
-                </div>
+                    <div class=" fbn-border-t border-t-2 border-t-fbn-gray-bg contact py-3">
+                        <h2 class="text-fbn-blue font-semibold">Account Information</h2>
 
-                <div class=" fbn-border-t border-t-2 border-t-fbn-gray-bg contact py-3">
-                    <h2 class="text-fbn-blue font-semibold">Account Information</h2>
-
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Date Created</p>
-                        <p class="fields">{{singleCustomer?.dateAdded | date: 'dd/MM/yyyy'}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Last Transactions</p>
-                        <div class="flex items-center">
-                            <p class="">{{singleCustomer?.lastTransaction}}</p>
-                            <p class="RQ text-fbn-blue border-fbn-blue p-2 ml-1">Request
-                                Payment</p>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Date Created</p>
+                            <p class="fields">{{singleCustomer?.dateAdded | date: 'dd/MM/yyyy'}}</p>
                         </div>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Currency</p>
-                        <p class="fields">{{singleCustomer?.currencyCode}}</p>
-                    </div>
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Tier</p>
-                        <p class="fields">{{singleCustomer?.tierId}}</p>
-                    </div>
-                    <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Last Transactions</p>
+                            <div class="flex items-center">
+                                <p class="">{{singleCustomer?.lastTransaction}}</p>
+                                <p class="RQ text-fbn-blue border-fbn-blue p-2 ml-1">Request
+                                    Payment</p>
+                            </div>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Currency</p>
+                            <p class="fields">{{singleCustomer?.currencyCode}}</p>
+                        </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Tier</p>
+                            <p class="fields">{{singleCustomer?.tierId}}</p>
+                        </div>
+                        <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
                         <p class="fields">Bank</p>
                         <p class="fields">{{singleCustomer?.bankName}}</p>
                     </div> -->
-                    <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Limit</p>
-                        <p class="fields">NGN {{singleCustomer?.limits}}</p>
-                    </div>
-                    <div
-                    *ngIf="role === 'SUPPLIER'" 
-                     class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Maximum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.maximumAnnualSpend}}</p>
-                    </div>
-                    <div
-                    *ngIf="role === 'SUPPLIER'" 
-                     class="flex-between text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Minimum Annual Spend</p>
-                        <p class="fields">NGN {{singleCustomer?.minimumAnnualSpend}}</p>
-                    </div>
-                    <div
-                    *ngIf="role === 'SUPPLIER'" 
-                     class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
-                        <p class="fields">Bank Information</p>
-                       <div class="fields">
-                        <p class="">{{singleCustomer?.bankName}}</p>
-                        <p class="">{{singleCustomer?.accountName}}</p>
-                        <p class="">{{singleCustomer?.accountNumber}}</p>
-                       </div>
+                        <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Limit</p>
+                            <p class="fields">NGN {{singleCustomer?.limits}}</p>
+                        </div>
+                        <div *ngIf="role === 'SUPPLIER'"
+                            class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Maximum Annual Spend</p>
+                            <p class="fields">NGN {{singleCustomer?.maximumAnnualSpend}}</p>
+                        </div>
+                        <div *ngIf="role === 'SUPPLIER'"
+                            class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Minimum Annual Spend</p>
+                            <p class="fields">NGN {{singleCustomer?.minimumAnnualSpend}}</p>
+                        </div>
+                        <div *ngIf="role === 'SUPPLIER'"
+                            class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Bank Information</p>
+                            <div class="fields">
+                                <p class="">{{singleCustomer?.bankName}}</p>
+                                <p class="">{{singleCustomer?.accountName}}</p>
+                                <p class="">{{singleCustomer?.accountNumber}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -398,9 +401,7 @@
 
 <app-centered-modal-wrapper *ngIf="deleteModalOpen">
     <!--   -->
-    <div
-                style="width: 40%;" 
-                class="modalAdd blowUp p-4">
+    <div style="width: 40%;" class="modalAdd blowUp p-4">
 
         <div class="flex-startend my-2">
             <svg (click)="toggleDeleteModal()" width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -438,16 +439,15 @@
 
             <div class="flex-between">
                 <button (click)="toggleDeleteModal()" class="mx-3 fbn-px-blue-btn">Cancel </button>
-                <button (click)="deleteCustomer()" class="mx-3 fbn-px-fill-blue-btn">Delete {{role | titlecase}}</button>
+                <button (click)="deleteCustomer()" class="mx-3 fbn-px-fill-blue-btn">Delete {{role |
+                    titlecase}}</button>
             </div>
         </div>
     </div>
 </app-centered-modal-wrapper>
 <div *ngIf="filterModal" class="modalFilter blowUp">
     <button (click)="closeFilterModal()">X</button>
-    <ul
-    style="cursor: pointer;"
-    >
+    <ul style="cursor: pointer;">
         <li (click)="sortBuyers()" class="my-2">Buyer</li>
         <li (click)="sortSuppliers()" class="my-2">Supplier</li>
         <li (click)="sortApproved()" class="my-2">Approved</li>
