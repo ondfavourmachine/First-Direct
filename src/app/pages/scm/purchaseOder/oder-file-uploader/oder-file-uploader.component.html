@@ -1,1 +1,46 @@
-<p>oder-file-uploader works!</p>
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT-->
+    <main class="main-content">
+        <div class="main-content-padding p-3">
+            <div class="fadeIn">
+                <div class="h-100 bg-white p-5">
+                    <p class="title m-0">Upload Purchase Order</p>
+
+                    <div class="my-2 py-5 uploader">
+                        <div class="d-flex justify-content-center align-items-center upload-btn-wrapper">
+                            <span><svg width="34" height="21" viewBox="0 0 34 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.125 2.3125V18.25C0.125 19.2859 0.964062 20.125 2 20.125H32C33.0359 20.125 33.875 19.2859 33.875 18.25V2.3125C33.875 1.27656 33.0359 0.4375 32 0.4375H2C0.964062 0.4375 0.125 1.27656 0.125 2.3125Z" fill="url(#paint0_linear_320_5091)"/>
+                                <defs>
+                                <linearGradient id="paint0_linear_320_5091" x1="17" y1="20.125" x2="17" y2="0.4375" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#1A70FF"/>
+                                <stop offset="1" stop-color="#18BFF9"/>
+                                </linearGradient>
+                                </defs>
+                                </svg>
+                                </span><button 
+                                (click)="fileUpload.click()"
+                                class="btn">Drop your files here, or browse</button>
+                            <input
+                            class="d-none"
+                                #fileUpload
+                                accept=".pdf"
+                                (click)="fileUpload.value = null"
+                             type="file" 
+                             (change)="onFileChange($event)" />
+                        </div>
+                    </div>
+
+                    <div class="my-2 py-5">
+                        <div class="d-flex justify-content-end align-items-end">
+                            <button class="fbn-blue-btn">Cancel</button>
+                            <button class="fbn-fill-blue-btn">Next</button>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

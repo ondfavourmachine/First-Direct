@@ -41,7 +41,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   keyWord: string = 'Approved';
   btnText = 'Continue';
   isOnSubmit: boolean = false;
-  companyCode: any  = [];
+  companyCode: any = [];
   constructor(
     private crudServices: CrudService,
     private router: Router,
@@ -64,7 +64,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
     // }
   }
 
-filterCompanyCode(companyName: string){
+  filterCompanyCode(companyName: string) {
     // filter out company code that is equal to the company name rom existing customers
     this.companyCode = this.existingCustomers.filter(customer => customer.companyName === companyName);
     // update the company code in the form
@@ -74,7 +74,7 @@ filterCompanyCode(companyName: string){
     // console.log("companyCode:", this.companyCode[0]?.customerCode)
     // console.log("companyCode:", this.addCustomerForm?.value?.customerCode)
     // console.log("companyCode:", this.companyCode)
-}
+  }
 
 
   validateBankDeyails(code: any) {
@@ -193,7 +193,7 @@ filterCompanyCode(companyName: string){
       // industryName: this.industries.filter(industry => industry.id === this.addCustomerForm.value.industryId)[0]?.name,
 
     }
-    
+
 
     if (this.role !== "buyer") {
       this.bankVerification();
@@ -223,6 +223,7 @@ filterCompanyCode(companyName: string){
 
         } else {
           this.gVars.toastr.error("Please fill all required fields")
+          this.isOnSubmit = true;
           this.btnText = "Continue"
 
         }
@@ -258,18 +259,18 @@ filterCompanyCode(companyName: string){
   onSortChange(e) {
     // console.log("e:", e.target.value)
     this.filterCompanyCode(e.target.value)
-    if(e.target.value === ""){
+    if (e.target.value === "") {
       this.addCustomerForm.patchValue({
         customerCode: ""
       })
     }
- }
-
- stateLoader(){
-  if (this.existingCustomers.length < 1){
-    this.gVars.spinner.show();
   }
-}
+
+  stateLoader() {
+    if (this.existingCustomers.length < 1) {
+      this.gVars.spinner.show();
+    }
+  }
   ngOnInit(): void {
 
     this.stateLoader();
@@ -301,7 +302,7 @@ filterCompanyCode(companyName: string){
     this.getIndustries();
     this.getCategories();
     this.getTiers();
-    if(this.role !== "buyer"){
+    if (this.role !== "buyer") {
       this.getBanks();
     }
     this.getExisitingCustomers();

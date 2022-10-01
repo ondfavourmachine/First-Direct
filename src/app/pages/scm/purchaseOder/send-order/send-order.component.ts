@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-order',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SendOrderComponent implements OnInit {
 
-  constructor() { }
+  isSuccessModalOpen: Boolean = false;
+  modalText: string = " Invooice sent successfully"
+  constructor(
+    private router: Router
+  ) { } 
+
+  toggleSuccessModal() {
+    this.isSuccessModalOpen = !this.isSuccessModalOpen;
+  }
 
   ngOnInit(): void {
   }

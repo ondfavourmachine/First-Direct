@@ -1,1 +1,189 @@
-<p>invoice-preview works!</p>
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT-->
+    <main class="main-content">
+        <div class="main-content-padding p-3">
+            <div class="fadeIn">
+                <div class=" bg-white p-5">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p>Preview</p>
+                        </div>
+                        <div>
+                            <svg width="89" height="28" viewBox="0 0 89 28" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect width="89" height="28" rx="5" fill="#DDAD31" />
+                                <path
+                                    d="M40.125 17.9268V19H34.8545V17.9268H40.125ZM35.1211 9.04688V19H33.8018V9.04688H35.1211ZM39.4277 13.3262V14.3994H34.8545V13.3262H39.4277ZM40.0566 9.04688V10.127H34.8545V9.04688H40.0566ZM46.0928 17.5645V8.5H47.3643V19H46.2021L46.0928 17.5645ZM41.1162 15.3838V15.2402C41.1162 14.6751 41.1846 14.1624 41.3213 13.7021C41.4626 13.2373 41.6608 12.8385 41.916 12.5059C42.1758 12.1732 42.4834 11.918 42.8389 11.7402C43.1989 11.5579 43.5999 11.4668 44.042 11.4668C44.5068 11.4668 44.9124 11.5488 45.2588 11.7129C45.6097 11.8724 45.9059 12.1071 46.1475 12.417C46.3936 12.7223 46.5872 13.0915 46.7285 13.5244C46.8698 13.9574 46.9678 14.4473 47.0225 14.9941V15.623C46.9723 16.1654 46.8743 16.653 46.7285 17.0859C46.5872 17.5189 46.3936 17.888 46.1475 18.1934C45.9059 18.4987 45.6097 18.7334 45.2588 18.8975C44.9079 19.057 44.4977 19.1367 44.0283 19.1367C43.5954 19.1367 43.1989 19.0433 42.8389 18.8564C42.4834 18.6696 42.1758 18.4076 41.916 18.0703C41.6608 17.7331 41.4626 17.3366 41.3213 16.8809C41.1846 16.4206 41.1162 15.9215 41.1162 15.3838ZM42.3877 15.2402V15.3838C42.3877 15.7529 42.4242 16.0993 42.4971 16.4229C42.5745 16.7464 42.693 17.0312 42.8525 17.2773C43.012 17.5234 43.2148 17.7171 43.4609 17.8584C43.707 17.9951 44.001 18.0635 44.3428 18.0635C44.762 18.0635 45.1061 17.9746 45.375 17.7969C45.6484 17.6191 45.8672 17.3844 46.0312 17.0928C46.1953 16.8011 46.3229 16.4844 46.4141 16.1426V14.4951C46.3594 14.2445 46.2796 14.0029 46.1748 13.7705C46.0745 13.5335 45.9424 13.3239 45.7783 13.1416C45.6188 12.9548 45.4206 12.8066 45.1836 12.6973C44.9512 12.5879 44.6755 12.5332 44.3564 12.5332C44.0101 12.5332 43.7116 12.6061 43.4609 12.752C43.2148 12.8932 43.012 13.0892 42.8525 13.3398C42.693 13.5859 42.5745 13.873 42.4971 14.2012C42.4242 14.5247 42.3877 14.8711 42.3877 15.2402ZM50.707 11.6035V19H49.4355V11.6035H50.707ZM49.3398 9.6416C49.3398 9.43652 49.4014 9.26335 49.5244 9.12207C49.652 8.98079 49.8389 8.91016 50.085 8.91016C50.3265 8.91016 50.5111 8.98079 50.6387 9.12207C50.7708 9.26335 50.8369 9.43652 50.8369 9.6416C50.8369 9.83757 50.7708 10.0062 50.6387 10.1475C50.5111 10.2842 50.3265 10.3525 50.085 10.3525C49.8389 10.3525 49.652 10.2842 49.5244 10.1475C49.4014 10.0062 49.3398 9.83757 49.3398 9.6416ZM55.834 11.6035V12.5742H51.835V11.6035H55.834ZM53.1885 9.80566H54.4531V17.168C54.4531 17.4186 54.4919 17.6077 54.5693 17.7354C54.6468 17.863 54.7471 17.9473 54.8701 17.9883C54.9932 18.0293 55.1253 18.0498 55.2666 18.0498C55.3714 18.0498 55.4808 18.0407 55.5947 18.0225C55.7132 17.9997 55.8021 17.9814 55.8613 17.9678L55.8682 19C55.7679 19.0319 55.6357 19.0615 55.4717 19.0889C55.3122 19.1208 55.1185 19.1367 54.8906 19.1367C54.5807 19.1367 54.2959 19.0752 54.0361 18.9521C53.7764 18.8291 53.569 18.624 53.4141 18.3369C53.2637 18.0452 53.1885 17.6533 53.1885 17.1611V9.80566Z"
+                                    fill="black" />
+                            </svg>
+
+                        </div>
+                    </div>
+
+                    <div class="right-modal bg-white modal-bg pt-0 p-3">
+
+                        <div class="details-header">
+                            <div class="details-title">
+                                <h1 class="">Invoice Details</h1>
+                            </div>
+                        </div>
+
+                        <div class="my-5 p-3 border-fill">
+
+                            <div class="details-body ">
+                                <div class="details-address d-flex justify-content-between">
+                                    <div class="first">
+                                        <div class="from my-3">
+                                            <p class="ed">From:</p>
+                                            <p class="main">Supplier's Company Name</p>
+                                            <p>Supplier's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                                        </div>
+
+                                        <div class="to my-3">
+                                            <p class="ed">Billed To:</p>
+                                            <p class="main">Buyer's Company Name</p>
+                                            <p>Buyer's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="second">
+                                        <div class="inv-no my-3">
+                                            <p class="ed">Invoice Number.</p>
+                                            <p class="main">651535</p>
+                                        </div>
+
+                                        <div class="pur-no my-3">
+                                            <p class="ed">Purchase Order Number.</p>
+                                            <p class="main">651535</p>
+                                        </div>
+
+                                        <div class="inv-date my-3">
+                                            <p class="ed">Invoice Date</p>
+                                            <p class="main">28/10/2012</p>
+                                        </div>
+                                    </div>
+                                    <div class="third">
+                                        <div class="total-payable my-3">
+                                            <p class="ed">Total Payable</p>
+                                            <p class="main amt">₦639,000.00</p>
+                                        </div>
+                                        <div class="due-date my-3">
+                                            <p class="ed">Due Date</p>
+                                            <p class="main">28/10/2012</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table my-5">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Price</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Item 1</td>
+                                                <td>1</td>
+                                                <td>₦639,000.00</td>
+                                                <td>₦639,000.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Item 2</td>
+                                                <td>1</td>
+                                                <td>₦639,000.00</td>
+                                                <td>₦639,000.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Item 3</td>
+                                                <td>1</td>
+                                                <td>₦639,000.00</td>
+                                                <td>₦639,000.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <div class="details-footer d-flex justify-content-between">
+                                <div class="footer-content1">
+                                    <h1 class="ed">Payment Terms</h1>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+                                        Lorem ipsum dolor sit amet
+                                        consectetur adipisicing elit. Quisquam, quod.
+                                    </p>
+                                </div>
+                                <div class="footer-content2">
+                                    <h1 class="ed">Payment Instructions</h1>
+                                    <p class="">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+                                        Lorem ipsum dolor sit amet
+                                        consectetur adipisicing elit. Quisquam, quod.
+                                    </p>
+                                </div>
+                                <div class="footer-content3">
+                                    <h1 class="ed">Summary</h1>
+                                    <div class="figs-amts d-flex justify-content-between">
+                                        <div class="words">
+                                            <p>Sub Total</p>
+                                            <p>Tax (2%)</p>
+                                            <p>Discount (0%)</p>
+                                            <p>Miscellaneous</p>
+                                        </div>
+                                        <div class="figs">
+                                            <p>NGN 9,000.00</p>
+                                            <p>NGN 9,000.00</p>
+                                            <p>NGN 9,000.00</p>
+                                            <p>NGN 9,000.00</p>
+                                        </div>
+                                    </div>
+                                    <div class="total-amt d-flex justify-content-between">
+                                        <p>Total</p>
+                                        <p class="ta-figs">NGN 9,180.00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button class="fbn-blue-btn">Cancel</button>
+                        <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<app-centered-modal-wrapper *ngIf="isSuccessModalOpen">
+    <div style="width: 50%;" class="modalAdd blowUp p-4">
+        <div class="flex-colend my-2">
+            <div class="my-2">
+                <h1 class="text-fbn-blue modalTitle font-semibold text-lg">Success!</h1>
+            </div>
+            <div class="my-2">
+                <p class=" text-fbn-text">
+                   {{modalText}}
+                </p>
+            </div>
+            <div class="my-2">
+                <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+
+</app-centered-modal-wrapper>

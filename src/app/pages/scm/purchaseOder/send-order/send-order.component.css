@@ -1,0 +1,29 @@
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 10px 2rem;
+    background-color: #022E64; ;
+    color: white;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+    margin: 0 10px;
+}
+
+
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 2px solid #022E64;
+    color: #022E64;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+textarea, select {
+    background-color: #F8FBFD;
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 51, 102, 0.2);
+    font-size: 14px !important;
+    width: 100%;
+}

@@ -34,7 +34,7 @@
                                 <div *ngIf="role === 'supplier'" class="fields my-5">
                                     <label for="">Company Name</label>
                                     <input
-                                    [ngClass]="{'is-invalid': addCustomerForm.controls.companyName.hasError('required', 'companyName') && isOnSubmit}"
+                                    [ngClass]="{'is-invalid': addCustomerForm.controls.companyName.hasError('required') && isOnSubmit}"
                                      formControlName="companyName" type="text" list="companyName"
                                         placeholder="Enter Company Name">
                                 </div>

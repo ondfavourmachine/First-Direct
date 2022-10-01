@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 @Component({
@@ -12,10 +13,15 @@ isDetailsModalOpen: boolean = false;
 
   constructor(
     private customersService: CustomersService,
-  private  gVars: GlobalsService
+  private  gVars: GlobalsService,
+  private router: Router
+
   ) { }
 
 
+  navigate( tab: number) {
+    this.router.navigate(['scm/invoice/pages']);
+  }
 
   toggleDetailsModal() {
     this.isDetailsModalOpen = !this.isDetailsModalOpen;

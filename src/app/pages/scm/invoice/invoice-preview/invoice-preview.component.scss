@@ -1,0 +1,150 @@
+@import '../../../../../customStyles/colors';
+@import '../../../../../customStyles/layouting.scss';
+table {
+    width: 100%;
+    text-align: left;
+    color: $fbn-text;
+    margin: 10px 0;
+}
+
+.bodyRow,
+.headRow {
+    border-bottom: 3px solid $fbn-gray-bg;
+    background-color: white;
+
+    & th,
+    td {
+        padding: 10px;
+
+    }
+}
+
+.headRow {
+    th {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+
+.bodyRow {
+    td {
+        font-style: normal;
+        font-weight: 300 !important;
+        font-size: 14px;
+        line-height: 16px;
+        padding: 12px !important;
+        color: $fbn-text;
+        // margin: 1rem 0 !important;
+    }
+
+    .actionIcn {
+        font-weight: 200 !important;
+        color: $fbn-text;
+    }
+}
+
+.capitalize {
+    text-transform: capitalize !important;
+}
+
+.flex-betweenS {
+    display: flex;
+    justify-content: space-between;
+
+}
+.details-title{
+    font-style: normal;
+font-weight: 600;
+line-height: 42px;
+color: #657889;
+}
+.details-header{
+   & h1{
+    font-size: 20px;
+   }
+}
+
+.footer-content1, .footer-content2, .footer-content3{
+    width: 50%;
+    margin: 10PX;
+
+    & H1{
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 42px;
+        color: #657889;
+    }
+
+    & p{
+        font-size: 15px;
+        font-weight: 500;
+        color: #657889;
+    }
+
+
+    & .figs p{
+        font-weight: 600;
+       
+    }
+
+    & .ta-figs{
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: black;
+    }
+}
+
+.details-address{
+   & P{
+        margin: 0;
+    }
+
+    & .ed {
+        font-size: 15px;
+        font-weight: 500;
+        color: #657889;
+    }
+
+    & .main{
+        color: black;
+        font-weight: 600;
+        margin: 4px 0;
+    }
+}
+
+.total-amt{
+    border-top: 1px solid #657889;
+    padding: 10px;
+}
+.fbn-fill-blue-btn {
+    border-radius: 100px;
+    padding: 10px 2rem;
+    background-color: $fbn-blue ;
+    color: white;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+    margin: 0 10px;
+}
+
+
+.fbn-blue-btn {
+    border-radius: 100px;
+    padding: 8px 15px;
+    border: 2px solid $fbn-blue;
+    color: $fbn-blue;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.modalTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: #002855 !important;
+}

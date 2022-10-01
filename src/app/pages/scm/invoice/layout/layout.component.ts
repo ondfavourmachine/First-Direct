@@ -19,6 +19,9 @@ export class LayoutComponent implements OnInit {
   navigateToForm() {
     this.router.navigate(['scm/invoice/create-invoice']);
   }
+  navigateToInvoiceUploader(){
+    this.router.navigate(['scm/invoice/invoice-uploader']);
+  }
 
   ngOnInit(): void {
   }
