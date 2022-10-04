@@ -23,7 +23,7 @@ export class OverviewComponent implements OnInit {
   SearchQuery: string = "";
   filterModal: Boolean = false;
   SortColumn: string = "";
-
+  requestBody: requestBodyModel;
   stats = {
     buyers: 0,
     inactive: 0,
@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit {
   allCustomersEmptyState: boolean = false;
   singleCustomer: any = [];
   searchForm: FormGroup;
-  userLoad: any;
+  userLoad: userRoleModel;
   constructor(
     private router: Router,
     private crudServices: CrudService,
@@ -53,6 +53,16 @@ export class OverviewComponent implements OnInit {
       this.getCustomers();
     }
     this.userLoad = this.gVar.checkRoute(this.gVar.router.url);
+    this.requestBody = {
+      "searchQuery": this.SearchQuery,
+      "sortColumn": this.SortColumn,
+      "pageNumber": this.PageNumber,
+      "pageSize": this.PageSize,
+      "session": this.userLoad?.session,
+      "username": this.userLoad?.username,
+      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
+      "countryId": "01"
+    }
   }
 
 
@@ -158,17 +168,8 @@ export class OverviewComponent implements OnInit {
   }
 
   getCustomers() {
-  const  requestBody: requestBodyModel = {
-      "searchQuery": this.SearchQuery,
-      "sortColumn": this.SortColumn,
-      "pageNumber": this.PageNumber,
-      "pageSize": this.PageSize,
-      "session": this.userLoad?.session,
-      "username": this.userLoad?.username,
-      "subsidiaryId": this.userLoad?.subsidiaryId.toString(),
-      "countryId": "01"
-    }
-    this.onboardService.getAllCustomers(requestBody).subscribe({
+  
+    this.onboardService.getAllCustomers(this.requestBody).subscribe({
       next: (data) => {
         // console.log("customers:", data)
         this.allCustomers = data.data;
@@ -191,7 +192,9 @@ export class OverviewComponent implements OnInit {
     this.router.navigateByUrl('scm/onboarding/edit-form/' + role + '/' + id);
   }
 
-
+openMail(address: string) {
+  window.open(`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${address}&su=WriteSUBJECT&body=WriteBODY&tf=1`)
+}
 
   tableHeaders = [
     {
@@ -272,7 +275,9 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStats();
-    this.getCustomers();
+    setTimeout(() => {
+      this.getCustomers();
+    }, 2000);
     this.gVar.spinner.show();
 
 

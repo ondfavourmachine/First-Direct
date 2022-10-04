@@ -96,7 +96,7 @@ export class CustomersService {
 
   getSessions() {
     const userLoad = JSON.parse(this.globals.DecryptData(sessionStorage.getItem('plomk')))
-    console.log(userLoad.session)
+    // console.log(userLoad.session)
     return userLoad.session;
   }
 
@@ -111,6 +111,14 @@ export class CustomersService {
   getPrincipalBuyers(): Observable<any> {
     return this.http.post(`${environment.scmApiUrl}/api/Customer/GetBankPrincipal`, httpOptions);
   };
+
+  getAllReports(requestParams: requestBodyModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Audit/GetCustomerBySubsidiary` , requestParams, httpOptions);
+  }
+
+  getCustomerReportById(requestParams: requestBodyModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/Audit/GetCustomerById` , requestParams, httpOptions);
+  }
 
 
 

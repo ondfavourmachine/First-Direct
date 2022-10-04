@@ -91,8 +91,11 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
   }
 
   getBankBranches(e) {
-    //  console.log("val", e.target.value)
     this.isAccountDetailsChanged = true;
+    //  console.log("val", 
+    //  e.target.value,
+    //  this.isAccountDetailsChanged
+    //  )
   }
 
   onAccountNumberChange(e) {
@@ -122,7 +125,8 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         this.validatedBankDetails = data;
         this.accountName = this.validatedBankDetails?.accountName
-        // console.log("data:", data)
+        this.isAccountDetailsChanged = false;
+        // console.log("data:", this.isAccountDetailsChanged)
         // this.btnText = 'Continue';
         if (this.validatedBankDetails?.valid === false) {
           this.gVars.toastr.error("Incorrect Account Details")
@@ -132,8 +136,8 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
           this.btnText = 'Preview';
         }
       }, error: (error: any) => {
-        // this.btnText = 'Continue';
-        this.gVars.toastr.error(error?.error?.message);
+        this.btnText = 'Continue';
+        this.gVars.toastr.error("Incorrect Account Details")
       }
     })
 
@@ -180,13 +184,14 @@ export class EditFormPageComponent implements OnInit, AfterViewInit {
         this.gVars.toastr.error("Please fill all required fields")
       }
     } else {
-      this.bankVerification();
+     
       if (this.editCustomerForm.valid && this.accountName !== "" && this.validatedBankDetails?.valid === true && this.isAccountDetailsChanged === false) {
         this.btnText = "Continue"
         this.crudServices.updateCustomerDetails(this.editCustomerDeatails);
         this.crudServices.updateEditor("edited");
         this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
       } else {
+        this.bankVerification();
         // this.gVars.toastr.error("Please fill all required fields")
         // this.btnText = "Continue"
       }

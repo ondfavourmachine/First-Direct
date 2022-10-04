@@ -137,11 +137,11 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHeaderTitle();
-    this.customerService.getSessions().subscribe({
-      next: (data: any) => {
-        console.log(data);
-      }
-    })
+    // this.customerService.getSessions().subscribe({
+    //   next: (data: any) => {
+    //     console.log(data);
+    //   }
+    // })
   }
 
 }

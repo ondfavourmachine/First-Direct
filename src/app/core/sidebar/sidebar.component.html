@@ -218,6 +218,11 @@
                         *ngIf="allowedRoutes[8]?.Allowed && allowedRoutes[8]?.GetSubModules[4]?.Allowed">
                         <a>Transaction reports</a>
                     </li>
+                    <li [ngClass]="CheckActiveSub('onboarding-reports')" [routerLink]="['/scm/onboarding/reports']"
+                    >
+                        <a>Onboarding Reports</a>
+                    </li>
+
                 </ul>
             </div>
         </ul>

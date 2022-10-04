@@ -1,6 +1,6 @@
 <div class="flex-between my-4">
     <app-card cardTitle="All Purchase Orders" figure="400"></app-card>
-    <app-card cardTitle="Uploaded Purchase Orders" figure="400"></app-card>
+    <app-card cardTitle="Uploaded Purchase Orders" (clicker)="navigate(2)" figure="400"></app-card>
     <app-card cardTitle="Unpaid Purchase Orders" figure="400"></app-card>
     <app-card cardTitle="New Purchase Orders" figure="0"></app-card>
 </div>
@@ -140,18 +140,13 @@
     
                     </div>
                     <div class="second">
-                        <div class="inv-no">
-                            <p class="ed">Invoice Number.</p>
-                            <p class="main">651535</p>
-                        </div>
-    
                         <div class="pur-no">
                             <p class="ed">Purchase Order Number.</p>
                             <p class="main">651535</p>
                         </div>
-    
+
                         <div class="inv-date">
-                            <p class="ed">Invoice Date</p>
+                            <p class="ed">Created</p>
                             <p class="main">28/10/2012</p>
                         </div>
                     </div>

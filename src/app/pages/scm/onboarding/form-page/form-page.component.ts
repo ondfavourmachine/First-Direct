@@ -14,6 +14,7 @@ import { GlobalsService } from 'src/app/core/globals/globals.service';
 export class FormPageComponent implements OnInit, AfterViewInit {
 
   role: string;
+  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   public getRole() {
     this.crudServices.getRole().subscribe({
@@ -200,11 +201,15 @@ export class FormPageComponent implements OnInit, AfterViewInit {
     }
     if (this.role === "buyer") {
       if (this.addCustomerForm.valid) {
+        if (!this.addCustomerForm?.value?.email?.match(this.emailPattern)) {
+          this.gVars.toastr.error("Please enter a valid email address");
+        }else {
         this.crudServices.updateCustomerDetails(customerDetails);
         this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
-
+        }
       } else {
-        this.gVars.toastr.error("Please fill all required fields")
+        // check if email pattern is valid
+          this.gVars.toastr.error("Please fill in all required fields");
         this.isOnSubmit = true;
       }
     } else {

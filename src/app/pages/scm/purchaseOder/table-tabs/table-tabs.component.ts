@@ -43,16 +43,16 @@ export class TableTabsComponent implements OnInit {
       name: "Date"
     },
     {
-      name: "Invoice No"
+      name: "LPO No"
     },
     {
-      name: "buyer"
-    },
-    {
-      name: "Supplier"
+      name: "Company"
     },
     {
       name: "Amount"
+    },
+    {
+      name: "Email Address"
     },
     {
       name: "Status"

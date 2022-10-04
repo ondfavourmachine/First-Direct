@@ -16,7 +16,7 @@ export class LayoutComponent implements OnInit {
   }
 
   navigateToOrderUploader(){
-    this.router.navigate(['scm/purchase-order/order-uploader']);
+    this.router.navigate(['scm/purchase-order/order-file-uploader']);
   }
 
   ngOnInit(): void {

@@ -1,0 +1,438 @@
+<app-header></app-header>
+<div class="page-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <!-- MAIN CONTENT-->
+    <main class="main-content">
+        <div class="main-content-padding p-3">
+            <div class="ny-3">
+                <p (click)="goBack()">Back</p>
+            </div>
+
+            <div class="text">
+                <h1 class="headerTitle">Reports</h1>
+            </div>
+
+            <div class="flex-between my-4">
+                <app-card cardTitle="Total" figure={{total}}></app-card>
+                <app-card cardTitle="Recent Edits" figure={{totalEdited}}></app-card>
+                <app-card cardTitle="Recent Deletes" figure={{totalDeleted}}></app-card>
+                <app-card cardTitle="Newly Added" figure={{totalAdded}}></app-card>
+            </div>
+
+            <div class="flex-startrow">
+                <button (click)="toggleTabs(1)" [ngClass]="tabNumber === 1 ? 'active-btn-bg' : 'btn'">All</button>
+                <button (click)="toggleTabs(2)" [ngClass]="tabNumber === 2 ? 'active-btn-bg' : 'btn'">Recents
+                    Deletes</button>
+                <button [ngClass]="tabNumber === 3 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(3)">Recents
+                    Edits</button>
+                <button [ngClass]="tabNumber === 4 ? 'active-btn-bg' : 'btn'" (click)="toggleTabs(4)">Newly
+                    Added</button>
+            </div>
+
+            <div [ngClass]="tabNumber === 1 ? 'show' : 'hide'">
+                <app-table [tableHeaders]='tableHeaders'>
+                    <tbody>
+                        <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of allCustomers">
+                            <td>{{contents.customerName}}</td>
+                            <td>
+                                <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
+                                    {{contents?.customerType}}
+                                </p>
+                            </td>
+                            <td>
+                                {{contents?.date | date: 'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </app-table>
+
+                <div 
+                    *ngIf="allCustomers.length === 0"
+                style="display: flex; justify-content: center; align-items: center; ">
+                    <div style="width: 100%;" class="bg-white p-5">
+                        <p class="text-center text-xs">
+                            No data found
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="tabNumber === 2 ? 'show' : 'hide'">
+                <app-table [tableHeaders]='tableHeaders'>
+                    <tbody>
+                        <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of deletedCustomers">
+                            <td>{{contents.customerName}}</td>
+                            <td>
+                                <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
+                                    {{contents?.customerType}}
+                                </p>
+                            </td>
+                            <td>
+                                {{contents?.date | date: 'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </app-table>
+
+                <div *ngIf="deletedCustomers.length === 0"
+                    style="display: flex; justify-content: center; align-items: center; ">
+                    <div style="width: 100%;" class="bg-white p-5">
+                        <p class="text-center text-xs">
+                            No data found
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="tabNumber === 3 ? 'show' : 'hide'">
+                <app-table [tableHeaders]='tableHeaders'>
+                    <tbody>
+                        <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of editedCustomers">
+                            <td>{{contents.customerName}}</td>
+                            <td>
+                                <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
+                                    {{contents?.customerType}}
+                                </p>
+                            </td>
+                            <td>
+                                {{contents?.date | date: 'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </app-table>
+
+                <div *ngIf="editedCustomers.length === 0"
+                    style="display: flex; justify-content: center; align-items: center; ">
+                    <div style="width: 100%;" class="bg-white p-5">
+                        <p class="text-center text-xs">
+                            No data found
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="tabNumber === 4 ? 'show' : 'hide'">
+                <app-table [tableHeaders]='tableHeaders'>
+                    <tbody>
+                        <tr class="bodyRow cursor-pointer" (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of addedCustomers">
+                            <td>{{contents.customerName}}</td>
+                            <td>
+                                <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
+                                    {{contents?.customerType}}
+                                </p>
+                            </td>
+                            <td>
+                                {{contents?.date | date: 'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </app-table>
+
+                <div *ngIf="addedCustomers.length === 0"
+                    style="display: flex; justify-content: center; align-items: center; ">
+                    <div style="width: 100%;" class="bg-white p-5">
+                        <p class="text-center text-xs">
+                            No data found
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <div class="flex">
+                    <button (click)="paginator('previous')" class="">
+                        <svg class=" " width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                        </svg>
+                    </button>
+                    <button (click)="paginator('next')">
+                        <svg class="" width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+        
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- END MAIN CONTENT-->
+</div>
+
+<app-details-modal-wrapper *ngIf="detailsModal">
+    <div class="right-modal bg-white modal-bg pt-0 p-3">
+        <div class="detailsModal">
+            <div class="modalHeader pt-4 mb-3 pb-3 ">
+                <!--  -->
+                <h1 class=" capitalize">{{singleCustomer?.customerType | titlecase}} Details</h1>
+                <svg (click)="closeDetailsModal()" width="12" height="12" viewBox="0 0 10 10" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8.0056 9.06627C8.2985 9.35917 8.7734 9.35917 9.0663 9.06627C9.3591 8.77337 9.3591 8.29847 9.0663 8.00557L6.0611 5.00037L9.0662 1.99519C9.3591 1.7023 9.3591 1.22743 9.0662 0.934529C8.7734 0.641639 8.2985 0.641639 8.0056 0.934529L5.0004 3.93977L1.99519 0.934519C1.70229 0.641619 1.22742 0.641619 0.934529 0.934519C0.641629 1.22741 0.641629 1.70228 0.934529 1.99518L3.9397 5.00037L0.934519 8.00557C0.641619 8.29847 0.641619 8.77337 0.934519 9.06627C1.22741 9.35917 1.70228 9.35917 1.99518 9.06627L5.0004 6.06107L8.0056 9.06627Z"
+                        fill="black" />
+                </svg>
+
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="modalContents border-fbn-gray-bg w-50 ">
+                    <h2 class="text-fbn-blue font-semibold">New Values</h2>
+
+                    <div class="flex-colstart text-left ">
+                        <div *ngFor="let singleCustomer of singleCustomer" class="my-5">
+                           
+                            <h2 class="text-fbn-blue font-semibold">Basic Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <!-- nake first letter uppercase  and rest lowercase -->
+                                <p class="fields">
+                                    {{singleCustomer?.customerType | titlecase}}'s Name
+                                </p>
+                                <p class="fields">{{singleCustomer?.newValues?.CustomerName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Name</p>
+                                <p class="fields">{{singleCustomer?.newValues?.CompanyName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Industry</p>
+                                <p class="fields">{{singleCustomer?.newValues?.industryName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">{{singleCustomer?.newValues?.CustomerType | titlecase }}'s code</p>
+                                <p class="fields">{{singleCustomer?.newValues?.CustomerCode}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Tax ID Number (TIN)</p>
+                                <p class="fields">{{singleCustomer?.newValues?.Tin}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">RC Number</p>
+                                <p class="fields">{{singleCustomer?.newValues?.RcNumber}}</p>
+                            </div>
+                        </div>
+    
+                        <div class=" border-t-2 fbn-border-t    contact py-3">
+                            <h2 class="text-fbn-blue font-semibold">Contact Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+    
+                                <p class="fields">Country</p>
+    
+                                <p class="fields">{{singleCustomer?.newValues?.Country}}</p>
+    
+                            </div>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Email</p>
+                                <div class="flex items-center email text-sm">
+                                    <p class="mx-3">{{singleCustomer?.newValues?.email}}</p>
+                                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="path-1-inside-1_885_1707" fill="white">
+                                            <path
+                                                d="M0.333984 3.33464C0.333984 1.86188 1.52789 0.667969 3.00065 0.667969H11.0007C12.4734 0.667969 13.6673 1.86188 13.6673 3.33464V8.66797C13.6673 10.1407 12.4734 11.3346 11.0007 11.3346H3.00065C1.52789 11.3346 0.333984 10.1407 0.333984 8.66797V3.33464Z" />
+                                        </mask>
+                                        <path
+                                            d="M12.9228 3.87753C13.2226 3.73643 13.3513 3.37899 13.2102 3.07916C13.0691 2.77933 12.7117 2.65065 12.4118 2.79174L12.9228 3.87753ZM7.00065 6.0013L6.74517 6.54419C6.90698 6.62034 7.09432 6.62034 7.25613 6.54419L7.00065 6.0013ZM1.58946 2.79174C1.28963 2.65065 0.93219 2.77933 0.791093 3.07916C0.649996 3.37899 0.778676 3.73643 1.07851 3.87753L1.58946 2.79174ZM12.4118 2.79174L6.74517 5.45841L7.25613 6.54419L12.9228 3.87753L12.4118 2.79174ZM7.25613 5.45841L1.58946 2.79174L1.07851 3.87753L6.74517 6.54419L7.25613 5.45841ZM3.00065 1.86797H11.0007V-0.532031H3.00065V1.86797ZM12.4673 3.33464V8.66797H14.8673V3.33464H12.4673ZM11.0007 10.1346H3.00065V12.5346H11.0007V10.1346ZM1.53398 8.66797V3.33464H-0.866016V8.66797H1.53398ZM3.00065 10.1346C2.19063 10.1346 1.53398 9.47799 1.53398 8.66797H-0.866016C-0.866016 10.8035 0.86515 12.5346 3.00065 12.5346V10.1346ZM12.4673 8.66797C12.4673 9.47799 11.8107 10.1346 11.0007 10.1346V12.5346C13.1362 12.5346 14.8673 10.8035 14.8673 8.66797H12.4673ZM11.0007 1.86797C11.8107 1.86797 12.4673 2.52462 12.4673 3.33464H14.8673C14.8673 1.19913 13.1362 -0.532031 11.0007 -0.532031V1.86797ZM3.00065 -0.532031C0.86515 -0.532031 -0.866016 1.19913 -0.866016 3.33464H1.53398C1.53398 2.52462 2.19063 1.86797 3.00065 1.86797V-0.532031Z"
+                                            fill="#022E64" mask="url(#path-1-inside-1_885_1707)" />
+                                    </svg><span class=" ml-1 underline text-fbn-blue font-semibold">Send Email</span>
+    
+                                </div>
+                            </div>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Phone No</p>
+                                <p class="fields">{{singleCustomer?.newValues?.PhoneNumber}}</p>
+                            </div>
+                        </div>
+    
+                        <div class=" fbn-border-t border-t-2 border-t-fbn-gray-bg contact py-3">
+                            <h2 class="text-fbn-blue font-semibold">Account Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Date Created</p>
+                                <p class="fields">{{singleCustomer?.newValues?.DateCreated | date: 'dd/MM/yyyy'}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Last Transactions</p>
+                                <div class="flex items-center">
+                                    <p class="">{{singleCustomer?.newValues?.lastTransaction}}</p>
+                                    <p class="RQ text-fbn-blue border-fbn-blue p-2 ml-1">Request
+                                        Payment</p>
+                                </div>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Currency</p>
+                                <p class="fields">{{singleCustomer?.newValues?.Currency}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Tier</p>
+                                <p class="fields">{{singleCustomer?.newValues?.TierId}}</p>
+                            </div>
+                            <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Bank</p>
+                            <p class="fields">{{singleCustomer?.newValues?.bankName}}</p>
+                        </div> -->
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Limits</p>
+                                <p class="fields">NGN {{singleCustomer?.newValues?.Limits}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.newValues?.customerType === 'SUPPLIER'"
+                                class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Maximum Annual Spend</p>
+                                <p class="fields">NGN {{singleCustomer?.newValues?.maximumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.newValues?.customerType === 'SUPPLIER'"
+                                class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Minimum Annual Spend</p>
+                                <p class="fields">NGN {{singleCustomer?.newValues?.minimumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.newValues?.customerType === 'SUPPLIER'"
+                                class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Bank Information</p>
+                                <div class="fields">
+                                    <p class="">{{singleCustomer?.newValues?.BankName}}</p>
+                                    <p class="">{{singleCustomer?.newValues?.AccountName}}</p>
+                                    <p class="">{{singleCustomer?.newValues?.AccountNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modalContents border-fbn-gray-bg w-50 ">
+                    <h2 class="text-fbn-blue font-semibold">Old Values</h2>
+
+                    <div *ngIf="isOldEmpty === false" class="flex-colstart text-left ">
+                        <div class="my-5">
+
+                            <h2 class="text-fbn-blue font-semibold">Basic Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <!-- nake first letter uppercase  and rest lowercase -->
+                                <p class="fields">
+                                    {{singleCustomer?.customerType | titlecase}}'s Name
+                                </p>
+                                <p class="fields">{{singleCustomer?.oldValues?.CustomerName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Name</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.CompanyName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Industry</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.IndustryName}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">{{singleCustomer?.oldValues?.CustomerType | titlecase }}'s code</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.CustomerCode}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Tax ID Number (TIN)</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.Tin}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">RC Number</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.RcNumber}}</p>
+                            </div>
+                        </div>
+    
+                        <div class=" border-t-2 fbn-border-t    contact py-3">
+                            <h2 class="text-fbn-blue font-semibold">Contact Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+    
+                                <p class="fields">Country</p>
+    
+                                <p class="fields">{{singleCustomer?.oldValues?.Country}}</p>
+    
+                            </div>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Email</p>
+                                <div class="flex items-center email text-sm">
+                                    <p class="mx-3">{{singleCustomer?.oldValues?.email}}</p>
+                                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="path-1-inside-1_885_1707" fill="white">
+                                            <path
+                                                d="M0.333984 3.33464C0.333984 1.86188 1.52789 0.667969 3.00065 0.667969H11.0007C12.4734 0.667969 13.6673 1.86188 13.6673 3.33464V8.66797C13.6673 10.1407 12.4734 11.3346 11.0007 11.3346H3.00065C1.52789 11.3346 0.333984 10.1407 0.333984 8.66797V3.33464Z" />
+                                        </mask>
+                                        <path
+                                            d="M12.9228 3.87753C13.2226 3.73643 13.3513 3.37899 13.2102 3.07916C13.0691 2.77933 12.7117 2.65065 12.4118 2.79174L12.9228 3.87753ZM7.00065 6.0013L6.74517 6.54419C6.90698 6.62034 7.09432 6.62034 7.25613 6.54419L7.00065 6.0013ZM1.58946 2.79174C1.28963 2.65065 0.93219 2.77933 0.791093 3.07916C0.649996 3.37899 0.778676 3.73643 1.07851 3.87753L1.58946 2.79174ZM12.4118 2.79174L6.74517 5.45841L7.25613 6.54419L12.9228 3.87753L12.4118 2.79174ZM7.25613 5.45841L1.58946 2.79174L1.07851 3.87753L6.74517 6.54419L7.25613 5.45841ZM3.00065 1.86797H11.0007V-0.532031H3.00065V1.86797ZM12.4673 3.33464V8.66797H14.8673V3.33464H12.4673ZM11.0007 10.1346H3.00065V12.5346H11.0007V10.1346ZM1.53398 8.66797V3.33464H-0.866016V8.66797H1.53398ZM3.00065 10.1346C2.19063 10.1346 1.53398 9.47799 1.53398 8.66797H-0.866016C-0.866016 10.8035 0.86515 12.5346 3.00065 12.5346V10.1346ZM12.4673 8.66797C12.4673 9.47799 11.8107 10.1346 11.0007 10.1346V12.5346C13.1362 12.5346 14.8673 10.8035 14.8673 8.66797H12.4673ZM11.0007 1.86797C11.8107 1.86797 12.4673 2.52462 12.4673 3.33464H14.8673C14.8673 1.19913 13.1362 -0.532031 11.0007 -0.532031V1.86797ZM3.00065 -0.532031C0.86515 -0.532031 -0.866016 1.19913 -0.866016 3.33464H1.53398C1.53398 2.52462 2.19063 1.86797 3.00065 1.86797V-0.532031Z"
+                                            fill="#022E64" mask="url(#path-1-inside-1_885_1707)" />
+                                    </svg><span class=" ml-1 underline text-fbn-blue font-semibold">Send Email</span>
+    
+                                </div>
+                            </div>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Company Phone No</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.PhoneNumber}}</p>
+                            </div>
+                        </div>
+    
+                        <div class=" fbn-border-t border-t-2 border-t-fbn-gray-bg contact py-3">
+                            <h2 class="text-fbn-blue font-semibold">Account Information</h2>
+    
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Date Created</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.DateCreated | date: 'dd/MM/yyyy'}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Last Transactions</p>
+                                <div class="flex items-center">
+                                    <p class="">{{singleCustomer?.oldValues?.lastTransaction}}</p>
+                                    <p class="RQ text-fbn-blue border-fbn-blue p-2 ml-1">Request
+                                        Payment</p>
+                                </div>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Currency</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.Currency}}</p>
+                            </div>
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Tier</p>
+                                <p class="fields">{{singleCustomer?.oldValues?.TierId}}</p>
+                            </div>
+                            <!-- <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                            <p class="fields">Bank</p>
+                            <p class="fields">{{singleCustomer?.oldValues?.bankName}}</p>
+                        </div> -->
+                            <div class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Limit</p>
+                                <p class="fields">NGN {{singleCustomer?.oldValues?.Limits}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.oldValues?.customerType === 'SUPPLIER'"
+                                class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Maximum Annual Spend</p>
+                                <p class="fields">NGN {{singleCustomer?.oldValues?.MaximumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.oldValues?.customerType === 'SUPPLIER'"
+                                class="flex-between text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Minimum Annual Spend</p>
+                                <p class="fields">NGN {{singleCustomer?.oldValues?.MinimumAnnualSpend}}</p>
+                            </div>
+                            <div *ngIf="singleCustomer?.oldValues?.customerType === 'SUPPLIER'"
+                                class="flex-betweenS text-sm text-fbn-text text-left items-left my-2">
+                                <p class="fields">Bank Information</p>
+                                <div class="fields">
+                                    <p class="">{{singleCustomer?.oldValues?.BankName}}</p>
+                                    <p class="">{{singleCustomer?.oldValues?.AccountName}}</p>
+                                    <p class="">{{singleCustomer?.oldValues?.AccountNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isOldEmpty === true"class="flex-colstart text-left ">
+                        <div class="my-5">
+
+                            <h2 class="text-fbn-blue font-semibold">No data to show</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-details-modal-wrapper>

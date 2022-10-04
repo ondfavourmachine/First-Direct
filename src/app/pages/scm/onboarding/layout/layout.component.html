@@ -11,7 +11,9 @@
                 <app-buttons (clicker)="addSeller()" btnText="New Supplier" iconType="add-blue" class=" headerBtn">
                 </app-buttons>
 
-                <div class="mx-3">
+                <div
+                [routerLink]="['/scm/onboarding/reports']"
+                 class="mx-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#002855"
                         class="bi bi-clipboard2-data-fill" viewBox="0 0 16 16">
                         <path

@@ -18,8 +18,8 @@ const routes: Routes = [
         ],
     }
     , { path: 'create-order', component: CreateOderComponent },
-    { path: 'oder-preview', component: OderPreviewComponent },
-    { path: 'oder-file-uploader', component: OderFileUploaderComponent },
+    { path: 'order-preview', component: OderPreviewComponent },
+    { path: 'order-file-uploader', component: OderFileUploaderComponent },
     { path: 'send-order', component: SendOrderComponent },
 
 

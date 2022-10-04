@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFileUploaderComponent } from './customer-file-uploader/customer-file-uploader.component';
+import { ReportsComponent } from './reports/reports.component';
 @NgModule({
     declarations: [
         LayoutComponent,
@@ -19,7 +20,8 @@ import { CustomerFileUploaderComponent } from './customer-file-uploader/customer
         FormPageComponent,
         EditFormPageComponent,
         ConfirmDetailsComponent,
-        CustomerFileUploaderComponent
+        CustomerFileUploaderComponent,
+        ReportsComponent
     ],
     imports: [
         CommonModule,

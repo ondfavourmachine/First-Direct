@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
 
 
   navigate( tab: number) {
-    this.router.navigate(['scm/invoice/pages']);
+    this.router.navigate(['scm/purchase-order/pages']);
   }
 
   toggleDetailsModal() {
