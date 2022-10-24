@@ -12,7 +12,9 @@
                             <p>Preview</p>
                         </div>
                         <div>
-                            <svg width="89" height="28" viewBox="0 0 89 28" fill="none"
+                            <svg
+                            *ngIf="showEditBtn === true"
+                             (click)=" goBackToLastRoute()" width="89" height="28" viewBox="0 0 89 28" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect width="89" height="28" rx="5" fill="#DDAD31" />
                                 <path
@@ -27,7 +29,7 @@
 
                         <div class="details-header">
                             <div class="details-title">
-                                <h1 class="">Purchase Order FBN001</h1>
+                                <h1 class="">Purchase Order {{preservedData?.purchaseOrderNo}}</h1>
                             </div>
                         </div>
 
@@ -38,14 +40,22 @@
                                     <div class="first">
                                         <div class="from my-3">
                                             <p class="ed">From:</p>
-                                            <p class="main">Supplier's Company Name</p>
-                                            <p>Supplier's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                                            <p class="main">
+                                               {{preservedData?.username}}
+                                            </p>
+                                            <p>
+                                               
+                                                 </p>
                                         </div>
 
                                         <div class="to my-3">
                                             <p class="ed">Billed To:</p>
-                                            <p class="main">Buyer's Company Name</p>
-                                            <p>Buyer's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                                            <p class="main">
+                                                {{singleSupplier?.companyName}}
+                                            </p>
+                                            <p>
+                                                {{singleSupplier?.email}}
+                                            </p>
                                         </div>
 
                                     </div>
@@ -53,22 +63,22 @@
 
                                         <div class="pur-no my-3">
                                             <p class="ed">Purchase Order Number.</p>
-                                            <p class="main">651535</p>
+                                            <p class="main">{{preservedData?.purchaseOrderNo}}</p>
                                         </div>
 
                                         <div class="inv-date my-3">
                                             <p class="ed">Created Date</p>
-                                            <p class="main">28/10/2012</p>
+                                            <p class="main">{{preservedData?.dateCreated}}</p>
                                         </div>
                                     </div>
                                     <div class="third">
                                         <div class="total-payable my-3">
                                             <p class="ed">Total Payable</p>
-                                            <p class="main amt">₦639,000.00</p>
+                                            <p class="main amt">{{preservedData?.total}}</p>
                                         </div>
                                         <div class="due-date my-3">
                                             <p class="ed">Due Date</p>
-                                            <p class="main">28/10/2012</p>
+                                            <p class="main">{{preservedData?.paymentDueDate}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +94,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr *ngFor="let item of preservedData?.items; let i = index">
+                                                <td>{{item?.item}}</td>
+                                                <td>{{item?.quantity}}</td>
+                                                <td>{{item?.unitPrice}}</td>
+                                                <td>{{item?.amount}}</td>
+                                            </tr>
+                                            <!-- <tr>
                                                 <td>Item 1</td>
                                                 <td>1</td>
                                                 <td>₦639,000.00</td>
@@ -101,7 +117,7 @@
                                                 <td>1</td>
                                                 <td>₦639,000.00</td>
                                                 <td>₦639,000.00</td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
 
@@ -112,17 +128,13 @@
                                 <div class="footer-content1">
                                     <h1 class="ed">Payment Terms</h1>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. Quisquam, quod.
+                                        {{preservedData?.paymentTerms}}
                                     </p>
                                 </div>
                                 <div class="footer-content2">
                                     <h1 class="ed">Payment Instructions</h1>
                                     <p class="">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. Quisquam, quod.
+                                        {{preservedData?.purchaseOrderSummary}}
                                     </p>
                                 </div>
                                 <div class="footer-content3">
@@ -130,20 +142,24 @@
                                     <div class="figs-amts d-flex justify-content-between">
                                         <div class="words">
                                             <p>Sub Total</p>
-                                            <p>Tax (2%)</p>
-                                            <p>Discount (0%)</p>
+                                            <!-- <p>Tax (2%)</p>
+                                            <p>Discount (0%)</p> -->
                                             <p>Miscellaneous</p>
                                         </div>
                                         <div class="figs">
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
+                                            <p>
+                                              {{subtotal}}
+                                            </p>
+                                            <!-- <p>NGN {{preservedData?.tax}}</p>
+                                            <p>NGN {{preservedData?.discount}}</p> -->
+                                            <p>NGN {{preservedData?.miscellaneous}}</p>
                                         </div>
                                     </div>
                                     <div class="total-amt d-flex justify-content-between">
                                         <p>Total</p>
-                                        <p class="ta-figs">NGN 9,180.00</p>
+                                        <p class="ta-figs">NGN
+                                            {{preservedData?.total}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +170,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button class="fbn-blue-btn">Cancel</button>
+                        <button (click)="goBackToLastRoute()" class="fbn-blue-btn">Cancel</button>
                         <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Continue</button>
                     </div>
 
@@ -172,11 +188,11 @@
             </div>
             <div class="my-2">
                 <p class=" text-fbn-text">
-                   {{modalText}}
+                    {{modalText}}
                 </p>
             </div>
             <div class="my-2">
-                <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">CLOSE</button>
+                <button (click)=" closeSuccessModal()" class="fbn-fill-blue-btn">CLOSE</button>
             </div>
         </div>
     </div>

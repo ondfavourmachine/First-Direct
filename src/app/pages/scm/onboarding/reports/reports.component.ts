@@ -30,6 +30,8 @@ export class ReportsComponent implements OnInit {
   singleCustomer: any = [];
   customerType: string = "";
   isOldEmpty: boolean = true;
+  hasNextPage: boolean = false;
+  hasPrevPage: boolean = false;
   constructor(
     private crudServices: CrudService,
     private router: Router,
@@ -55,7 +57,8 @@ export class ReportsComponent implements OnInit {
     this.customerService.getAllReports(this.requestBody).subscribe({
       next: (data) => {
         this.allCustomers = data.data;
-
+        this.hasPrevPage = data.hasPrevious === true ? true : false;
+        this.hasNextPage = data.hasNext === true ? true : false;
         // console.log("reports",data);
         this.total = data.totalCount;
         this.gVar.spinner.hide();
@@ -76,6 +79,8 @@ export class ReportsComponent implements OnInit {
     this.customerService.getAllReports(this.requestBody).subscribe({
       next: (data) => {
         this.deletedCustomers = data.data;
+        this.hasPrevPage = data.hasPrevious === true ? true : false;
+        this.hasNextPage = data.hasNext === true ? true : false;
         this.totalDeleted = data.totalCount;
         // console.log("deleted",data);
       }
@@ -93,6 +98,8 @@ export class ReportsComponent implements OnInit {
     this.customerService.getAllReports(this.requestBody).subscribe({
       next: (data) => {
         this.editedCustomers = data.data;
+        this.hasPrevPage = data.hasPrevious === true ? true : false;
+        this.hasNextPage = data.hasNext === true ? true : false;
         this.totalEdited = data.totalCount;
         // console.log("edited",data);
       }
@@ -110,6 +117,8 @@ export class ReportsComponent implements OnInit {
     this.customerService.getAllReports(this.requestBody).subscribe({
       next: (data) => {
         this.addedCustomers = data.data;
+        this.hasPrevPage = data.hasPrevious === true ? true : false;
+        this.hasNextPage = data.hasNext === true ? true : false;
         this.totalAdded = data.totalCount;
         // console.log("added",data);
       }
@@ -145,10 +154,13 @@ export class ReportsComponent implements OnInit {
       name: "Contact Person Name",
     },
     {
+      name: "Company Name",
+    },
+    {
       name: "Contact Person Role",
     },
     {
-      name: "Date of Change",
+      name: "Date Initiated",
     }
   ]
 

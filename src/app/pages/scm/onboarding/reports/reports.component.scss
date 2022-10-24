@@ -1,6 +1,25 @@
 @import '../../../../../customStyles/colors';
 @import '../../../../../customStyles/layouting.scss';
 
+
+.btns {
+    background: #DFE6EC;
+    border-radius: 5px;
+    padding: 6px 11px;
+    color: #C4C4C4;
+    margin: 0 5px;
+    cursor: not-allowed;
+}
+.buttonAct {
+    background: #DDAD31;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 11px;
+    color: #C4C4C4;
+    margin: 0 5px;
+}
+
+
 .detailsModal {
     padding: 1rem !important;
     padding-top: 0 !important;

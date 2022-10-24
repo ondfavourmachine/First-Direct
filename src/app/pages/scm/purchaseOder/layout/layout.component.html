@@ -3,10 +3,10 @@
     <app-sidebar></app-sidebar>
     <main class="main-content">
         <div class="main-content-padding px-4 py-3">
-            <app-header-scm headerTitle="Purchase Order"  btnText1="New Buyer" btnText2="New Supplier">
+            <app-header-scm headerTitle={{headerTitle}}  btnText1="New Buyer" btnText2="New Supplier">
                 <app-buttons (clicker)="navigateToForm()"  btnText="Create LPO" iconType="add" class="fbn-fill-blue-btn mx-3">
                 </app-buttons>
-                <app-buttons  btnText="Accept LPO" iconType="check" class="mx-3 fbn-blue-btn">
+                <app-buttons (clicker)="navigate(6)"  btnText="Accept LPO" iconType="check" class="mx-3 fbn-blue-btn">
                 </app-buttons>
                 <app-buttons (clicker)="navigateToOrderUploader()" btnText="Upload LPO" iconType="upload" class="fbn-blue-btn">
                 </app-buttons>

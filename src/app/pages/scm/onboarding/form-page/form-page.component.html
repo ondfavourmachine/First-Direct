@@ -115,7 +115,7 @@
                                 <div class="fields my-5">
                                     <label for="">Company Email</label>
                                     <input
-                                    [ngClass]="{'is-invalid': addCustomerForm.controls.email.hasError('required') && isOnSubmit}"
+                                    [ngClass]="{'is-invalid': (addCustomerForm.controls.email.hasError('required') && isOnSubmit) || notEmail === true}"
                                      formControlName="email" type="email" placeholder="Enter Company Email">
                                 </div>
                                 <div class="fields my-5">
@@ -161,6 +161,7 @@
                                 <div *ngIf="role === 'supplier'" class="fields my-5">
                                     <label for="">Bank Name</label>
                                     <select
+                                    (change)="getBankBranches($event)"
                                     [ngClass]="{'is-invalid': addCustomerForm.controls.bankName.hasError('required') && isOnSubmit}"
                                      formControlName="bankName" name="">
                                         <option value="">Select Bank</option>
@@ -169,9 +170,10 @@
                                     </select>
                                 </div>
                                 <div *ngIf="role === 'supplier'" class="fields my-5">
-                                    <label for="">Account Number</label>
+                                    <label for="">Account Numbers</label>
                                     <div style="width: 50%;" >
                                         <input
+                                        (change)="updateAccountNumber($event)"
                                         [ngClass]="{'is-invalid': addCustomerForm.controls.accountNumber.hasError('required') && isOnSubmit}"
                                          style="width: 100%;" formControlName="accountNumber" type="text" placeholder="">
                                         <div style="font-size: 14px;" class="my-2">

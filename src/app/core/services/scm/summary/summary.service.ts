@@ -23,4 +23,8 @@ export class SummaryService {
   getOnboardStats(reqBody: userRoleModel): Observable<any> {
     return this.http.post(`${environment.scmApiUrl}/api/Customer/GetSummary`, reqBody, httpOptions);
   }
+
+  getLpoStats(reqBody: userRoleModel): Observable<any> {
+    return this.http.post(`${environment.scmApiUrl}/api/PurchaseOrder/GetSummary`, reqBody, httpOptions);
+  }
 }

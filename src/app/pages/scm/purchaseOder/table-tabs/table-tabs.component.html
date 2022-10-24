@@ -35,25 +35,26 @@
 <div [ngClass]="tabNumber === 1 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of allLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="seller">
-                        Unpaid
+                    <p
+                    [ngClass]="[item?.purchaseOrderStatus === 'NEW' ? 'NEW' : item?.purchaseOrderStatus === 'PAID' ? 'PAID' : item?.purchaseOrderStatus === 'UNPAID' ? 'UNPAID' : '']">
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -61,30 +62,41 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isLposEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div [ngClass]="tabNumber === 2 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of unpaidLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="seller">
-                        Unpaid
+                    <p
+                        [ngClass]="[item?.purchaseOrderStatus]" 
+                    >
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -92,30 +104,40 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isUnpaidLpoEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
 </div>
 
 <div [ngClass]="tabNumber === 3 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of paidLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="buyer">
-                        Paid
+                    <p
+                        [ngClass]="[item?.purchaseOrderStatus]" 
+                    >
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -123,30 +145,41 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isPaidLpoEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div [ngClass]="tabNumber === 4 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of uploadedLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="buyer">
-                        Uploaded
+                    <p
+                        [ngClass]="[item?.purchaseOrderStatus]" 
+                    >
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -154,30 +187,41 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isUploadedLpoEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div [ngClass]="tabNumber === 5 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of dueLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="seller">
-                        Due
+                    <p
+                        [ngClass]="[item?.purchaseOrderStatus]" 
+                    >
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -185,30 +229,41 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isDueLposEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div [ngClass]="tabNumber === 6 ? 'show' : 'hide'">
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr (click)="toggleDetailsModal()">
+            <tr *ngFor="let item of newLpos" (click)="toggleDetailsModal(item?.id)">
                 <td>
-                    28/10/2012
+                    {{item?.purchaseOrderDate | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    651535
+                    {{item?.purchaseOrderNo}}
                 </td>
                 <td>
-                    Jenny Wilson
+                    {{item?.supplier?.customerName}}
                 </td>
                 <td>
-                    Leslie Alexander
+                    {{item?.total}}
                 </td>
                 <td>
-                    ₦639,000.00
+                    {{item?.supplier?.email}}
                 </td>
                 <td>
-                    <p class="buyer">
-                        New
+                    <p
+                        [ngClass]="[item?.purchaseOrderStatus]" 
+                    >
+                        {{item?.purchaseOrderStatus}}
                     </p>
                 </td>
             </tr>
@@ -216,6 +271,15 @@
 
 
     </app-table>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="width: 100%;" *ngIf="isNewLpoEmpty" class="bg-white p-5">
+            <p class="text-center text-xs">
+                No data found
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <app-details-modal-wrapper class="fadeIn" *ngIf="isDetailsModalOpen">
@@ -223,7 +287,7 @@
 
         <div class="details-header">
             <div class="d-flex justify-content-end">
-                <svg (click)="toggleDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none"
+                <svg (click)="closeDetailsModal()" width="10" height="10" viewBox="0 0 10 10" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M8.0056 9.06627C8.2985 9.35917 8.7734 9.35917 9.0663 9.06627C9.3591 8.77337 9.3591 8.29847 9.0663 8.00557L6.0611 5.00037L9.0662 1.99519C9.3591 1.7023 9.3591 1.22743 9.0662 0.934529C8.7734 0.641639 8.2985 0.641639 8.0056 0.934529L5.0004 3.93977L1.99519 0.934519C1.70229 0.641619 1.22742 0.641619 0.934529 0.934519C0.641629 1.22741 0.641629 1.70228 0.934529 1.99518L3.9397 5.00037L0.934519 8.00557C0.641619 8.29847 0.641619 8.77337 0.934519 9.06627C1.22741 9.35917 1.70228 9.35917 1.99518 9.06627L5.0004 6.06107L8.0056 9.06627Z"
@@ -231,19 +295,21 @@
                 </svg>
             </div>
             <div class="details-title">
-                <h1>Invoice FBN001</h1>
+                <h1>Invoice {{singleLpo?.purchaseOrderNo}}</h1>
                 <div class="d-flex jusstify-content-center align-items-center">
                     <div>
                         <p>Status</p>
                     </div>
                     <div class="ml-2">
-                        <p class="buyer px-5">NEW</p>
+                        <p class="buyer px-5">{{singleLpo?.purchaseOrderStatus}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="details-header-btns my-3">
-                <svg (click)="toggleApproveInvoiceModal()" width="134" height="29" viewBox="0 0 134 29" fill="none"
+                <svg
+                *ngIf="singleLpo?.purchaseOrderStatus === 'NEW' || singleLpo?.purchaseOrderStatus === 'N'" 
+                 (click)="toggleApproveInvoiceModal()" width="134" height="29" viewBox="0 0 134 29" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect width="134" height="29" rx="4" fill="#3FC59D" />
                     <g clip-path="url(#clip0_596_18512)">
@@ -265,7 +331,9 @@
                     </defs>
                 </svg>
 
-                <svg (click)="toggleRejectInvoiceModal()" width="128" height="29" viewBox="0 0 128 29" fill="none"
+                <svg 
+                *ngIf="singleLpo?.purchaseOrderStatus === 'NEW' || singleLpo?.purchaseOrderStatus === 'N'" 
+                (click)="toggleRejectInvoiceModal()" width="128" height="29" viewBox="0 0 128 29" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect width="128" height="29" rx="4" fill="#F9F9F9" />
                     <g clip-path="url(#clip0_596_18513)">
@@ -321,38 +389,46 @@
             <div class="details-body">
                 <div class="details-address">
                     <div class="first">
-                        <div class="from">
+                        <div class="from my-3">
                             <p class="ed">From:</p>
-                            <p class="main">Supplier's Company Name</p>
-                            <p>Supplier's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                            <p class="main"> {{singleLpo?.supplier?.companyName}} </p>
+                            <p> {{singleLpo?.supplier?.email}} </p>
                         </div>
 
-                        <div class="to">
+                        <div class="to my-3">
                             <p class="ed">Billed To:</p>
-                            <p class="main">Buyer's Company Name</p>
-                            <p>Buyer's Company Address <br>Agege, lagos <br> Nigeria. </p>
+                            <p class="main"> {{singleLpo?.buyer?.companyName}} </p>
+                            <p> {{singleLpo?.buyer?.email}} </p>
                         </div>
 
                     </div>
                     <div class="second">
-                        <div class="pur-no">
+                        <div class="pur-no my-3">
                             <p class="ed">Purchase Order Number.</p>
-                            <p class="main">651535</p>
+                            <p class="main">
+                                {{singleLpo?.purchaseOrderNo}}
+                            </p>
                         </div>
 
-                        <div class="inv-date">
+                        <div class="inv-date my-3">
                             <p class="ed">Created</p>
-                            <p class="main">28/10/2012</p>
+                            <p class="main">
+                                {{singleLpo?.dateCreated | date: 'medium'}}
+                            </p>
                         </div>
                     </div>
                     <div class="third">
-                        <div class="total-payable">
+                        <div class="total-payable my-3">
                             <p class="ed">Total Payable</p>
-                            <p class="main amt">₦639,000.00</p>
+                            <p class="main amt">
+                                {{singleLpo?.total | currency: 'NGN '}}
+                            </p>
                         </div>
-                        <div class="due-date">
+                        <div class="due-date my-3">
                             <p class="ed">Due Date</p>
-                            <p class="main">28/10/2012</p>
+                            <p class="main">
+                                {{singleLpo?.paymentDueDate | date: 'medium'}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -368,7 +444,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let item of singleLpo?.items">
+                                <td>{{item?.item}}</td>
+                                <td>{{item?.quantity}}</td>
+                                <td>{{item?.unitPrice | currency: 'NGN '}}</td>
+                                <td>{{item?.amount | currency: 'NGN '}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td>Item 1</td>
                                 <td>1</td>
                                 <td>₦639,000.00</td>
@@ -385,7 +467,7 @@
                                 <td>1</td>
                                 <td>₦639,000.00</td>
                                 <td>₦639,000.00</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
 
@@ -396,17 +478,13 @@
                 <div class="footer-content1">
                     <h1 class="ed">Payment Terms</h1>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit
-                        amet
-                        consectetur adipisicing elit. Quisquam, quod.
+                        {{singleLpo?.paymentTerms}}
                     </p>
                 </div>
                 <div class="footer-content2">
                     <h1 class="ed">Payment Instructions</h1>
                     <p class="">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit
-                        amet
-                        consectetur adipisicing elit. Quisquam, quod.
+                        {{singleLpo?.purchaseOrderSummary}}
                     </p>
                 </div>
                 <div class="footer-content3">
@@ -414,20 +492,22 @@
                     <div class="figs-amts">
                         <div class="words">
                             <p>Sub Total</p>
-                            <p>Tax (2%)</p>
-                            <p>Discount (0%)</p>
+                            <!-- <p>Tax (2%)</p>
+                            <p>Discount (0%)</p> -->
                             <p>Miscellaneous</p>
                         </div>
                         <div class="figs">
-                            <p>NGN 9,000.00</p>
-                            <p>NGN 9,000.00</p>
-                            <p>NGN 9,000.00</p>
-                            <p>NGN 9,000.00</p>
+                            <p>{{subTotal}}</p>
+                            <!-- <p>NGN {{singleLpo?.tax}}</p>
+                            <p>NGN {{singleLpo?.discount}}</p> -->
+                            <p>NGN {{singleLpo?.miscellaneous}}</p>
                         </div>
                     </div>
                     <div class="total-amt">
                         <p>Total</p>
-                        <p class="ta-figs">NGN 9,180.00</p>
+                        <p class="ta-figs">NGN
+                            {{singleLpo?.total}}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -467,13 +547,13 @@
                     <p class="subHeads">
                         Buyer
                     </p>
-                    <p>Blessing Ojediran</p>
+                    <p>{{singleLpo?.buyer?.customerName}}</p>
                 </div>
                 <div class="">
                     <p class="subHeads">
                         Amount
                     </p>
-                    <p>NGN</p>
+                    <p>NGN {{singleLpo?.total}}</p>
                 </div>
             </div>
 
@@ -492,7 +572,7 @@
                     <rect x="1" y="1" width="182" height="34" rx="17" stroke="#002855" stroke-width="2" />
                 </svg>
 
-                <svg (click)="toggleSuccesModal()" width="180" height="32" viewBox="0 0 180 32" fill="none"
+                <svg (click)="acceptLpo()" width="180" height="32" viewBox="0 0 180 32" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect width="180" height="32" rx="16" fill="#38CB89" />
                     <path
@@ -535,13 +615,13 @@
                     <p class="subHeads">
                         Buyer
                     </p>
-                    <p>Blessing Ojediran</p>
+                    <p>{{singleLpo?.buyer?.customerName}}</p>
                 </div>
                 <div class="">
                     <p class="subHeads">
                         Amount
                     </p>
-                    <p>NGN</p>
+                    <p>NGN {{singleLpo?.total}}</p>
                 </div>
             </div>
 
@@ -550,7 +630,8 @@
                     <p class="subHeads">
                         Reason for rejection
                     </p>
-                    <textarea style="width: 15rem; height: 5rem;" class="form-control" name="" id="" cols="6" rows="6"></textarea>
+                    <textarea style="width: 15rem; height: 5rem;" class="form-control" name="" id="" cols="6"
+                        rows="6"></textarea>
                 </div>
             </div>
 
@@ -584,7 +665,7 @@
                     <rect x="1" y="1" width="182" height="34" rx="17" stroke="#002855" stroke-width="2" />
                 </svg>
 
-                <svg (click)="toggleSuccesModal()" width="181" height="32" viewBox="0 0 181 32" fill="none"
+                <svg (click)="rejectLpo()" width="181" height="32" viewBox="0 0 181 32" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" width="180" height="32" rx="16" fill="#E25949" />
                     <path

@@ -69,6 +69,14 @@
     color: #C4C4C4;
     margin: 0 5px;
 }
+.is-invalid{
+    border: 1px solid red !important;
+    
+    // palceholder color
+    &::placeholder {
+        color: red;
+    }
+}
 .tab1 {
     & form {
         display: flex;

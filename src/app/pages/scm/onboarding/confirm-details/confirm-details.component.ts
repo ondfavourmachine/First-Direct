@@ -35,6 +35,7 @@ export class ConfirmDetailsComponent implements OnInit {
   ) {
     this._route.params.subscribe(params => this.getRole(params['role']));
     this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
+
   }
 
   public getCustomerDetails() {
@@ -93,7 +94,7 @@ export class ConfirmDetailsComponent implements OnInit {
   }
 
   addContactPerson(payload: any) {
-    if (this.customerDetails?.role === "supplier") {
+    if (this.role === "SUPPLIER" || this.role === "supplier") {
       // spreed items to payload
       payload = {
         ...payload,
@@ -220,6 +221,7 @@ export class ConfirmDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("role:", this.role)
     this.getCustomerDetails();
     this.getEditor();
     this.getIndustries();

@@ -92,15 +92,15 @@
                                 <h1>Limit</h1>
                                 <p>NGN {{customerDetails?.limits}}</p>
                             </div>
-                            <div *ngIf="role === 'SUPPLIER'" class="fields  my-5">
+                            <div *ngIf="role === 'supplier' || role === 'SUPPLIER' " class="fields  my-5">
                                 <h1>Minimum Spend</h1>
                                 <p>NGN {{customerDetails?.minimumAnnualSpend}}</p>
                             </div>
-                            <div *ngIf="role === 'SUPPLIER'" class="fields  my-5">
+                            <div *ngIf="role === 'supplier'|| role === 'SUPPLIER' " class="fields  my-5">
                                 <h1>Maximum Spend</h1>
                                 <p>NGN {{customerDetails?.maximumAnnualSpend}}</p>
                             </div>
-                            <div *ngIf="role === 'SUPPLIER'" class="bankField  my-5">
+                            <div *ngIf="role === 'supplier' || role === 'SUPPLIER' " class="bankField  my-5">
                                 <h1>Bank Information</h1>
                                 <div style="width: 40%;" class="flex-colstart">
                                     <p>{{customerDetails?.bankName}}</p>

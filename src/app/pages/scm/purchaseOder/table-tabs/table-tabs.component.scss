@@ -556,6 +556,7 @@ table tr {
 .footer-content3 p {
     font-size: 14px;
     line-height: 17px;
+    margin: 10px 0;
 }
 .footer-content1 ,
 .footer-content2 ,
@@ -569,13 +570,12 @@ table tr {
 .figs-amts{
     border-bottom: 2px solid $fbn-gray-bg;
 
-    & .words {
+    & .words, .figs {
         & p{
-            margin: 0;
+            margin: 10px 0;
         }
     }
 }
-
 .total-amt{
     padding: 6px 0;
 
@@ -583,4 +583,49 @@ table tr {
         font-weight: 600;
         font-size: 1.2rem;
     }
+}
+
+.DUE {
+    background: rgba(255, 150, 149, 0.3);
+    color: #FF9695;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.UNPAID {
+    background: rgba(253, 255, 149, 0.16);
+    color: #FDB90B;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.NEW {
+    background: #FFFFFF;
+    border: 1px solid #3FC59D;
+    color: #3FC59D;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.PAID {
+    background: rgba(63, 197, 157, 0.3);
+    color: #3FC59D;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
 }

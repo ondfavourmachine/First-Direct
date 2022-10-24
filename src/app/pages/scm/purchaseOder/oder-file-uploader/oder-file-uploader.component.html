@@ -22,11 +22,11 @@
                                 </svg>
                                 </span><button 
                                 (click)="fileUpload.click()"
-                                class="btn">Drop your files here, or browse</button>
+                                class="btn">{{fileName}}</button>
                             <input
                             class="d-none"
                                 #fileUpload
-                                accept=".pdf"
+                                accept="xlsx"
                                 (click)="fileUpload.value = null"
                              type="file" 
                              (change)="onFileChange($event)" />
@@ -36,7 +36,7 @@
                     <div class="my-2 py-5">
                         <div class="d-flex justify-content-end align-items-end">
                             <button class="fbn-blue-btn">Cancel</button>
-                            <button class="fbn-fill-blue-btn">Next</button>
+                            <button (click)="next()" class="fbn-fill-blue-btn">Next</button>
                         </div>
                     </div>  
                 </div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { addLpoModel } from 'src/app/core/models/scm/LPO.model';
 import { addCustomer, uploadCustomerFileModel } from 'src/app/core/models/scm/onboarding.model';
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,34 @@ private role = new BehaviorSubject("");
 private customerDetails = new BehaviorSubject<addCustomer>(null);
 private customerFileDetails = new BehaviorSubject<any>(null);
 private editor = new BehaviorSubject<any>("");
+private lpoRequest = new BehaviorSubject<addLpoModel>(null);
+private lpoTabNumnber = new BehaviorSubject(1);
+private lpoHeaderTitle = new BehaviorSubject("Purchase Order");
+
+
+updateLpoHeaderTitle(title: string){
+  this.lpoHeaderTitle.next(title)
+}
+
+getLpoHeaderTitle(): BehaviorSubject<string>{
+  return this.lpoHeaderTitle
+}
+
+updateLpoTabNumber(num: number){
+  this.lpoTabNumnber.next(num)
+}
+
+getLpoTabNumber(): BehaviorSubject<number>{
+  return this.lpoTabNumnber
+}
+
+updateLpoRequest(lpo: addLpoModel){
+  this.lpoRequest.next(lpo)
+}
+
+getLpoRequest(): BehaviorSubject<addLpoModel>{
+  return this.lpoRequest
+}
 
 
 updateEditor(editor: any){

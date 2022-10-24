@@ -530,7 +530,7 @@ table {
 }
 
 .amt {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 table tr {
@@ -544,31 +544,99 @@ table tr {
 .footer-content3 p {
     font-size: 14px;
     line-height: 17px;
+    margin: 10px 0;
 }
-.footer-content1 ,
-.footer-content2 ,
+
+.footer-content1,
+.footer-content2,
 .footer-content3 {
     width: 30%;
 }
+
 .figs p {
     font-weight: 600;
-    margin: 0 ;
+    margin: 0;
 }
-.figs-amts{
+
+.figs-amts {
     border-bottom: 2px solid $fbn-gray-bg;
 
-    & .words {
-        & p{
-            margin: 0;
+    & .words,
+    .figs {
+        & p {
+            margin: 10px 0;
         }
     }
 }
 
-.total-amt{
+.total-amt {
     padding: 6px 0;
 
-    & .ta-figs{
+    & .ta-figs {
         font-weight: 600;
         font-size: 1.2rem;
     }
+}
+
+.btns {
+    background: #DFE6EC;
+    border-radius: 5px;
+    padding: 6px 11px;
+    color: #C4C4C4;
+    margin: 0 5px;
+    cursor: not-allowed;
+}
+
+.buttonAct {
+    background: #DDAD31;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 11px;
+    color: #C4C4C4;
+    margin: 0 5px;
+}
+
+.DUE {
+    background: rgba(255, 150, 149, 0.3);
+    color: #FF9695;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.UNPAID {
+    background: rgba(253, 255, 149, 0.16);
+    color: #FDB90B;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.NEW {
+    background: #FFFFFF;
+    border: 1px solid #3FC59D;
+    color: #3FC59D;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.PAID {
+    background: rgba(63, 197, 157, 0.3);
+    color: #3FC59D;
+    text-align: center !important;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
 }

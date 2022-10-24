@@ -35,6 +35,7 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of allCustomers">
                             <td>{{contents.customerName}}</td>
+                            <td>{{contents?.companyName}}</td>
                             <td>
                                 <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                                     {{contents?.customerType}}
@@ -62,6 +63,7 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of deletedCustomers">
                             <td>{{contents.customerName}}</td>
+                            <td>{{contents?.companyName}}</td>
                             <td>
                                 <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                                     {{contents?.customerType}}
@@ -88,6 +90,7 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer"  (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of editedCustomers">
                             <td>{{contents.customerName}}</td>
+                            <td>{{contents?.companyName}}</td>
                             <td>
                                 <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                                     {{contents?.customerType}}
@@ -114,6 +117,7 @@
                     <tbody>
                         <tr class="bodyRow cursor-pointer" (click)="viewCustomerDetails(contents?.customerId, contents?.customerType)" *ngFor="let contents of addedCustomers">
                             <td>{{contents.customerName}}</td>
+                            <td>{{contents?.companyName}}</td>
                             <td>
                                 <p [ngClass]="contents?.customerType === 'BUYER' ? 'buyer my-0' : 'seller' ">
                                     {{contents?.customerType}}
@@ -135,21 +139,12 @@
                     </div>
                 </div>
             </div>
-            <div class="pagination">
-                <div class="flex">
-                    <button (click)="paginator('previous')" class="">
-                        <svg class=" " width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                        </svg>
-                    </button>
-                    <button (click)="paginator('next')">
-                        <svg class="" width="20" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-        
-                    </button>
+            <div class="paginator my-4">
+                <div class="butns d-flex justify-content-end align-items-end">
+                    <button (click)="paginator('prev')"
+                    [ngClass]="hasPrevPage === true ? 'buttonAct' : 'btns'"> < </button>
+                    <button (click)="paginator('next')"
+                    [ngClass]="hasNextPage === true ? 'buttonAct' : 'btns'"> > </button>
                 </div>
             </div>
         </div>

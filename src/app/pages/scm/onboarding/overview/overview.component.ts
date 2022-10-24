@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
-import { SummaryService } from 'src/app/core/services/scm/onboarding/summary/summary.service';
+import { SummaryService } from 'src/app/core/services/scm/summary/summary.service';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

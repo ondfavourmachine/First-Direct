@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { addCustomer, validateBankDetailsModel } from 'src/app/core/models/scm/onboarding.model';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-form-page',
@@ -15,6 +16,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
 
   role: string;
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  notEmail: boolean = false;
 
   public getRole() {
     this.crudServices.getRole().subscribe({
@@ -43,6 +45,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   btnText = 'Continue';
   isOnSubmit: boolean = false;
   companyCode: any = [];
+  isAccountDetailsChanged: boolean = false;
   constructor(
     private crudServices: CrudService,
     private router: Router,
@@ -89,12 +92,18 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       next: (data: any) => {
         this.validatedBankDetails = data;
         this.accountName = this.validatedBankDetails?.accountName
-        // console.log("data:", data)
-        // this.btnText = 'Continue';
-        this.gVars.toastr.success("Bank details validated successfully");
+        if (this.validatedBankDetails?.valid === false) {
+          this.gVars.toastr.error("Incorrect Account Details")
+          this.btnText = 'continue';
+          this.isAccountDetailsChanged = false;
+        } else {
+          this.isAccountDetailsChanged = false;
+          this.gVars.toastr.success("Bank details validated successfully");
+          this.btnText = 'Preview';
+        }
       }, error: (error: any) => {
-        // this.btnText = 'Continue';
-        this.gVars.toastr.error(error?.error?.message);
+        this.btnText = 'Continue';
+        this.gVars.toastr.error("Bank details validation failed");
       }
     })
 
@@ -156,9 +165,33 @@ export class FormPageComponent implements OnInit, AfterViewInit {
   }
 
   bankVerification() {
+    this.btnText = "Validating Bank Details..."
+    this.isAccountDetailsChanged = true;
     if (this.addCustomerForm?.value?.bankName && this.addCustomerForm?.value?.accountNumber) {
       this.getBankCode();
       this.validateBankDeyails(this.bankCode);
+    }
+  }
+
+
+  getBankBranches(e) {
+    this.isAccountDetailsChanged = true;
+  }
+
+  updateAccountNumber(e) {
+    console.log("val", e.target.value)
+    // this.isAccountDetailsChanged = true;
+    // console.log("isAccountDetailsChanged", 
+    // this.isAccountDetailsChanged
+    // )
+  }
+
+  checkIfAccountDetailsChanged() {
+    this.accountName = "";
+    if (this.isAccountDetailsChanged) {
+      this.bankVerification();
+    } else {
+      this.bankVerification();
     }
   }
 
@@ -168,6 +201,62 @@ export class FormPageComponent implements OnInit, AfterViewInit {
       this.crudServices.updateCustomerDetails(checker);
       // console.log("checker:", checker)
       this.router.navigateByUrl(`scm/onboarding/confirm-details/supplier`);
+    }
+  }
+
+  addBuyer(customerDetails: addCustomer) {
+    this.btnText = "Processing..."
+    if (!this.addCustomerForm?.value?.email?.match(this.emailPattern)) {
+
+      this.gVars.toastr.error("Please enter a valid email address");
+      this.notEmail = true;
+      this.isOnSubmit = true;
+      this.btnText = 'Continue';
+    } else {
+
+      this.crudServices.updateCustomerDetails(customerDetails);
+      this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
+
+    }
+  }
+
+  addSupplier(customerDetails: addCustomer) {
+
+    if (!this.addCustomerForm?.value?.email?.match(this.emailPattern)) {
+
+      this.gVars.toastr.error("Please enter a valid email address");
+      this.notEmail = true;
+      this.isOnSubmit = true;
+      this.btnText = 'Continue';
+    } else {
+      this.checkIfAccountDetailsChanged();
+      setTimeout(() => {
+
+        if (this.validatedBankDetails?.valid === true && this.isAccountDetailsChanged === false && this.validatedBankDetails?.accountName !== "") {
+          this.btnText = "Continue"
+          this.saveCustomerDetails(customerDetails);
+        }
+      }, 3000);
+    }
+
+
+
+  }
+
+  checkRoleToAdd(customerDetails: addCustomer) {
+    if (this.role === "buyer") {
+      this.addBuyer(customerDetails)
+    } else {
+      this.addSupplier(customerDetails)
+    }
+  }
+
+  addContactPerson(customerDetails: addCustomer) {
+    if (this.addCustomerForm.valid) {
+      this.checkRoleToAdd(customerDetails)
+    } else {
+      this.gVars.toastr.error("Please fill all required fields");
+      this.isOnSubmit = true;
     }
   }
   onSubmit() {
@@ -195,49 +284,7 @@ export class FormPageComponent implements OnInit, AfterViewInit {
 
     }
 
-
-    if (this.role !== "buyer") {
-      this.bankVerification();
-    }
-    if (this.role === "buyer") {
-      if (this.addCustomerForm.valid) {
-        if (!this.addCustomerForm?.value?.email?.match(this.emailPattern)) {
-          this.gVars.toastr.error("Please enter a valid email address");
-        }else {
-        this.crudServices.updateCustomerDetails(customerDetails);
-        this.router.navigate([`scm/onboarding/confirm-details/${this.role}`])
-        }
-      } else {
-        // check if email pattern is valid
-          this.gVars.toastr.error("Please fill in all required fields");
-        this.isOnSubmit = true;
-      }
-    } else {
-      if (this.accountName === "" && this.addCustomerForm.valid) {
-        this.btnText = "Validating Bank Details..."
-      } else {
-        this.btnText = "Processing..."
-      }
-      setTimeout(() => {
-        if (this.validatedBankDetails?.valid === true && this.bankCode?.bankName) {
-          // console.log("customerDetails:", customerDetails)
-          this.btnText = "Continue"
-          this.saveCustomerDetails(customerDetails);
-          // this.crudServices.updateCustomerDetails(customerDetails);
-          // this.router.navigate(['/scm/confirm-details'])
-
-        } else {
-          this.gVars.toastr.error("Please fill all required fields")
-          this.isOnSubmit = true;
-          this.btnText = "Continue"
-
-        }
-      }, 3000)
-    }
-    // }
-    // check if form is all filled
-    // console.log('usserLoad:', this.userLoad)
-
+    this.addContactPerson(customerDetails)
   }
 
   // afterViewInit
