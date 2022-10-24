@@ -11,9 +11,17 @@ import { InvoiceUploaderComponent } from './invoice-uploader/invoice-uploader.co
 import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { SendInvoiceComponent } from './send-invoice/send-invoice.component';
+import { InvoiceCalculationPipe } from 'src/app/invoice-calculation.pipe';
+import { DeleteInvoiceComponent } from 'src/app/delete-invoice/delete-invoice.component';
+
 
 @NgModule({
-    declarations: [LayoutComponent, OverviewComponent, TableTabsComponent, InvoiceUploaderComponent, InvoicePreviewComponent, CreateInvoiceComponent, SendInvoiceComponent],
+    declarations: [
+        DeleteInvoiceComponent,
+        LayoutComponent, OverviewComponent, 
+        TableTabsComponent, 
+        InvoiceUploaderComponent, 
+        InvoicePreviewComponent, CreateInvoiceComponent, SendInvoiceComponent],
     imports: [
         CommonModule,
         InvoiceRoutingModule,
@@ -22,6 +30,7 @@ import { SendInvoiceComponent } from './send-invoice/send-invoice.component';
         FormsModule,
         ReactiveFormsModule
     ],
+    providers: [InvoiceCalculationPipe],
     exports: [InvoiceRoutingModule]
 })
 

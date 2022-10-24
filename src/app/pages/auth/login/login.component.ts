@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   
   Login(data)
   {
-  this.gVars.spinner.show()
+  this.gVars.spinner.show();
    let body = {
     CorporateCode: data.OrgCode,
     Username: data.username,

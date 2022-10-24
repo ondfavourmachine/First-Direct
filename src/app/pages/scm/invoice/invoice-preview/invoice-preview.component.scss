@@ -148,3 +148,17 @@ color: #657889;
 
     color: #002855 !important;
 }
+
+
+.fbn-fill-blue-btn, .fbn-blue-btn{
+    transition: all 350ms ease-in-out;
+   &:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+     transform: translateY(-5px) scale(1.01);
+   }
+}
+
+.edit:hover{
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

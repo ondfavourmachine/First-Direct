@@ -1,0 +1,54 @@
+<div class="main">
+        <div class="delete_container">
+            <h3><img  (click)="close()" src="../../assets/images/delete_cancel.svg" alt=""></h3>
+            <div class="content">
+                <h4>Delete Invoice</h4>
+
+                <div class="remaining_parts">
+                    <div class="text_contents">
+                        <div class="texts">
+                            <span>Invoice Number</span>
+                            <span>{{ invoice?.invoiceNo }}</span>
+                        </div>
+                        <div class="texts">
+                            <span>Buyer</span>
+                            <span>{{ invoice?.buyer }}</span>
+                        </div>
+                        <div class="texts">
+                            <span>Amount</span>
+                            <span>NGN{{ invoice?.totalPayable }}</span>
+                        </div>
+                    </div>
+
+                    <form >
+                        <div class="w-100 form-row align-items-center mt-4">
+                            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                                <label for="password_confirmation" 
+                                  class="mb-0 font-blue f-weight500">
+                                    Enter your password to confirm this action
+                                </label>
+                                <div class=" mt-3 w-100 d-flex justify-content-center align-items-center position-relative">
+                                    <input  [(ngModel)]="password" name="password" [type]="type" placeholder="Enter password" id="password_confirmation" 
+                                      class="w-75" />
+                                      <i (click)="type = 'password'" *ngIf="type == 'text'" class="fa fa-eye icon-color"></i>
+                                      <i (click)="type = 'text'" *ngIf="type == 'password'" class="fa fa-lock icon-color"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="buttons w-100 d-flex justify-content-between mt-4 px-5">
+                        <button
+                          (click)="close()"
+                          [disabled]="password.length < 3"
+                          class="rounded-pill px-4 py-1">CANCEL</button>
+                        <button 
+                            [disabled]="password.length < 3"
+                           (click)="deleteInvoice($event)"
+                          class="rounded-pill px-4 py-1">DELETE INVOICE</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>

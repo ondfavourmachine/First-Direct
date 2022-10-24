@@ -12,7 +12,7 @@
                             <p>Preview</p>
                         </div>
                         <div>
-                            <svg width="89" height="28" viewBox="0 0 89 28" fill="none"
+                            <svg (click)="triggerEdit()" class="edit" width="89" height="28" viewBox="0 0 89 28" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect width="89" height="28" rx="5" fill="#DDAD31" />
                                 <path
@@ -52,27 +52,27 @@
                                     <div class="second">
                                         <div class="inv-no my-3">
                                             <p class="ed">Invoice Number.</p>
-                                            <p class="main">651535</p>
+                                            <p class="main">{{dataFromInvoiceCreation?.invoiceNo }}</p>
                                         </div>
 
                                         <div class="pur-no my-3">
                                             <p class="ed">Purchase Order Number.</p>
-                                            <p class="main">651535</p>
+                                            <p class="main">{{dataFromInvoiceCreation?.purchaseOrderNo }}</p>
                                         </div>
 
                                         <div class="inv-date my-3">
                                             <p class="ed">Invoice Date</p>
-                                            <p class="main">28/10/2012</p>
+                                            <p class="main">  {{ dataFromInvoiceCreation?.invoiceDate  | date:'mediumDate' }} </p>
                                         </div>
                                     </div>
                                     <div class="third">
                                         <div class="total-payable my-3">
                                             <p class="ed">Total Payable</p>
-                                            <p class="main amt">₦639,000.00</p>
+                                            <p class="main amt">{{ dataFromInvoiceCreation?.totalPayable | currency:'₦'  }}</p>
                                         </div>
                                         <div class="due-date my-3">
                                             <p class="ed">Due Date</p>
-                                            <p class="main">28/10/2012</p>
+                                            <p class="main">  {{ dataFromInvoiceCreation.paymentDueDate | date:'mediumDate'  }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,23 +88,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Item 1</td>
-                                                <td>1</td>
-                                                <td>₦639,000.00</td>
-                                                <td>₦639,000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Item 2</td>
-                                                <td>1</td>
-                                                <td>₦639,000.00</td>
-                                                <td>₦639,000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Item 3</td>
-                                                <td>1</td>
-                                                <td>₦639,000.00</td>
-                                                <td>₦639,000.00</td>
+                                            <tr *ngFor="let inv of dataFromInvoiceCreation?.invoiceValues">
+                                                <td> {{ inv?.item}} </td>
+                                                <td> {{inv?.quantity}} </td>
+                                                <td> {{inv?.unitPrice}} </td>
+                                                <td>{{ inv?.amount | currency: '₦'}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -116,17 +104,13 @@
                                 <div class="footer-content1">
                                     <h1 class="ed">Payment Terms</h1>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. Quisquam, quod.
+                                       {{  dataFromInvoiceCreation.paymentTerms  }}
                                     </p>
                                 </div>
                                 <div class="footer-content2">
                                     <h1 class="ed">Payment Instructions</h1>
                                     <p class="">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. Quisquam, quod.
+                                        {{ dataFromInvoiceCreation?.paymentTerms }}
                                     </p>
                                 </div>
                                 <div class="footer-content3">
@@ -134,20 +118,20 @@
                                     <div class="figs-amts d-flex justify-content-between">
                                         <div class="words">
                                             <p>Sub Total</p>
-                                            <p>Tax (2%)</p>
-                                            <p>Discount (0%)</p>
+                                            <p>Tax ({{dataFromInvoiceCreation?.tax}}%)</p>
+                                            <p>Discount ({{dataFromInvoiceCreation?.discount}}%)</p>
                                             <p>Miscellaneous</p>
                                         </div>
                                         <div class="figs">
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
-                                            <p>NGN 9,000.00</p>
+                                            <p>NGN {{ dataFromInvoiceCreation?.subTotal || 0}} </p>
+                                            <p>NGN {{ dataFromInvoiceCreation?.calculatedTax || 0}}  </p>
+                                            <p>NGN  {{ dataFromInvoiceCreation?.calculatedDiscount  || 0}} </p>
+                                            <p>NGN {{ dataFromInvoiceCreation?.miscellaneous || 0}}</p>
                                         </div>
                                     </div>
                                     <div class="total-amt d-flex justify-content-between">
                                         <p>Total</p>
-                                        <p class="ta-figs">NGN 9,180.00</p>
+                                        <p class="ta-figs">NGN {{ dataFromInvoiceCreation?.totalPayable }} </p>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +143,8 @@
 
                     <div class="d-flex justify-content-between">
                         <button class="fbn-blue-btn">Cancel</button>
-                        <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Continue</button>
+                        <button class="fbn-blue-btn" (click)="goBack()">Go Back</button>
+                        <button (click)="sendInvoice()" class="fbn-fill-blue-btn">Confirm</button>
                     </div>
 
                 </div>

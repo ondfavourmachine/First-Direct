@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, CurrencyPipe } from "@angular/common";
 import { HeaderComponent } from "./header/header.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { SidebarComponent } from "./sidebar/sidebar.component";
@@ -14,6 +14,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { NgIdleKeepaliveModule } from "@ng-idle/keepalive";
 import { TokenInterceptor } from "./interceptor/interceptor";
 import { GenericModalComponent } from "./components/modals/generic-modal/generic-modal.component";
+import { InvoiceCalculationPipe } from '../invoice-calculation.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { GenericModalComponent } from "./components/modals/generic-modal/generic
     SummaryComponent,
     SearchFilterPipe,
     GenericModalComponent,
+    InvoiceCalculationPipe,
   ],
   imports: [
     CommonModule,
@@ -42,12 +44,14 @@ import { GenericModalComponent } from "./components/modals/generic-modal/generic
     ConfirmationComponent,
     SummaryComponent,
     SearchFilterPipe,
+    InvoiceCalculationPipe,
     GenericModalComponent,
   ],
   providers:[
     {
       provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi:true
-    }
+    },
+    CurrencyPipe
   ],
 })
 export class CoreModule {}

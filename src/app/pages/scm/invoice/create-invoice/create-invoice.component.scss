@@ -71,7 +71,7 @@
 }
 .tab1 {
     & form {
-        display: flex;
+        display: none;
         flex-direction: space-between;
         font-size: 14px;
 
@@ -137,10 +137,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     & label {
         margin: 0 10px;
     }
+
+    
 }
 
 
@@ -283,4 +286,50 @@ table {
             color: #002855;
          }
     }
+}
+
+.back_button{
+    cursor: pointer;
+    display: inline;
+    padding: 2px 5px;
+    &:hover{
+        border: 1px solid rgba(100, 100, 111, 0.2);
+        border-radius: 28px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+}
+
+.cancel_out:hover{
+    cursor: pointer;
+    border: 1px dashed #002855;
+}
+
+.addNewItem{
+    cursor: pointer;
+}
+
+.fbn-fill-blue-btn, .fbn-blue-btn{
+    transition: all 350ms ease-in-out;
+   &:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+     transform: translateY(-5px) scale(1.01);
+   }
+}
+
+ #tax_currency, #discount_currency, #miscellaneous_currency{
+    position: absolute;
+    width: 20%;
+    left: -16px;
+    border-color: transparent;
+    border: none;
+    pointer-events: none;
+}
+
+#tax, #discount, #miscellaneous{
+    padding-left: 23% !important;
+}
+
+table:focus-within{
+    
 }

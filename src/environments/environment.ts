@@ -13,12 +13,19 @@ export const environment = {
     papsUrl:'https://192.168.253.129/Tesla_PaymentEncryption/api/'
   },
   scmApiUrl: 'https://bridger-tesla.herokuapp.com',
-  // scmApiUrl: 'https://192.168.253.129:6067',
+  invoicesApiUrl: 'https://bridger-tesla.herokuapp.com/api/',
   bankDetailsVerificationApiUrl: 'https://192.168.253.129:8443/Tesla_Payment_1b/api/Payment',
   spmo:{ 
     mlm: stuff.pairs.sruff.mlmm,
     nlp: stuff.pairs.sruff.nnnn
   },
+
+  invoiceApi: {
+    addInvoice: 'Invoice/AddInvoice', 
+    getAnInvoice: 'Invoice/GetInvoice',
+    getSubsidiaryInvoices: 'Invoice/GetSubsidiaryInvoices',
+    deleteInvoice: 'Invoice/DeleteInvoice'
+  }
 };
 
 /*

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
+import { InvoiceValue } from '../models/scm/invoices.model';
 
 
 declare var $:any;
@@ -254,4 +255,19 @@ export class GlobalsService implements OnChanges{
         reader.readAsDataURL(file);
       });
     }
+
+
+   calculateDiscount(totalSum: number, discount: number) {
+      return  totalSum - ((totalSum * discount) / 100);
+     }
+   
+   calculateTax(totalSum: number, tax: number) {
+       return (totalSum * tax) / 100;
+      }
+
+
+      calculateSubtotal(invoice: InvoiceValue[]) {
+       return invoice.reduce((prev, elem) => elem.amount + prev, 0)
+       }
+    
 }
