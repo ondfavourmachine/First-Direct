@@ -84,3 +84,45 @@ export class editCustomer {
        pageNumber: number;
        pageSize: number;
      }
+
+
+export interface BuyerResponse{
+ code:string,currentPage:number,totalPages:number,pageSize:number,totalCount:number,hasPrevious:boolean,hasNext:boolean,data:[],message:string
+}
+
+export interface ABuyer{
+  accountName: string
+accountNumber: null | string
+address1: null | string
+address2: null | string
+bankCode: null | string
+bankName: null | string
+categoryId: null | string
+categoryName: null | string
+city: null | string
+companyName: string
+country:string
+countryId: string
+createdBy: null |string
+currencyCode: string
+customerCode: string
+customerName: string
+customerType: string
+dateAdded: string
+email: string
+id: number
+industryId: number
+industryName: string
+isActive: false
+limits: number
+maximumAnnualSpend: null | string 
+minimumAnnualSpend: null | string
+phoneNumber: string
+rcNumber: string
+status: string
+subsidiaryCode: string
+swiftCode: null | string
+tierId: number
+tierName: string
+tin:string
+}

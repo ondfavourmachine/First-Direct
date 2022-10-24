@@ -1,6 +1,10 @@
 @import '../../../../../customStyles/colors';
 @import '../../../../../customStyles/layouting.scss';
 
+.main{
+    position: relative;
+}
+
 .detailsModal {
     padding: 1rem !important;
     padding-top: 0 !important;
@@ -571,4 +575,9 @@ table tr {
         font-weight: 600;
         font-size: 1.2rem;
     }
+}
+
+.buttons:hover{
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

@@ -1,0 +1,119 @@
+
+
+
+.main{
+    --main-color: #002855;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-content: center;
+    backdrop-filter: blur(4px);
+    /* overflow: hidden; */
+}
+
+.main .delete_container{
+    height: 45vh;
+    width: 30vw;
+    background-color: transparent;
+}
+
+.main .delete_container h3{
+    width: 100%;
+    padding-block: .5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+}
+
+.main .delete_container .content{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    border: 1px solid hsl(0, 100%, 95%);
+    border-radius: 3px;
+    padding: 1.5rem;
+}
+
+.main .delete_container .content h4{
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--main-color);
+}
+
+.main .delete_container .content .remaining_parts{
+    width: 100%;
+    margin-block: 1rem;
+}
+
+.main .delete_container .content .remaining_parts .text_contents{
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+
+.main .delete_container .content .remaining_parts .text_contents .texts:nth-child(2){
+    flex: 1 1 auto;
+}
+
+.main .delete_container .content .remaining_parts .text_contents .texts{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+.main .delete_container .content .remaining_parts .text_contents .texts  span:first-child{
+    font-weight: 500;
+    font-size: .75rem;
+    color: var(--main-color);
+}
+
+.main .delete_container .content .remaining_parts .text_contents .texts  span:last-child{
+    font-weight: 500;
+    font-size: .95rem;
+    color: #999999;
+}
+
+.main .delete_container .content .remaining_parts form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main .delete_container .content .remaining_parts form input{
+    height: 2.15rem;
+}
+
+.main .delete_container .content .remaining_parts form .icon-color{
+    top: 9px;
+    right: 3.5rem;
+    position: absolute;
+    cursor: pointer;
+}
+
+.main .delete_container .content .remaining_parts .buttons button:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+.main .delete_container .content .remaining_parts .buttons button:first-child{
+  border: 1px solid var(--main-color);
+  background-color: white;
+  color: var(--main-color);
+  font-size: 1rem;
+}
+
+
+.main .delete_container .content .remaining_parts .buttons button:last-child{
+    border: 1px solid #E25949;
+    background-color: #E25949;
+    color: white;
+    font-size: 1rem;
+  }
+
+
+  .main .delete_container .content .remaining_parts .buttons button:disabled{
+    box-shadow: none;
+    opacity: .3;
+  }

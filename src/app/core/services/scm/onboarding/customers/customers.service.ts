@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { addCustomer, editCustomer, uploadCustomerFileModel, validateBankDetailsModel, requestBodyModel, userRoleModel} from 'src/app/core/models/scm/onboarding.model';
+import { addCustomer, editCustomer, uploadCustomerFileModel, validateBankDetailsModel, requestBodyModel, userRoleModel, BuyerResponse} from 'src/app/core/models/scm/onboarding.model';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 const httpOptions = {
   headers: new HttpHeaders({
@@ -56,8 +56,8 @@ export class CustomersService {
     return this.http.patch(`${environment.scmApiUrl}/api/Customer/save-supplier`, supplier, httpOptions);
   };
 
-  getBuyers(reqBody: requestBodyModel): Observable<any> {
-    return this.http.post(`${environment.scmApiUrl}/api/Customer/GetBuyer`,reqBody, httpOptions);
+  getBuyers(reqBody: requestBodyModel): Observable<BuyerResponse> {
+    return this.http.post<BuyerResponse>(`${environment.scmApiUrl}/api/Customer/GetBuyer`,reqBody, httpOptions);
   };
 
   getSuppliers(reqBody: requestBodyModel): Observable<any> {
