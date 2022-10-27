@@ -43,6 +43,7 @@ currentInvoiceInView: CreateAnInvoice;
         subTotal: this.gVars.calculateSubtotal(invoice.invoiceValues)};
       this.currentInvoiceInView = newInvoice;
       this.isDetailsModalOpen = !this.isDetailsModalOpen;
+      console.log(this.currentInvoiceInView);
       return;
     }
     this.isDetailsModalOpen = !this.isDetailsModalOpen;

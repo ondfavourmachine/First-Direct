@@ -445,8 +445,11 @@
                                 <h1> Add Attachments optional</h1>
                             </div>
                             <div>
-                                
-                                <svg width="158" height="40" viewBox="0 0 158 40" fill="none"
+                                 <div class="d-flex my-2" *ngFor="let attachment of createAnInvoiceForm?.invoiceAttachments; index as i">
+                                    <span class="mr-4" > {{ attachment?.invoiceFileName }} </span>
+                                    <span class=""><img src="../../../../../assets/images/trash.svg" alt=""></span>
+                                 </div>
+                                <svg  (click)="triggerFileAttachment()" class="attachmentTriggerBtn"  width="158" height="40" viewBox="0 0 158 40" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect width="158" height="40" rx="8" fill="#DDAD31" />
                                     <g clip-path="url(#clip0_594_16030)">
@@ -468,15 +471,16 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-
+                                <input type="file" (change)="handleAttachement($event)" class="d-none attachAFile">
                             </div>
 
                         </div>
                     </div>
 
                     <div class="tab-btns">
+                        <!--  -->
                         <button (click)="goToOverview()" class="fbn-fill-blue-btn">Cancel</button>
-                        <button (click)="goToNextPage()" [disabled]="tabNumber == 1 && !primaryInvoiceDetails.valid" class="fbn-blue-btn">Continue</button>
+                        <button (click)="goToNextPage()"  class="fbn-blue-btn" [disabled]="tabNumber == 1 && !primaryInvoiceDetails.valid">Continue</button>
                     </div>
                 </div>
             </div>

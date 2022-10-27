@@ -393,3 +393,11 @@ input[type=text], input[type=date]{
         bottom: -17%;
     }
 }
+
+
+.attachmentTriggerBtn:hover{
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+     transform: translateY(-5px) scale(1.01);
+     transition: transform 250ms ease-in-out;
+   }

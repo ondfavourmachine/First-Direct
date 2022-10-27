@@ -71,6 +71,9 @@
                     <p class="seller" *ngIf="invoice.invoiceStatus == 'A'">
                         Accepted
                     </p>
+                    <p class="seller" *ngIf="invoice.invoiceStatus == 'O'">
+                        Unpaid
+                    </p>
                 </td>
             </tr>
         </tbody>

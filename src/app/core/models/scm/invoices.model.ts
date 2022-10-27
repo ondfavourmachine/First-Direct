@@ -25,6 +25,7 @@ export interface CreateAnInvoice{
   calculatedDiscount?: string,
   calculatedTax?: string;
   invoiceValues: InvoiceValue[],
+  invoiceAttachments: {invoiceFileName: string,documentBase64: string}[],
     isAccepted?: false,
     isActive?: true,
     isDeleted?: false,

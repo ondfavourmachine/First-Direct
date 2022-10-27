@@ -22,7 +22,8 @@ export class CreateInvoiceComponent implements OnInit {
   SortColumn: string = '';
   PageNumber: number = 1;
   PageSize: number = 20;
-   createAnInvoiceForm: Partial<CreateAnInvoice> = {};
+   createAnInvoiceForm: Partial<CreateAnInvoice> = 
+   { invoiceAttachments: []};
    dataFromPreviewComp!: CreateAnInvoice;
    userLoad: Record<string, any>
    buyers: ABuyer[] = [];
@@ -98,8 +99,9 @@ export class CreateInvoiceComponent implements OnInit {
     this.createAnInvoiceForm.username = this.userLoad.username;
     this.createAnInvoiceForm.subsidiaryId = this.userLoad?.subsidiaryId.toString();
     this.createAnInvoiceForm.session = this.userLoad?.session;
-    this.createAnInvoiceForm.hasAttachment = 'N';
+    this.createAnInvoiceForm.hasAttachment = this.createAnInvoiceForm.invoiceAttachments.length > 0 ? 'Y' : 'N';
     this.createAnInvoiceForm.acceptedOffline = 'Y';
+    // debugger;
     const data: NavigationExtras = {
       state: this.createAnInvoiceForm
     }
@@ -187,5 +189,34 @@ export class CreateInvoiceComponent implements OnInit {
   calculateAmount(invoice: InvoiceValue){
     invoice.amount = invoice.unitPrice * invoice.quantity;
   }
+
+  handleAttachement(event: Event){
+    console.log(event.target['files']);
+    const file = event.target['files'] as FileList;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // this.createAnInvoiceForm = {...this.createAnInvoiceForm}
+      if('invoiceAttachments' in this.createAnInvoiceForm){
+        this.createAnInvoiceForm.invoiceAttachments.push({
+          invoiceFileName: file[0].name,
+          documentBase64: e.target?.result as string
+        })
+      }else{
+        this.createAnInvoiceForm = {...this.createAnInvoiceForm, invoiceAttachments: []};
+        this.createAnInvoiceForm.invoiceAttachments.push({
+          invoiceFileName: file[0].name,
+          documentBase64: e.target?.result as string
+        })
+      }
+      
+    }
+    reader.readAsDataURL(file[0]);
+    console.log(this.createAnInvoiceForm.invoiceAttachments);
+  }
+
+  triggerFileAttachment(){
+    (document.querySelector('.attachAFile') as HTMLInputElement).click();
+  }
+  
   
 }

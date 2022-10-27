@@ -24,7 +24,7 @@ export class InvoicePreviewComponent implements OnInit {
    } 
 
    ngOnInit(): void {
-    
+    console.log(this.dataFromInvoiceCreation)
   }
   sendInvoice() {
     delete this.dataFromInvoiceCreation.subTotal;
