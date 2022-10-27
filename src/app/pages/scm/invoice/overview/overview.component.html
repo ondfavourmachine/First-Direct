@@ -1,9 +1,9 @@
 <div class="main">
     <div class="flex-between my-4">
-        <app-card cardTitle="All Invoices" figure="400"></app-card>
-        <app-card (clicker)="navigate(2)" cardTitle="Uploaded Invoices" figure="400"></app-card>
-        <app-card cardTitle="Unpaid Invoices" figure="400"></app-card>
-        <app-card cardTitle="New Incoices" figure="0"></app-card>
+        <app-card cardTitle="All Invoices" [figure]="invoices?.length > 0 ? invoices.length : 0"></app-card>
+        <app-card (clicker)="navigate(2)" cardTitle="Uploaded Invoices" [figure]="0"></app-card>
+        <app-card cardTitle="Unpaid Invoices" [figure]="upaidInvoices"></app-card>
+        <app-card cardTitle="New Incoices" [figure]="invoices?.length > 0 ? invoices.length : 0"></app-card>
     </div>
     
     
@@ -23,7 +23,7 @@
             </div>
             <div class="centeredRowFlex inputBox">
                 <form>
-                    <input type="text" formControlName="search" class="input" placeholder="search">
+                    <input type="text" [(ngModel)]="searchItem" name="searchitem" class="input" placeholder="search">
                 </form>
                 <div class="search centeredRowFlex">
                     <svg class="h-5 w-5 text-gray-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -39,7 +39,7 @@
     
     <app-table [tableHeaders]='tableHeaders'>
         <tbody class="bodyRow cursor-pointer">
-            <tr *ngFor="let invoice of invoices" (click)="toggleDetailsModal(invoice)" style="cursor: pointer;">
+            <tr *ngFor="let invoice of invoices | searchFilter: searchItem" (click)="toggleDetailsModal(invoice)" style="cursor: pointer;">
                 <td>
                     {{ invoice?.dateCreated | date:'mediumDate'}}
                 </td>

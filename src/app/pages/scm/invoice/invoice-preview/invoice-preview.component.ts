@@ -55,15 +55,15 @@ export class InvoicePreviewComponent implements OnInit {
     setTimeout(this.goBack, 500);
   }
 
-  // calculateTax(): number {
-  //   return this.dataFromInvoiceCreation.tax == 0 ? 0 : ((this.dataFromInvoiceCreation.subTotal * this.dataFromInvoiceCreation.tax) / 100);
-  // }
-
   triggerEdit(){   
     const data: NavigationExtras = {
       state: this.dataFromInvoiceCreation
     }
     this.router.navigate(['/scm/invoice/create-invoice'], data);
+  }
+
+  goToOverview(){
+    this.router.navigate(['/scm/invoice/overview']);
   }
 
   goBack(){

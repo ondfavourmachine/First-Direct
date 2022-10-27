@@ -141,10 +141,18 @@
 
     & label {
         margin: 0 10px;
-    }
-
-    
+    }   
 }
+
+.flex_group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+    gap: 1.5rem;
+}
+
+
 
 
 .flex-col {
@@ -315,21 +323,73 @@ table {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
      transform: translateY(-5px) scale(1.01);
    }
+
+   &:disabled{
+    pointer-events: none;
+    opacity: .25;
+   }
 }
 
- #tax_currency, #discount_currency, #miscellaneous_currency{
+
+ #tax_currency, #tax_currency_second, #discount_currency_second, #miscellaneous_currency_second, #discount_currency, #miscellaneous_currency{
     position: absolute;
-    width: 20%;
+    width: 44%;
     left: -16px;
     border-color: transparent;
     border: none;
     pointer-events: none;
 }
 
-#tax, #discount, #miscellaneous{
-    padding-left: 23% !important;
+#tax_figure, #discount, #miscellaneous{
+    padding-left: 10% !important;
 }
+
+#tax_percentage, #discount_percentage{
+    padding-left: 47%;
+}
+
+#tax_currency, #discount_currency{
+    left: unset;
+    right: -16px;
+    width: 38%;
+    & .percentage{
+        appearance: unset;
+    }   
+}
+
+#tax_currency_second, #discount_currency_second, #miscellaneous_currency_second {
+    width: 38%;
+     select{
+        padding: 8px 8px;
+    }
+}
+
+
 
 table:focus-within{
     
+}
+
+input[type=text], input[type=date]{
+    &.ng-invalid.ng-touched{
+        outline: 2px solid tomato;
+        outline-offset: 2px;
+    }
+
+    & + small{
+        color: tomato;
+        left: 50%;
+        bottom: -17px;
+    }   
+}
+
+#buyer.ng-invalid.ng-touched{
+    outline: 2px solid tomato;
+    outline-offset: 2px;
+
+    & ~ small{
+        color: tomato;
+        // left: 50%;
+        bottom: -17%;
+    }
 }

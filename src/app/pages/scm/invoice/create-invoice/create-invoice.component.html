@@ -27,48 +27,56 @@
                     </div>
 
                     <div [style.display]="tabNumber == 1 ? 'block': 'none'" class="tab1 fadeIn">
-                        <form [style.display]="tabNumber == 1 ? 'flex': 'none'">
+                        <form [style.display]="tabNumber == 1 ? 'flex': 'none'" #primaryInvoiceDetails="ngForm">
                             <div class="left">
-                                <div class="my-5 fields">
+                                <div class="my-5 fields position-relative">
+                                    <!--  -->
                                     <label>Invoice Number</label>
                                     <input
-                                     [(ngModel)]="createAnInvoiceForm.invoiceNo"
+                                    [(ngModel)]="createAnInvoiceForm.invoiceNo"
                                      name="invoiceNumber"
                                       type="text" id="invoiceNumber" 
-                                        placeholder="Enter Invoice Number">
+                                        placeholder="Enter Invoice Number" ngModel required  #invoiceNo="ngModel">
+                                     <small class="position-absolute" *ngIf="invoiceNo?.touched && invoiceNo?.invalid">Invoice number is required!</small>
                                 </div>
 
-                                <div class="my-5 fields">
+                                <div class="my-5 fields position-relative">
+                                    <!--  -->
                                     <label>Invoice Date</label>
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.invoiceDate"
                                     name="invoiceDate"
                                      type="date" id="invoiceDate" 
-                                       placeholder="Enter Invoice Date">
+                                       placeholder="Enter Invoice Date" ngModel required #invoiceDate="ngModel">
+                                       <small class="position-absolute" *ngIf="invoiceDate?.touched && invoiceDate?.invalid">Invoice Date is required!</small>
                                 </div>
 
                                 <div class="my-5 fields">
-                                    <label> Purchase Oder No (Optional)</label>
+                                    <!-- -->
+                                    <label> Purchase Order No (Optional)</label>
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.purchaseOrderNo"
                                     name="purchaseOrderNo" 
                                      type="text" id="purchaseOrderNo" 
-                                        placeholder="Enter Purchase Order No">
+                                        placeholder="Enter Purchase Order No" ngModel>
                                 </div>
 
-                                <div class="my-5 fields">
+                                <div class="my-5 fields position-relative">
                                     <label>Choose Buyer</label>
                                     <div class="flex-col">
-                                        <select 
-                                        [(ngModel)]="createAnInvoiceForm.buyer"
+                                        <!-- -->
+                                        <select
+                                         [(ngModel)]="createAnInvoiceForm.buyer" 
+                                         ngModel required
                                          name="buyer"
-                                         id="buyer">
+                                         id="buyer" #buyer="ngModel">
                                             <option value="">Select Buyer</option>
-                                            <option *ngFor="let buyer of buyers; index as i"> 
+                                            <option [value]="buyer?.companyName" *ngFor="let buyer of buyers; index as i"> 
                                                  {{ buyer?.companyName }}
                                             </option>
                                         </select>
                                         <button class="new-buyer">New Buyer</button>
+                                        <small class="position-absolute" *ngIf="buyer?.touched && buyer?.invalid">Buyer is required!</small>
                                     </div>
                                 </div>
 
@@ -77,9 +85,11 @@
                                     <label>Invoice Accepted Offline ?</label>
                                     <div class="radio-input">
                                         <div class="flex-row">
+                                            <!--  -->
                                             <div class="radio mx-3">
                                                 <input 
-                                                [(ngModel)]="createAnInvoiceForm.acceptedOffline"
+                                                 [(ngModel)]="createAnInvoiceForm.acceptedOffline"
+                                                  ngModel
                                                   name="acceptedOffline"
                                                  type="radio" id="invoiceType" 
                                                     value="yes">
@@ -87,8 +97,10 @@
                                             </div>
 
                                             <div class="radio">
+                                                <!--  -->
                                                 <input 
                                                 [(ngModel)]="createAnInvoiceForm.acceptedOffline"
+                                                ngModel
                                                 name="acceptedOffline"
                                                  type="radio" id="invoiceType" 
                                                     value="no">
@@ -100,28 +112,36 @@
                             </div>
 
                             <div class="ryt">
-                                <div class="my-5 fields">
+                                <div class="my-5 fields position-relative  ">
+                                    <!--  -->
                                     <label>Date Of supply</label>
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.supplyDate"
+                                    ngModel required
                                     name="supplyDate"
                                       type="date" id="dateOfSupply" 
-                                        placeholder="Enter Date Of Supply">
+                                        placeholder="Enter Date Of Supply" #supplyDate="ngModel">
+                                        <small class="position-absolute" *ngIf="supplyDate?.touched && supplyDate?.invalid">Date of supply is required!</small>
                                 </div>
 
-                                <div class="my-5 fields">
+                                <div class="my-5 fields position-relative">
                                     <label>Due date of Payment</label>
+                                    <!--  -->
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.paymentDueDate"
+                                    ngModel required
                                     name="paymentDueDate"
                                      type="date" id="dueDateOfPayment" 
-                                        placeholder="Enter Due Date Of Payment">
+                                        placeholder="Enter Due Date Of Payment" #paymentDueDate="ngModel">
+                                    <small class="position-absolute" *ngIf="paymentDueDate?.touched && paymentDueDate?.invalid">Date Payment is due is required!</small>
                                 </div>
 
                                 <div class="my-5 fields">
+                                    <!--  -->
                                     <label>Order Summary</label>
                                     <textarea 
                                     [(ngModel)]="createAnInvoiceForm.invoiceSummary"
+                                    ngModel
                                     name="invoiceSummary"
                                       id="orderSummary"  cols="30"
                                         rows="10"></textarea>
@@ -210,20 +230,38 @@
                                             <label>Tax %</label>
                                         </div>
 
-                                        <div style="width: 75% ;" class="rowFlex">
-                                            <!-- % inout -->
-                                            <input
-                                                [(ngModel)]="createAnInvoiceForm.tax" 
-                                                name="tax"
-                                                (change)="calculateTotal()"
-                                                style="width: 50% ;" id="tax"
-                                                 placeholder="0" type="number" min="0">
-                                            <div  class="rowFlex mx-3" id="tax_currency">
-                                                
-                                                <select style="" type="text" id="" 
-                                                            placeholder="0" >
-                                                            <option value="NGN" selected>NGN</option>
-                                                </select>
+                                        <div class="w-100 flex_group" style="margin-left: 3.85rem;">
+                                            <div style="" class="rowFlex">
+                                                <!-- % inout -->
+                                                <input
+                                                    [(ngModel)]="createAnInvoiceForm.tax" 
+                                                    name="tax"
+                                                    (change)="calculateTotal()"
+                                                    style="" id="tax_figure"
+                                                     placeholder="0" type="number" min="0">
+                                                <div  class="rowFlex mx-3" id="tax_currency">
+                                                    
+                                                    <select disabled style="" type="text" id="" 
+                                                                placeholder="0" class="percentage">
+                                                                <option value="NGN" selected>%</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div style="" class="rowFlex">
+                                                <!-- % inout -->
+                                                <input 
+                                                    name="tax"  
+                                                    [(ngModel)]="calculatedTax"
+                                                    style="" id="tax_percentage"
+                                                     placeholder="0" type="number" min="0">
+                                                  <div  class="rowFlex mx-3" id="tax_currency_second">
+                                                    
+                                                    <select style="" type="text" id="" 
+                                                                placeholder="0" >
+                                                                <option value="NGN" selected>NGN</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -233,27 +271,46 @@
                                 </div>
                                 <div class="add-new">
 
-                                    <div style="width: 50% ;">
+                                    <div style="width: 50%" class="">
                                         <div class="discount my-2">
                                             <div class="rowFlex">
                                                 <div style="width: 30% ;">
                                                     <label>Discount %</label>
                                                 </div>
-                                                <div style="width: 70% ;" class="rowFlex">
-                                                    <!-- % inout -->
-                                                    <input 
-                                                      [(ngModel)]="createAnInvoiceForm.discount"
-                                                      (change)="calculateTotal()"
-                                                      name="discount"
-                                                      style="width: 50% ;" type="number" id="discount"
-                                                       min="0"  placeholder="0" >
-
-                                                    
-                                                    <div  class="rowFlex mx-3" id="discount_currency">
-                                                        <select style="" type="text" id="" 
-                                                            placeholder="0" >
-                                                            <option value="NGN" selected>NGN</option>
-                                                        </select>
+                                                <div class="flex_group">
+                                                    <div style="" class="rowFlex">
+                                                        <!-- % inout -->
+                                                        <input 
+                                                          [(ngModel)]="createAnInvoiceForm.discount"
+                                                          (change)="calculateTotal()"
+                                                          name="discount"
+                                                           type="number" id="discount"
+                                                           min="0"  placeholder="0" >
+    
+                                                        
+                                                        <div  class="rowFlex mx-3" id="discount_currency">
+                                                            <select style="" type="text" class="percentage" id="" 
+                                                                placeholder="0" >
+                                                                <option value="NGN" selected>%</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div style="" class="rowFlex">
+                                                        <!-- % inout -->
+                                                        <input 
+                                                            name="tax"  
+                                                            [(ngModel)]="calculatedDiscount"
+                                                              name="calculatedDiscount"
+                                                            style="" id="discount_percentage"
+                                                             placeholder="0" type="number" min="0">
+                                                          <div  class="rowFlex mx-3" id="discount_currency_second">
+                                                            
+                                                            <select style="" type="text" id="" 
+                                                                        placeholder="0" >
+                                                                        <option value="NGN" selected>NGN</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,25 +321,36 @@
                                                 <div style="width: 30%;">
                                                     <label> Miscellaneous</label>
                                                 </div>
-                                                <div style="width: 70%;" class="rowFlex">
-                                                    <!-- % inout -->
-                                                    <input style="width: 50% ;" 
-                                                      [(ngModel)]="createAnInvoiceForm.miscellaneous"
-                                                      (change)="calculateTotal()"
-                                                      name="miscellaneous"
-                                                      min="0"
-                                                      id="miscellaneous"
-                                                         placeholder="0" type="number">
 
-                                                    
-                                                    <div  class="rowFlex mx-3" id="miscellaneous_currency">
-                                                        <select style="" type="text" id="" 
-                                                            placeholder="0" >
-                                                            <option value="NGN" selected>NGN</option>
-                                                        </select>
+                                                <div class="flex_group">
+                                                    <div style="" class="rowFlex">
+                                                        <!-- % inout -->
+                                                        <input style="" 
+                                                          
+                                                          name="miscellaneous"
+                                                          min="0"
+                                                          id="miscellaneous"
+                                                          class="description"   placeholder="Description" type="text">
+    
                                                     </div>
-
+                                                    <div style="" class="rowFlex">
+                                                        <!-- % inout -->
+                                                        <input 
+                                                        [(ngModel)]="createAnInvoiceForm.miscellaneous"
+                                                        (change)="calculateTotal()"
+                                                        name="miscellaneous"
+                                                            style="" id="discount_percentage"
+                                                             placeholder="0" type="number" min="0">
+                                                          <div  class="rowFlex mx-3" id="miscellaneous_currency_second">
+                                                            
+                                                            <select style="" type="text" id="" 
+                                                                        placeholder="0" >
+                                                                        <option value="NGN" selected>NGN</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
 
@@ -299,33 +367,28 @@
                                                      placeholder="0">
                                             </div>
                                         </div>
-                                        <div class="total my-1">
+                                        <!-- <div class="total my-1">
                                             <div style="width: 60%;" class="rowFlex">
                                                 <div style="width: 50%;">
                                                     <label>Calc. Discount</label>
                                                 </div>
                                                 <input 
-                                                  [(ngModel)]="calculatedDiscount"
-                                                  name="calculatedDiscount"
+                                                  
                                                   disabled
-                                                  class="mx-3" style="width: 50%;" type="number" id="calculatedDiscount"
-                                                     placeholder="0">
+                                                  class="mx-3" style="width: 50%;" type="number" id="calculatedDiscount" placeholder="0">
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="total my-1">
+                                        <!-- <div class="total my-1">
                                             <div style="width: 60%;" class="rowFlex">
                                                 <div style="width: 50%;">
                                                     <label>Calc.Tax</label>
                                                 </div>
                                                 <input 
-                                                  [(ngModel)]="calculatedTax"
-                                                  disabled
                                                   name="calculatedTax"
-                                                  class="mx-3" style="width: 50%;" type="number" id="calculatedTax"
-                                                     placeholder="0">
+                                                  class="mx-3" style="width: 50%;" type="number" id="calculatedTax" placeholder="0">
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="total my-1">
                                             <div style="width: 60%;" class="rowFlex">
@@ -412,8 +475,8 @@
                     </div>
 
                     <div class="tab-btns">
-                        <button class="fbn-fill-blue-btn">Cancel</button>
-                        <button (click)="goToNextPage()" class="fbn-blue-btn">Continue</button>
+                        <button (click)="goToOverview()" class="fbn-fill-blue-btn">Cancel</button>
+                        <button (click)="goToNextPage()" [disabled]="tabNumber == 1 && !primaryInvoiceDetails.valid" class="fbn-blue-btn">Continue</button>
                     </div>
                 </div>
             </div>

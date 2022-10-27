@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { CreateAnInvoice } from './core/models/scm/invoices.model';
+import { CreateAnInvoice } from '../../../../core/models/scm/invoices.model';
 
 @Pipe({
   name: 'invoiceCalculation'

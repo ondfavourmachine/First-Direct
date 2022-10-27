@@ -6,6 +6,13 @@
     height: 11%;
     padding: 13px 15px;
     position: static;
+    cursor: pointer;
+    transition: transform 250ms ease-in-out;
+
+    &:hover{
+        transform: scale(1.03);
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
 
 }
 

@@ -11,8 +11,10 @@ import { InvoiceUploaderComponent } from './invoice-uploader/invoice-uploader.co
 import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { SendInvoiceComponent } from './send-invoice/send-invoice.component';
-import { InvoiceCalculationPipe } from 'src/app/invoice-calculation.pipe';
+import { InvoiceCalculationPipe } from 'src/app/pages/scm/invoice/pipes/invoice-calculation.pipe';
 import { DeleteInvoiceComponent } from 'src/app/delete-invoice/delete-invoice.component';
+import { InvoiceFilterPipe } from './pipes/invoice-filter.pipe';
+
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { DeleteInvoiceComponent } from 'src/app/delete-invoice/delete-invoice.co
         FormsModule,
         ReactiveFormsModule
     ],
-    providers: [InvoiceCalculationPipe],
+    providers: [InvoiceCalculationPipe, InvoiceFilterPipe],
     exports: [InvoiceRoutingModule]
 })
 

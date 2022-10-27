@@ -11,7 +11,7 @@ export class SearchFilterPipe implements PipeTransform {
       if(!args)return value;
 
       args = args.toLowerCase();
-
+      // console.log(args);
       return value.filter(function(data){
           return JSON.stringify(data).toLowerCase().includes(args);
       });

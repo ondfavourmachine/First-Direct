@@ -5,7 +5,7 @@ import { CreateAnInvoice } from 'src/app/core/models/scm/invoices.model';
 import { userData } from 'src/app/core/models/userData.model';
 import { InvoiceService } from 'src/app/core/services/scm/invoices/invoice.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
-import { InvoiceCalculationPipe } from 'src/app/invoice-calculation.pipe';
+import { InvoiceCalculationPipe } from 'src/app/pages/scm/invoice/pipes/invoice-calculation.pipe';
 
 
 @Component({
@@ -15,9 +15,11 @@ import { InvoiceCalculationPipe } from 'src/app/invoice-calculation.pipe';
 })
 export class OverviewComponent implements OnInit {
 invoices: CreateAnInvoice[] = [];
+upaidInvoices: number = 0;
 deleteMode: boolean = false;
 isDetailsModalOpen: boolean = false;
 userLoad: userData;
+searchItem: string = '';
 currentInvoiceInView: CreateAnInvoice;
   constructor(
     private customersService: CustomersService,
@@ -90,6 +92,7 @@ currentInvoiceInView: CreateAnInvoice;
       {
         next: ({data})=> {
           this.invoices = data;
+          this.upaidInvoices = this.invoices.length;
           this.gVars.spinner.hide();
         },
         error: console.error
@@ -99,7 +102,7 @@ currentInvoiceInView: CreateAnInvoice;
 
 
    deletePayment(){
-    console.log(this.currentInvoiceInView);
+    // console.log(this.currentInvoiceInView);
     this.deleteMode = true;
    }
 

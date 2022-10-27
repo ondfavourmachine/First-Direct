@@ -1,4 +1,5 @@
-import {  Component, OnInit } from '@angular/core';
+import {  Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { NavigationExtras, Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
@@ -11,6 +12,7 @@ import { CustomersService } from 'src/app/core/services/scm/onboarding/customers
   styleUrls: ['./create-invoice.component.scss']
 })
 export class CreateInvoiceComponent implements OnInit {
+  @ViewChild('primaryInvoiceDetails') primaryInvoiceDetails: NgForm;
   calculatedTax: string = '0';
   calculatedDiscount: string = '0';
   subTotal: number = 0;
@@ -35,7 +37,7 @@ export class CreateInvoiceComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.createAnInvoiceForm = {
+  this.createAnInvoiceForm = {
   session: '',
   username: '',
   subsidiaryId: '',
@@ -67,6 +69,7 @@ export class CreateInvoiceComponent implements OnInit {
 }
 
     this.fetchBuyers();
+    console.log(this.dataFromPreviewComp);
     if(this.dataFromPreviewComp &&  'invoiceNo' in this.dataFromPreviewComp) {
       this.createAnInvoiceForm = {...this.dataFromPreviewComp};
       this.calculatedTax = this.createAnInvoiceForm.calculatedTax;
@@ -109,7 +112,8 @@ export class CreateInvoiceComponent implements OnInit {
       return; 
     }
     this.tabNumber++;
-    console.log(this.tabNumber);
+    // console.log(this.primaryInvoiceDetails);
+    // console.log(this.createAnInvoiceForm);
   }
 
   goBack(){
@@ -118,6 +122,10 @@ export class CreateInvoiceComponent implements OnInit {
       return;
     }
     this.tabNumber--;
+  }
+
+  goToOverview(){
+    this.router.navigate(['/scm/invoice/overview']);
   }
 
   goToPreviousPage(){
@@ -179,12 +187,5 @@ export class CreateInvoiceComponent implements OnInit {
   calculateAmount(invoice: InvoiceValue){
     invoice.amount = invoice.unitPrice * invoice.quantity;
   }
-
-  // triggerCalculation(event: Event){
-  //     this.calculateSubTotal();
-  //     this.calculateTotal();
-  //     return;
-  // }
   
-
 }

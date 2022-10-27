@@ -14,7 +14,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { NgIdleKeepaliveModule } from "@ng-idle/keepalive";
 import { TokenInterceptor } from "./interceptor/interceptor";
 import { GenericModalComponent } from "./components/modals/generic-modal/generic-modal.component";
-import { InvoiceCalculationPipe } from '../invoice-calculation.pipe';
+import { InvoiceCalculationPipe } from '../pages/scm/invoice/pipes/invoice-calculation.pipe';
 
 @NgModule({
   declarations: [
