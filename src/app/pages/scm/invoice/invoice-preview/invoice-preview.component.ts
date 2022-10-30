@@ -71,7 +71,4 @@ export class InvoicePreviewComponent implements OnInit {
   }
 
 
-
-  
-
 }

@@ -112,6 +112,12 @@
     font-size: 1rem;
   }
 
+  .main .delete_container .content .remaining_parts .buttons button:last-child.accept_invoice{
+    border: 1px solid  #3FC59D;
+    background-color: #3FC59D;
+    color: white;
+    font-size: 1rem;
+  }
 
   .main .delete_container .content .remaining_parts .buttons button:disabled{
     box-shadow: none;

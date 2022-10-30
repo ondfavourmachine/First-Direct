@@ -8,7 +8,7 @@
             <div class="fadeIn">
                 <div class="h-100 w-50 bg-white p-5">
                     <div class="d-flex justify-content-between">
-                        <p>Send Invoice</p>
+                        <p >Send Invoice</p>
                         <div>
                             <svg width="108" height="34" viewBox="0 0 108 34" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -38,13 +38,14 @@
                         <div class="my-5">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="w-50">
-                                    <label>Selectv Buyer</label>
+                                    <label>Select  Buyer</label>
                                 </div>
                                 <div class="w-50">
-                                    <select class="form-control">
-                                        <option>Buyer 1</option>
-                                        <option>Buyer 2</option>
-                                        <option>Buyer 3</option>
+                                    <select [(ngModel)]="buyerSelected" name="buyerSelected" class="form-control">
+                                        <option value="" selected>Select Buyer</option>
+                                        <option *ngFor="let buyer of buyers; index as i"> {{ buyer?.customerName }} </option>
+                                        <!-- <option>Buyer 2</option>
+                                        <option>Buyer 3</option> -->
                                     </select>
                                     <svg width="83" height="20" viewBox="0 0 83 20" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -65,14 +66,14 @@
                                     <label>Invoice Summary</label>
                                 </div>
                                 <div class="w-50">
-                                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                                    <textarea [value]="invoice?.invoiceSummary" class="form-control" rows="5" id="comment"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="my-2 py-5">
                             <div class="d-flex justify-content-end align-items-end">
-                                <button class="fbn-blue-btn">Cancel</button>
-                                <button (click)="toggleSuccessModal()" class="fbn-fill-blue-btn">Next</button>
+                                <button (click)="cancel()" class="fbn-blue-btn">Cancel</button>
+                                <button [disabled]="buyerSelected.length < 2 && invoice.invoiceSummary.length < 3" (click)="shareThisInvoice()" class="fbn-fill-blue-btn">Next</button>
                             </div>
                         </div>
                     </form>

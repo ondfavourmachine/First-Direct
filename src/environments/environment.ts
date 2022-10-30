@@ -24,7 +24,10 @@ export const environment = {
     addInvoice: 'Invoice/AddInvoice', 
     getAnInvoice: 'Invoice/GetInvoice',
     getSubsidiaryInvoices: 'Invoice/GetSubsidiaryInvoices',
-    deleteInvoice: 'Invoice/DeleteInvoice'
+    deleteInvoice: 'Invoice/DeleteInvoice',
+    acceptInvoice: 'Invoice/AcceptInvoice',
+    shareInvoice: 'Invoice/ShareInvoice',
+    getInvoiceSummary: 'Invoice/GetInvoiceSummary'
   }
 };
 

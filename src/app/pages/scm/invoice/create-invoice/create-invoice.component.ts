@@ -1,6 +1,6 @@
 import {  Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
+import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CreateAnInvoice, InvoiceValue } from 'src/app/core/models/scm/invoices.model';
@@ -12,6 +12,7 @@ import { CustomersService } from 'src/app/core/services/scm/onboarding/customers
   styleUrls: ['./create-invoice.component.scss']
 })
 export class CreateInvoiceComponent implements OnInit {
+  private fileSizeLimit: number = 2;
   @ViewChild('primaryInvoiceDetails') primaryInvoiceDetails: NgForm;
   calculatedTax: string = '0';
   calculatedDiscount: string = '0';
@@ -31,6 +32,7 @@ export class CreateInvoiceComponent implements OnInit {
     private router: Router,
     private customerService: CustomersService,
     private gVar: GlobalsService,
+    private crudService: CrudService
   ) {
     this.dataFromPreviewComp = this.router.getCurrentNavigation().extras.state as CreateAnInvoice;
     this.userLoad = this.gVar.checkRoute(this.gVar.router.url);
@@ -63,7 +65,7 @@ export class CreateInvoiceComponent implements OnInit {
       item: '',
       invoiceNo: '',
       unitPrice: 0,
-      quantity: 1,
+      quantity: 0,
       amount: 0
     }
   ]
@@ -86,6 +88,16 @@ export class CreateInvoiceComponent implements OnInit {
     this.createAnInvoiceForm.invoiceValues.splice(index, 1);
   }
 
+  redirectToCreateBuyer(path: string){
+    this.crudService.updateRole('buyer');
+    this.crudService.getRole().subscribe({
+        next: (data: any) => {
+          const role = data;
+          this.router.navigateByUrl(`/${path}/${role}`)
+        }
+      })   
+  }
+
   toggleTab(val: number) {
     this.tabNumber = val;
   }
@@ -99,9 +111,8 @@ export class CreateInvoiceComponent implements OnInit {
     this.createAnInvoiceForm.username = this.userLoad.username;
     this.createAnInvoiceForm.subsidiaryId = this.userLoad?.subsidiaryId.toString();
     this.createAnInvoiceForm.session = this.userLoad?.session;
-    this.createAnInvoiceForm.hasAttachment = this.createAnInvoiceForm.invoiceAttachments.length > 0 ? 'Y' : 'N';
+    this.createAnInvoiceForm.hasAttachment = 'invoiceAttachments' in this.createAnInvoiceForm &&  this.createAnInvoiceForm.invoiceAttachments.length > 0 ? 'Y' : 'N';
     this.createAnInvoiceForm.acceptedOffline = 'Y';
-    // debugger;
     const data: NavigationExtras = {
       state: this.createAnInvoiceForm
     }
@@ -175,7 +186,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.calculateSubTotal();
     this.calculatedDiscount = this.calculateDiscount(this.subTotal).toFixed(2);
     this.calculatedTax = this.calculateTax(this.subTotal).toFixed(2);
-    this.total = (this.subTotal - this.convertValuesToNumbers(this.calculatedDiscount) + this.convertValuesToNumbers(this.calculatedTax) + this.createAnInvoiceForm.miscellaneous).toFixed(2);
+    this.total = ((this.subTotal - this.convertValuesToNumbers(this.calculatedDiscount) + this.convertValuesToNumbers(this.calculatedTax) + this.createAnInvoiceForm.miscellaneous)).toFixed(3);
 
   }
 
@@ -193,6 +204,10 @@ export class CreateInvoiceComponent implements OnInit {
   handleAttachement(event: Event){
     console.log(event.target['files']);
     const file = event.target['files'] as FileList;
+    if(!this.fileToBeStoredIsLessThanPreferredFileSize(file[0].size)){
+      this.gVar.toastr.error(`Attachment uploaded must not be greater than 2mb`);
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (e) => {
       // this.createAnInvoiceForm = {...this.createAnInvoiceForm}
@@ -218,5 +233,28 @@ export class CreateInvoiceComponent implements OnInit {
     (document.querySelector('.attachAFile') as HTMLInputElement).click();
   }
   
+  fileToBeStoredIsLessThanPreferredFileSize(filesize: number): boolean{
+    return convertToBytesToMB(filesize) <= this.fileSizeLimit;
+  }
   
+}
+
+export const convertToBytesToMB = (bytes: number) => (bytes * 0.000001) / 1;
+
+
+export const formatter = new Intl.NumberFormat('en-US',{
+  notation: 'standard',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 20,
+  minimumSignificantDigits: 1,
+  maximumSignificantDigits: 20
+});
+
+export const forceToTwoDecimalPlaces = (val: number): string =>{
+  const formatted = formatter.format((val));
+  if(formatted.includes(".")){
+    const number = val.toString().split(".")[0]+"."+formatted.split(".")[1].slice(0, 2)
+    return number;
+  }
+  return formatted;
 }

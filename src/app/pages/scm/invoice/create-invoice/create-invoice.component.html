@@ -75,7 +75,7 @@
                                                  {{ buyer?.companyName }}
                                             </option>
                                         </select>
-                                        <button class="new-buyer">New Buyer</button>
+                                        <button (click)="redirectToCreateBuyer('scm/onboarding/add-new')" class="new-buyer">New Buyer</button>
                                         <small class="position-absolute" *ngIf="buyer?.touched && buyer?.invalid">Buyer is required!</small>
                                     </div>
                                 </div>

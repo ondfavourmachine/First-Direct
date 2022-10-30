@@ -25,7 +25,8 @@ export interface CreateAnInvoice{
   calculatedDiscount?: string,
   calculatedTax?: string;
   invoiceValues: InvoiceValue[],
-  invoiceAttachments: {invoiceFileName: string,documentBase64: string}[],
+  invoiceStatus?: string,
+  invoiceAttachments: Attachment[],
     isAccepted?: false,
     isActive?: true,
     isDeleted?: false,
@@ -37,6 +38,8 @@ export interface CreateAnInvoice{
     deletedBy?: null,
     dateDeleted?: null,
 }
+
+export type Attachment = {invoiceFileName: string,documentBase64: string}
 
 export type InvoiceValue = {
       item: '',
@@ -57,7 +60,7 @@ export type GetInvoiceModel = {
   session: string,
   username: string,
   subsidiaryId: string,
-  countryId: string,
+  countryId: any,
   searchQuery: string,
   sortColumn: string,
   filter: string,
@@ -75,4 +78,13 @@ export interface GeneralGetResponses<T>{
 
 export type FailedResponse ={
   code: string, data: boolean, message: string
+}
+
+export interface ASubsidiaryInvoicesSnapshotResponse{
+  code: string,
+  data: ASubsidiaryInvoicesSnapshot[]
+}
+
+export type ASubsidiaryInvoicesSnapshot = { 
+  key: string , value: number
 }

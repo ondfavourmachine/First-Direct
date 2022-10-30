@@ -11,8 +11,11 @@ import { InvoiceService } from '../core/services/scm/invoices/invoice.service';
   styleUrls: ['./delete-invoice.component.css']
 })
 export class DeleteInvoiceComponent implements OnInit {
-  @Output() closeBtn = new EventEmitter<boolean>();
+  @Output() closeDelete = new EventEmitter<boolean>();
+  @Output() closeAccept = new EventEmitter<boolean>();
   @Input() invoice: CreateAnInvoice;
+  @Input() isAccepting: boolean = false;
+  @Input() isRejecting: boolean = false;
   type: 'password' | 'text' = 'text';
   password = '';
   userLoad: userData;
@@ -27,7 +30,11 @@ export class DeleteInvoiceComponent implements OnInit {
 
 
   close(){
-    this.closeBtn.emit(false);
+    this.closeDelete.emit(false);
+  }
+
+  closeAcceptBtn(){
+    this.closeAccept.emit(false);
   }
 
   deleteInvoice(event: Event){
@@ -42,16 +49,44 @@ export class DeleteInvoiceComponent implements OnInit {
         next: ({code, message}) => {
           if(code != '00'){
             this.gVars.spinner.hide();
-             this.closeBtn.emit(false);
+             this.closeDelete.emit(false);
              this.gVars.toastr.error(message)
             return;
           }
           this.gVars.spinner.hide();
-          this.closeBtn.emit(true);
+          this.closeDelete.emit(true);
         },
         error:()=>{
           this.gVars.spinner.hide();
-             this.closeBtn.emit(false);
+             this.closeDelete.emit(false);
+             this.gVars.toastr.error('An error occurred, kindly contact admin')
+        }
+       }
+    )
+  }
+
+  acceptInvoice(event:Event){
+    this.gVars.spinner.show();
+    this.invoiceService.acceptInvoice({
+      subsidiaryId: this.userLoad.subsidiaryId,
+      username: this.userLoad.username,
+      session: this.userLoad.session,
+      invoiceNo: this.invoice.invoiceNo,
+    }).subscribe(
+       {
+        next: ({code, message}) => {
+          if(code != '00'){
+            this.gVars.spinner.hide();
+             this.closeAccept.emit(false);
+             this.gVars.toastr.error(message)
+            return;
+          }
+          this.gVars.spinner.hide();
+          this.closeAccept.emit(true);
+        },
+        error:()=>{
+          this.gVars.spinner.hide();
+             this.closeAccept.emit(false);
              this.gVars.toastr.error('An error occurred, kindly contact admin')
         }
        }

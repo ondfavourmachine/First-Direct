@@ -2,7 +2,9 @@
         <div class="delete_container">
             <h3><img  (click)="close()" src="../../assets/images/delete_cancel.svg" alt=""></h3>
             <div class="content">
-                <h4>Delete Invoice</h4>
+                <h4 *ngIf="!isAccepting && !isRejecting">Delete Invoice</h4>
+                <h4 *ngIf="isAccepting">Accept Invoice</h4>
+                <h4 *ngIf="isRejecting">Reject Invoice</h4>
 
                 <div class="remaining_parts">
                     <div class="text_contents">
@@ -43,10 +45,24 @@
                           [disabled]="password.length < 3"
                           class="rounded-pill px-4 py-1">CANCEL</button>
                         <button 
+                          *ngIf="!isAccepting && !isRejecting"
                             [disabled]="password.length < 3"
                            (click)="deleteInvoice($event)"
                           class="rounded-pill px-4 py-1">DELETE INVOICE</button>
+
+                          <button 
+                          *ngIf="isAccepting"
+                            [disabled]="password.length < 3"
+                           (click)="acceptInvoice($event)"
+                          class="rounded-pill accept_invoice px-4 py-1">Approve Transaction</button>
+
+                          <button 
+                          *ngIf="isRejecting"
+                            [disabled]="password.length < 3"
+                           (click)="deleteInvoice($event)"
+                          class="rounded-pill px-4 py-1">Reject Invoice</button>
                     </div>
+
                 </div>
             </div>
 

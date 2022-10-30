@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
-import { CreateAnInvoice } from 'src/app/core/models/scm/invoices.model';
+import { ASubsidiaryInvoicesSnapshot, Attachment, CreateAnInvoice } from 'src/app/core/models/scm/invoices.model';
 import { userData } from 'src/app/core/models/userData.model';
 import { InvoiceService } from 'src/app/core/services/scm/invoices/invoice.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
@@ -17,9 +17,11 @@ export class OverviewComponent implements OnInit {
 invoices: CreateAnInvoice[] = [];
 upaidInvoices: number = 0;
 deleteMode: boolean = false;
+acceptMode: boolean = false
 isDetailsModalOpen: boolean = false;
 userLoad: userData;
 searchItem: string = '';
+invoiceSummaries: ASubsidiaryInvoicesSnapshot[] = [];
 currentInvoiceInView: CreateAnInvoice;
   constructor(
     private customersService: CustomersService,
@@ -33,6 +35,19 @@ currentInvoiceInView: CreateAnInvoice;
 
   navigate( tab: number) {
     this.router.navigate(['scm/invoice/pages']);
+  }
+
+  getInvoiceSummaries(){
+    this.invoiceService.getInvoiceSummary({
+        username: this.userLoad.username,
+        session: this.userLoad.session,
+        subsidiaryId: this.userLoad.subsidiaryId})
+      .subscribe(
+        val => {
+          this.invoiceSummaries = val.data;
+        },
+        console.error
+      )
   }
 
   toggleDetailsModal(invoice?: CreateAnInvoice) {
@@ -73,8 +88,44 @@ currentInvoiceInView: CreateAnInvoice;
   ngOnInit(): void {
     this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
     this.getAllInvoices();
+    this.getInvoiceSummaries();
   }
 
+  async downloadAsPDf(invoiceAttachments: Attachment[]){
+    for(let attachment of invoiceAttachments){
+      await this.downloadFile({docName: attachment.invoiceFileName, base64String: attachment.documentBase64, extension: undefined}, false);
+    }
+  }
+
+  async dataUrlToFile(dataUrl: string, fileName: string, mimeType: string): Promise<File>{
+    const res: Response = await fetch(dataUrl);
+    const blob: Blob = await res.blob();
+    return new File([blob], fileName, {type: mimeType})
+  }
+
+  async downloadFile(doc: {docName: string,base64String: string, extension: string}, openInNewTab?: boolean){
+    const anchor = document.createElement('a');
+    const file: File = await this.dataUrlToFile(`${doc.base64String}`, doc.docName, doc.extension ? doc.extension : `application/pdf`);
+    let fileURL = window.URL.createObjectURL(file);
+    if(openInNewTab){
+      anchor.href = fileURL;
+      anchor.target = 'blank';
+      anchor.click();
+      return;
+    }
+
+    anchor.href = fileURL;
+    anchor.download = doc.docName;
+    anchor.click();
+  }
+
+
+  gotoSendInvoice(){
+    const extraObj: NavigationExtras = {
+      state: this.currentInvoiceInView
+    }
+    this.router.navigateByUrl('scm/invoice/send-invoice', extraObj);
+  }
 
    getAllInvoices(){
     this.gVars.spinner.show();
@@ -106,6 +157,10 @@ currentInvoiceInView: CreateAnInvoice;
     // console.log(this.currentInvoiceInView);
     this.deleteMode = true;
    }
+   acceptPayment(){
+    // console.log(this.currentInvoiceInView);
+    this.acceptMode = true;
+   }
 
    closeDeleteModal(event: boolean){
     if(!event) {
@@ -113,6 +168,16 @@ currentInvoiceInView: CreateAnInvoice;
       return;
     }
     this.deleteMode = false; 
+    this.toggleDetailsModal();
+    this.getAllInvoices();
+   }
+
+   closeAcceptModal(event: boolean){
+    if(!event) {
+      this.acceptMode = false; 
+      return;
+    }
+    this.acceptMode = false; 
     this.toggleDetailsModal();
     this.getAllInvoices();
    }

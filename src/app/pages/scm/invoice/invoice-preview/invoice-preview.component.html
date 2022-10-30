@@ -142,8 +142,8 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button class="fbn-blue-btn">Cancel</button>
-                        <button class="fbn-blue-btn" (click)="goBack()">Go Back</button>
+                        <button (click)="goToOverview()" class="fbn-blue-btn">Cancel</button>
+                        <button class="fbn-blue-btn" (click)="triggerEdit()">Go Back</button>
                         <button (click)="sendInvoice()" class="fbn-fill-blue-btn">Confirm</button>
                     </div>
 

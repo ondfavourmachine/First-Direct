@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateAnInvoice, GetInvoiceModel, CreateInvoiceResponse, GeneralGetResponses, FailedResponse } from 'src/app/core/models/scm/invoices.model';
+import { CreateAnInvoice, GetInvoiceModel, CreateInvoiceResponse, GeneralGetResponses, FailedResponse, ASubsidiaryInvoicesSnapshotResponse } from 'src/app/core/models/scm/invoices.model';
 import { environment } from 'src/environments/environment';
 
 
@@ -34,6 +34,18 @@ export class InvoiceService {
 
   deleteInvoice(data: Partial<GetInvoiceModel>): Observable<FailedResponse>{
     return this.http.patch<FailedResponse>(`${environment.invoicesApiUrl}${environment.invoiceApi.deleteInvoice}`, data, httpOptions)
+  }
+
+  acceptInvoice(data: Partial<GetInvoiceModel>): Observable<FailedResponse>{
+    return this.http.patch<FailedResponse>(`${environment.invoicesApiUrl}${environment.invoiceApi.acceptInvoice}`, data, httpOptions)
+  }
+
+  shareInvoice(requestParams: Partial<GetInvoiceModel>): Observable<any> {
+    return this.http.patch(`${environment.invoicesApiUrl}${environment.invoiceApi.shareInvoice}` , requestParams, httpOptions);
+  }
+
+  getInvoiceSummary(requestParams: Pick<GetInvoiceModel, 'session' | 'username' | 'subsidiaryId'>): Observable<ASubsidiaryInvoicesSnapshotResponse>{
+    return this.http.post<ASubsidiaryInvoicesSnapshotResponse>(`${environment.invoicesApiUrl}${environment.invoiceApi.getInvoiceSummary}` , requestParams, httpOptions);
   }
 
   

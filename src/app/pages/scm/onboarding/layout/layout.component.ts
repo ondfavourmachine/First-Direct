@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';;
+import { CrudService } from 'src/app/core/services/scm/crudServices/crud.service';
 import { Router } from '@angular/router';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
 import { CustomersService } from 'src/app/core/services/scm/onboarding/customers/customers.service';
@@ -119,7 +119,6 @@ export class LayoutComponent implements OnInit {
   }
 
   navigate(path: string) {
-
     if (this.customerType === "Buyer") {
       this.crudServices.updateRole('buyer');
     } else {
