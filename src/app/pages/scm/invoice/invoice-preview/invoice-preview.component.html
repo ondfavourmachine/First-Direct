@@ -120,7 +120,7 @@
                                             <p>Sub Total</p>
                                             <p>Tax ({{dataFromInvoiceCreation?.tax}}%)</p>
                                             <p>Discount ({{dataFromInvoiceCreation?.discount}}%)</p>
-                                            <p>Miscellaneous</p>
+                                            <p>Miscellaneous ({{dataFromInvoiceCreation?.descriptionText}})</p>
                                         </div>
                                         <div class="figs">
                                             <p>NGN {{ dataFromInvoiceCreation?.subTotal || 0}} </p>
@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="total-amt d-flex justify-content-between">
                                         <p>Total</p>
-                                        <p class="ta-figs">NGN {{ dataFromInvoiceCreation?.totalPayable }} </p>
+                                        <p class="ta-figs">NGN {{ displayModifiedTotal }} </p>
                                     </div>
                                 </div>
                             </div>

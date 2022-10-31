@@ -13,6 +13,7 @@ export class InvoicePreviewComponent implements OnInit {
   isSuccessModalOpen: Boolean = false;
   modalText: string = " Invooice created successfully"
   dataFromInvoiceCreation!: CreateAnInvoice;
+  displayModifiedTotal: string = '';
   constructor(
     private router: Router,
     private location: Location,
@@ -24,7 +25,8 @@ export class InvoicePreviewComponent implements OnInit {
    } 
 
    ngOnInit(): void {
-    console.log(this.dataFromInvoiceCreation)
+    console.log(this.dataFromInvoiceCreation);
+    this.displayModifiedTotal = formatter.format(this.dataFromInvoiceCreation.totalPayable);
   }
   sendInvoice() {
     delete this.dataFromInvoiceCreation.subTotal;
@@ -70,5 +72,23 @@ export class InvoicePreviewComponent implements OnInit {
     this.location.back();
   }
 
+}
 
+const object: any = {
+  notation: 'standard',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 20,
+  minimumSignificantDigits: 1,
+  maximumSignificantDigits: 20
+}
+
+export const formatter = new Intl.NumberFormat('en-US', object);
+
+export const forceToTwoDecimalPlaces = (val: number): string =>{
+  const formatted = formatter.format((val));
+  if(formatted.includes(".")){
+    const number = val.toString().split(".")[0]+ "." + formatted.split(".")[1].slice(0, 2)
+    return number;
+  }
+  return formatted;
 }

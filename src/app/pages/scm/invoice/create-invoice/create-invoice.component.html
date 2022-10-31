@@ -235,7 +235,7 @@
                                                 <!-- % inout -->
                                                 <input
                                                     [(ngModel)]="createAnInvoiceForm.tax" 
-                                                    name="tax"
+                                                    name="tax_figure"
                                                     (change)="calculateTotal()"
                                                     style="" id="tax_figure"
                                                      placeholder="0" type="number" min="0">
@@ -300,7 +300,7 @@
                                                         <!-- % inout -->
                                                         <input 
                                                             name="tax"  
-                                                            [(ngModel)]="calculatedDiscount"
+                                                              [(ngModel)]="calculatedDiscount"
                                                               name="calculatedDiscount"
                                                             style="" id="discount_percentage"
                                                              placeholder="0" type="number" min="0">
@@ -326,9 +326,8 @@
                                                     <div style="" class="rowFlex">
                                                         <!-- % inout -->
                                                         <input style="" 
-                                                          
-                                                          name="miscellaneous"
-                                                          min="0"
+                                                          [(ngModel)]="createAnInvoiceForm.descriptionText"
+                                                          name="miscellaneous_description"
                                                           id="miscellaneous"
                                                           class="description"   placeholder="Description" type="text">
     

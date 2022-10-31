@@ -1,9 +1,9 @@
 <div class="main">
     <div class="flex-between my-4">
-        <app-card cardTitle="All Invoices" [figure]="invoiceSummaries[1].value + invoiceSummaries[0].value"></app-card>
-        <app-card (clicker)="navigate(2)" cardTitle="My Invoices" [figure]="invoiceSummaries[1].value"></app-card>
-        <app-card cardTitle="New Invoices" [figure]="invoiceSummaries[3].value"></app-card>
-        <app-card cardTitle="Accepted Invoices" [figure]="invoiceSummaries[0].value"></app-card>
+        <app-card cardTitle="All Invoices" [figure]="invoiceSummaries![1]?.value + invoiceSummaries![0]?.value"></app-card>
+        <app-card (clicker)="navigate(2)" cardTitle="My Invoices" [figure]="invoiceSummaries![1]?.value"></app-card>
+        <app-card cardTitle="New Invoices" [figure]="invoiceSummaries![3]?.value"></app-card>
+        <app-card cardTitle="Accepted Invoices" [figure]="invoiceSummaries![0]?.value"></app-card>
     </div>
     
     

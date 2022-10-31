@@ -24,7 +24,7 @@ export class CreateInvoiceComponent implements OnInit {
   PageNumber: number = 1;
   PageSize: number = 20;
    createAnInvoiceForm: Partial<CreateAnInvoice> = 
-   { invoiceAttachments: []};
+   {descriptionText: '', invoiceAttachments: []};
    dataFromPreviewComp!: CreateAnInvoice;
    userLoad: Record<string, any>
    buyers: ABuyer[] = [];
@@ -183,6 +183,7 @@ export class CreateInvoiceComponent implements OnInit {
     return parseInt(value.replace(/,/g, ''));
   }
   calculateTotal(){
+    // debugger;
     this.calculateSubTotal();
     this.calculatedDiscount = this.calculateDiscount(this.subTotal).toFixed(2);
     this.calculatedTax = this.calculateTax(this.subTotal).toFixed(2);
@@ -242,19 +243,4 @@ export class CreateInvoiceComponent implements OnInit {
 export const convertToBytesToMB = (bytes: number) => (bytes * 0.000001) / 1;
 
 
-export const formatter = new Intl.NumberFormat('en-US',{
-  notation: 'standard',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 20,
-  minimumSignificantDigits: 1,
-  maximumSignificantDigits: 20
-});
 
-export const forceToTwoDecimalPlaces = (val: number): string =>{
-  const formatted = formatter.format((val));
-  if(formatted.includes(".")){
-    const number = val.toString().split(".")[0]+"."+formatted.split(".")[1].slice(0, 2)
-    return number;
-  }
-  return formatted;
-}
