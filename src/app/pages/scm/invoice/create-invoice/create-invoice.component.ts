@@ -36,6 +36,7 @@ export class CreateInvoiceComponent implements OnInit {
   ) {
     this.dataFromPreviewComp = this.router.getCurrentNavigation().extras.state as CreateAnInvoice;
     this.userLoad = this.gVar.checkRoute(this.gVar.router.url);
+    console.log(this.userLoad);
     
    }
 
@@ -52,7 +53,7 @@ export class CreateInvoiceComponent implements OnInit {
   supplyDate: '',
   paymentDueDate: '',
   invoiceSummary: '',
-  acceptedOffline: 'no',
+  acceptedOffline: 'yes',
   paymentTerms: '',
   additionalInformation: '',
   hasAttachment: '',
@@ -86,6 +87,17 @@ export class CreateInvoiceComponent implements OnInit {
  
   removeAnInvoice(index: number){
     this.createAnInvoiceForm.invoiceValues.splice(index, 1);
+  }
+
+  insertBuyerDetails(){
+    console.log(this.createAnInvoiceForm.buyer);
+    const foundBuyer = this.buyers.find(elem => elem.companyName == this.createAnInvoiceForm.buyer);
+    if(foundBuyer){ 
+      this.createAnInvoiceForm.buyerCompanyName = foundBuyer.companyName;
+      this.createAnInvoiceForm.buyerComapanyEmail = foundBuyer.email;
+    }
+
+    console.log(this.createAnInvoiceForm);
   }
 
   redirectToCreateBuyer(path: string){

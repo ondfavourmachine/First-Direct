@@ -26,6 +26,8 @@ export interface CreateAnInvoice{
   calculatedTax?: string;
   invoiceValues: InvoiceValue[],
   invoiceStatus?: string,
+  buyerCompanyName?: string,
+  buyerComapanyEmail?: string
   descriptionText?: string,
   invoiceAttachments: Attachment[],
     isAccepted?: false,

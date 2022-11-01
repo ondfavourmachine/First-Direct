@@ -4,6 +4,7 @@ import {NavigationExtras, Router} from '@angular/router';
 import { CreateAnInvoice } from 'src/app/core/models/scm/invoices.model';
 import { InvoiceService } from 'src/app/core/services/scm/invoices/invoice.service';
 import { GlobalsService } from 'src/app/core/globals/globals.service';
+import { userData } from 'src/app/core/models/userData.model';
 @Component({
   selector: 'app-invoice-preview',
   templateUrl: './invoice-preview.component.html',
@@ -13,6 +14,7 @@ export class InvoicePreviewComponent implements OnInit {
   isSuccessModalOpen: Boolean = false;
   modalText: string = " Invooice created successfully"
   dataFromInvoiceCreation!: CreateAnInvoice;
+  userLoad: userData;
   displayModifiedTotal: string = '';
   constructor(
     private router: Router,
@@ -22,6 +24,7 @@ export class InvoicePreviewComponent implements OnInit {
   ) {
     this.dataFromInvoiceCreation = this.router.getCurrentNavigation().extras.state as CreateAnInvoice;
     this.goBack = this.goBack.bind(this);
+    this.userLoad = this.gVars.checkRoute(this.gVars.router.url);
    } 
 
    ngOnInit(): void {
@@ -54,6 +57,7 @@ export class InvoicePreviewComponent implements OnInit {
 
   toggleSuccessModal(){
     this.isSuccessModalOpen = !this.isSuccessModalOpen;
+    this.goToOverview();
     setTimeout(this.goBack, 500);
   }
 

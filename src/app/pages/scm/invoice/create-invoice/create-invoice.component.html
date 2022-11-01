@@ -68,6 +68,7 @@
                                         <select
                                          [(ngModel)]="createAnInvoiceForm.buyer" 
                                          ngModel required
+                                         (change)="insertBuyerDetails()"
                                          name="buyer"
                                          id="buyer" #buyer="ngModel">
                                             <option value="">Select Buyer</option>
@@ -89,22 +90,18 @@
                                             <div class="radio mx-3">
                                                 <input 
                                                  [(ngModel)]="createAnInvoiceForm.acceptedOffline"
-                                                  ngModel
                                                   name="acceptedOffline"
-                                                 type="radio" id="invoiceType" 
-                                                    value="yes">
+                                                 type="radio" id="invoiceType" value="yes">
                                                 <label for="invoiceType">Yes</label>
                                             </div>
 
                                             <div class="radio">
                                                 <!--  -->
                                                 <input 
-                                                [(ngModel)]="createAnInvoiceForm.acceptedOffline"
-                                                ngModel
+                                                [(ngModel)]="createAnInvoiceForm.acceptedOffline" 
                                                 name="acceptedOffline"
-                                                 type="radio" id="invoiceType" 
-                                                    value="no">
-                                                <label for="invoiceType">No</label>
+                                                 type="radio" id="invoiceType200"  value="no">
+                                                <label for="invoiceType200">No</label>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +111,7 @@
                             <div class="ryt">
                                 <div class="my-5 fields position-relative  ">
                                     <!--  -->
-                                    <label>Date Of supply</label>
+                                    <label>Supply Date</label>
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.supplyDate"
                                     ngModel required
@@ -125,7 +122,7 @@
                                 </div>
 
                                 <div class="my-5 fields position-relative">
-                                    <label>Due date of Payment</label>
+                                    <label>Payment Due Date</label>
                                     <!--  -->
                                     <input 
                                     [(ngModel)]="createAnInvoiceForm.paymentDueDate"
